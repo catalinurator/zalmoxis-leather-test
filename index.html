@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html lang="ro">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zalmoxis Leather | Premium Handmade Shop</title>
+
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+
+font-family:Arial, sans-serif;
+
+background:#c79a6b;
+
+color:#2b2b2b;
+
+overflow-x:hidden;
+
+}
+
+/* BACKGROUND */
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+inset:0;
+
+background:
+
+radial-gradient(rgba(0,0,0,0.08) 1px, transparent 1px),
+
+linear-gradient(135deg,#b07a4a,#5a3a25);
+
+background-size:12px 12px, cover;
+
+z-index:-1;
+
+opacity:0.9;
+
+}
+
+/* HERO */
+
+.hero{
+
+height:90vh;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+text-align:center;
+
+color:white;
+
+padding:20px;
+
+}
+
+.hero h1{
+
+font-size:60px;
+
+letter-spacing:2px;
+
+}
+
+.hero p{
+
+max-width:700px;
+
+margin-top:10px;
+
+font-size:18px;
+
+opacity:0.9;
+
+}
+
+.btn{
+
+margin-top:20px;
+
+padding:14px 26px;
+
+background:rgba(0,0,0,0.6);
+
+color:white;
+
+text-decoration:none;
+
+border-radius:10px;
+
+transition:0.3s;
+
+}
+
+.btn:hover{
+
+transform:scale(1.05);
+
+background:black;
+
+}
+
+/* SECTIONS */
+
+section{
+
+padding:80px 20px;
+
+max-width:1200px;
+
+margin:auto;
+
+}
+
+h2{
+
+text-align:center;
+
+font-size:34px;
+
+margin-bottom:40px;
+
+color:#1f140f;
+
+}
+
+/* PRODUCTS GRID */
+
+.grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+gap:20px;
+
+}
+
+/* PRODUCT CARD */
+
+.card{
+
+background:rgba(255,255,255,0.85);
+
+backdrop-filter:blur(8px);
+
+border-radius:15px;
+
+overflow:hidden;
+
+box-shadow:0 10px 25px rgba(0,0,0,0.25);
+
+transition:0.4s;
+
+}
+
+.card:hover{
+
+transform:translateY(-8px);
+
+}
+
+.card img{
+
+width:100%;
+
+height:220px;
+
+object-fit:cover;
+
+}
+
+.card-content{
+
+padding:15px;
+
+}
+
+.price{
+
+margin-top:10px;
+
+font-weight:bold;
+
+color:#8a4f2b;
+
+}
+
+/* BUTTON */
+
+.buy{
+
+display:inline-block;
+
+margin-top:10px;
+
+padding:10px 14px;
+
+background:#1f140f;
+
+color:white;
+
+text-decoration:none;
+
+border-radius:8px;
+
+font-size:14px;
+
+}
+
+/* CONTACT BAR */
+
+.contact-bar{
+
+position:fixed;
+
+bottom:15px;
+
+right:15px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+
+}
+
+.contact-bar a{
+
+background:#1f140f;
+
+color:white;
+
+padding:12px;
+
+border-radius:50px;
+
+text-decoration:none;
+
+font-size:14px;
+
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+
+}
+
+/* FOOTER */
+
+footer{
+
+text-align:center;
+
+padding:30px;
+
+background:#1f140f;
+
+color:white;
+
+margin-top:40px;
+
+}
+
+/* RESPONSIVE MOBILE */
+
+@media(max-width:768px){
+
+.hero h1{font-size:38px;}
+
+.hero p{font-size:16px;}
+
+section{padding:60px 15px;}
+
+.card img{height:180px;}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HERO -->
+
+<div class="hero">
+
+<h1>Zalmoxis Leather</h1>
+
+<p>Magazin premium de produse handmade din piele naturală. Fiecare piesă este unică și lucrată manual.</p>
+
+<a class="btn" href="#shop">Vezi produse</a>
+
+</div>
+
+<!-- SHOP -->
+
+<section id="shop">
+
+<h2>Produse disponibile</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?auto=format&fit=crop&w=800&q=80">
+
+<div class="card-content">
+
+<h3>Portofel minimalist</h3>
+
+<p>Realizat din piele naturală premium.</p>
+
+<div class="price">199 MDL</div>
+
+<a class="buy" href="https://www.instagram.com/zalmoxis_leather" target="_blank">Comandă</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1618354691373-d851c5c3b0c6?auto=format&fit=crop&w=800&q=80">
+
+<div class="card-content">
+
+<h3>Curea handmade</h3>
+
+<p>Piele groasă, cusută manual.</p>
+
+<div class="price">249 MDL</div>
+
+<a class="buy" href="https://www.instagram.com/zalmoxis_leather" target="_blank">Comandă</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1594223274512-ad4803739b7c?auto=format&fit=crop&w=800&q=80">
+
+<div class="card-content">
+
+<h3>Geantă premium</h3>
+
+<p>Design elegant și durabilitate maximă.</p>
+
+<div class="price">799 MDL</div>
+
+<a class="buy" href="https://www.instagram.com/zalmoxis_leather" target="_blank">Comandă</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+© 2026 Zalmoxis Leather • Handmade Premium Craft
+
+</footer>
+
+<!-- CONTACT BUTTONS -->
+
+<div class="contact-bar">
+
+<a href="https://www.instagram.com/zalmoxis_leather" target="_blank">IG</a>
+
+<a href="https://wa.me/0000000000" target="_blank">WA</a>
+
+</div>
+
+</body>
+
+</html>
