@@ -22,7 +22,51 @@ background:#fff;
 
 color:#1d1d1f;
 
+overflow-x:hidden;
+
+}
+
+/* TOP BAR */
+
+.topbar{
+
+position:fixed;
+
+top:0;
+
+width:100%;
+
 display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:15px 25px;
+
+background:rgba(255,255,255,0.8);
+
+backdrop-filter:blur(10px);
+
+z-index:1001;
+
+}
+
+.logo{
+
+font-weight:600;
+
+letter-spacing:2px;
+
+}
+
+/* HAMBURGER */
+
+.menu-btn{
+
+font-size:26px;
+
+cursor:pointer;
 
 }
 
@@ -30,27 +74,37 @@ display:flex;
 
 .sidebar{
 
-width:240px;
-
-height:100vh;
-
 position:fixed;
 
-left:0;
-
 top:0;
+
+left:-260px;
+
+width:260px;
+
+height:100vh;
 
 background:#111;
 
 color:white;
 
-padding:30px 20px;
+padding:30px;
 
 display:flex;
 
 flex-direction:column;
 
 gap:20px;
+
+transition:0.4s ease;
+
+z-index:1002;
+
+}
+
+.sidebar.open{
+
+left:0;
 
 }
 
@@ -60,8 +114,6 @@ font-size:18px;
 
 margin-bottom:20px;
 
-letter-spacing:1px;
-
 }
 
 .sidebar a{
@@ -69,8 +121,6 @@ letter-spacing:1px;
 color:#aaa;
 
 text-decoration:none;
-
-font-size:15px;
 
 transition:0.3s;
 
@@ -84,13 +134,31 @@ padding-left:5px;
 
 }
 
-/* CONTENT */
+/* OVERLAY */
 
-.content{
+.overlay{
 
-margin-left:240px;
+position:fixed;
 
-width:100%;
+inset:0;
+
+background:rgba(0,0,0,0.4);
+
+opacity:0;
+
+visibility:hidden;
+
+transition:0.3s;
+
+z-index:1000;
+
+}
+
+.overlay.active{
+
+opacity:1;
+
+visibility:visible;
 
 }
 
@@ -112,9 +180,9 @@ padding:20px;
 
 background:url('https://images.unsplash.com/photo-1520975958225-1c0b3c7b0a8f?auto=format&fit=crop&w=1600&q=80') center/cover;
 
-position:relative;
-
 color:white;
+
+position:relative;
 
 }
 
@@ -262,23 +330,7 @@ background-position:center;
 
 @media(max-width:768px){
 
-.sidebar{
-
-width:180px;
-
-}
-
-.content{
-
-margin-left:180px;
-
-}
-
-.hero h1{
-
-font-size:40px;
-
-}
+.hero h1{font-size:40px;}
 
 }
 
@@ -288,31 +340,45 @@ font-size:40px;
 
 <body>
 
-<!-- SIDEBAR -->
+<!-- TOP BAR -->
 
-<div class="sidebar">
+<div class="topbar">
 
-<h1>ZALMOXIS</h1>
+<div class="logo">ZALMOXIS</div>
 
-<a href="#home">Home</a>
-
-<a href="#produse">Produse</a>
-
-<a href="#calitate">Calitate</a>
-
-<a href="#atelier">Atelier</a>
-
-<a href="#contact">Contact</a>
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
 
 </div>
 
+<!-- SIDEBAR -->
+
+<div class="sidebar" id="sidebar">
+
+<h1>Meniu</h1>
+
+<a href="#home" onclick="toggleMenu()">Home</a>
+
+<a href="#produse" onclick="toggleMenu()">Produse</a>
+
+<a href="#calitate" onclick="toggleMenu()">Calitate</a>
+
+<a href="#atelier" onclick="toggleMenu()">Atelier</a>
+
+<a href="#contact" onclick="toggleMenu()">Contact</a>
+
+</div>
+
+<!-- OVERLAY -->
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
 <!-- CONTENT -->
 
-<div class="content">
+<div id="home">
 
 <!-- HERO -->
 
-<section class="hero" id="home">
+<section class="hero">
 
 <div class="hero-content">
 
@@ -331,8 +397,6 @@ font-size:40px;
 <section id="produse">
 
 <h2>Colecția</h2>
-
-<p>Produse handmade din piele naturală premium.</p>
 
 <div class="grid">
 
@@ -401,6 +465,18 @@ font-size:40px;
 </section>
 
 </div>
+
+<script>
+
+function toggleMenu(){
+
+document.getElementById("sidebar").classList.toggle("open");
+
+document.getElementById("overlay").classList.toggle("active");
+
+}
+
+</script>
 
 </body>
 
