@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Portofel Classic - Zalmoxis</title>
+
 <style>
 body{
 margin:0;
@@ -13,36 +21,21 @@ display:grid;
 grid-template-columns:1fr 1fr;
 gap:40px;
 padding:20px;
+align-items:center;
 }
 
-/* IMAGE */
 .image-box img{
 width:100%;
 border-radius:16px;
 box-shadow:0 10px 30px rgba(0,0,0,0.15);
 }
 
-/* INFO */
-h1{
-font-size:34px;
-margin-bottom:10px;
-}
+/* TEXT */
+h1{font-size:34px;margin-bottom:10px;}
+.price{font-size:22px;margin:10px 0;font-weight:600;}
+.desc{color:#5a3a2e;line-height:1.5;}
 
-.price{
-font-size:22px;
-margin:10px 0;
-font-weight:600;
-}
-
-.desc{
-color:#5a3a2e;
-line-height:1.5;
-}
-
-/* ========================= */
-/* PREMIUM BUTTON SYSTEM */
-/* ========================= */
-
+/* ================= PREMIUM BUTTONS ================= */
 .btn, .color-btn{
 display:inline-block;
 padding:12px 18px;
@@ -56,9 +49,9 @@ color:#2A211B;
 background:transparent;
 letter-spacing:0.3px;
 font-weight:500;
+margin-right:8px;
 }
 
-/* hover premium */
 .btn:hover, .color-btn:hover{
 background:#9A6A3A;
 color:#fff;
@@ -66,22 +59,83 @@ transform:translateY(-2px);
 box-shadow:0 10px 25px rgba(154,106,58,0.25);
 }
 
-/* active state pentru culori */
 .color-btn.active{
 background:#9A6A3A;
 color:#fff;
 border-color:#9A6A3A;
 }
 
-/* COLORS */
-.colors{
-margin-top:20px;
-}
+.colors{margin-top:20px;}
 
-/* MOBILE */
 @media(max-width:768px){
-.container{
-grid-template-columns:1fr;
-}
+.container{grid-template-columns:1fr;}
 }
 </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- IMAGE -->
+<div class="image-box">
+<img id="productImg" src="https://images.unsplash.com/photo-1600180758890?auto=format&fit=crop&w=800&q=80">
+</div>
+
+<!-- INFO -->
+<div>
+<h1>Portofel Classic</h1>
+
+<div class="price">349 MDL</div>
+
+<div class="desc">
+Portofel realizat manual din piele naturală full-grain.
+Cusut manual pentru durabilitate maximă.
+</div>
+
+<!-- COLORS -->
+<div class="colors">
+<h3>Culori</h3>
+
+<span class="color-btn active" onclick="changeColor(this,'black')">Negru</span>
+<span class="color-btn" onclick="changeColor(this,'brown')">Maro</span>
+<span class="color-btn" onclick="changeColor(this,'cognac')">Coniac</span>
+</div>
+
+<!-- BUTTON -->
+<br>
+
+<a class="btn" href="https://ig.me/m/zalmoxis_leather" target="_blank">
+Comandă pe Instagram
+</a>
+
+</div>
+
+</div>
+
+<script>
+function changeColor(el, color){
+
+document.querySelectorAll(".color-btn").forEach(b=>{
+b.classList.remove("active");
+});
+el.classList.add("active");
+
+let img = document.getElementById("productImg");
+
+if(color === "black"){
+img.src = "https://images.unsplash.com/photo-1600180758890?auto=format&fit=crop&w=800&q=80";
+}
+
+if(color === "brown"){
+img.src = "https://images.unsplash.com/photo-1618354691792-d1d42acfd860?auto=format&fit=crop&w=800&q=80";
+}
+
+if(color === "cognac"){
+img.src = "https://images.unsplash.com/photo-1600180758890?auto=format&fit=crop&w=800&q=80";
+}
+}
+</script>
+
+</body>
+</html>
