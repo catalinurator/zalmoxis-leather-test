@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portofel Classic - Zalmoxis</title>
+<title>Portofel masina - Zalmoxis</title>
 
 <style>
 body{
@@ -98,14 +98,14 @@ grid-template-columns:1fr;
 
 <!-- IMAGE -->
 <div class="image-box">
-<img id="productImg" src="https://images.unsplash.com/photo-1600180758890?auto=format&fit=crop&w=800&q=80">
+<img id="productImg" src="image/portmoneu-masina.jpg">
 </div>
 
 <!-- INFO -->
 <div>
-<h1>Portofel Classic</h1>
+<h1>Portofel masina</h1>
 
-<div class="price">349 MDL</div>
+<div class="price">549 MDL</div>
 
 <div class="desc">
 Portofel realizat manual din piele naturală full-grain.
@@ -122,7 +122,7 @@ Cusut manual pentru durabilitate maximă și design minimalist.
 </div>
 
 <!-- BUTTON -->
-<a class="btn" href="https://instagram.com/zalmoxis_leather" target="_blank">
+<a class="btn" href="https://ig.me/m/zalmoxis_leather?text=Salut!%20Vreau%20sa%20comand%20Portofel%20Classic" target="_blank">
 Comandă pe Instagram
 </a>
 
