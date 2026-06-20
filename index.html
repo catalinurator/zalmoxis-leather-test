@@ -56,53 +56,25 @@ font-weight:600;
 letter-spacing:2px;
 }
 
-/* SIDEBAR */
-.sidebar{
-position:fixed;
-left:-280px;
-top:0;
-width:260px;
-height:100vh;
-background:var(--dark);
-color:white;
-padding:40px 25px;
-transition:0.4s;
-z-index:2000;
-}
+<!-- TOP -->
+<div class="topbar">
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  <div class="logo">ZALMOXIS</div>
+</div>
 
-.sidebar.open{
-left:0;
-}
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <h2>ZALMOXIS</h2>
 
-.sidebar h2{
-color:var(--accent);
-margin-bottom:20px;
-}
+  <a href="index.html" onclick="toggleMenu()">Acasă</a>
+  <a href="collections.html" onclick="toggleMenu()">Colecții</a>
+  <a href="#produse" onclick="toggleMenu()">Produse</a>
+  <a href="#atelier" onclick="toggleMenu()">Atelier</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
 
-.sidebar a{
-display:block;
-color:#d6c6b8;
-text-decoration:none;
-margin-top:15px;
-}
-
-.sidebar a:hover{
-color:var(--accent);
-}
-
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.4);
-opacity:0;
-visibility:hidden;
-transition:0.3s;
-}
-
-.overlay.active{
-opacity:1;
-visibility:visible;
-}
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
 /* HERO */
 .hero{
