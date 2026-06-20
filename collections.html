@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colecții - Zalmoxis Leather</title>
+
+<style>
+:root{
+--bg:#f3e7db;
+--dark:#2a1c16;
+--accent:#c49a6c;
+}
+
+body{
+margin:0;
+font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+background:var(--bg);
+color:var(--dark);
+}
+
+/* HEADER */
+.header{
+padding:120px 20px 40px;
+text-align:center;
+}
+
+.header h1{
+font-size:42px;
+margin-bottom:10px;
+}
+
+.header p{
+color:#5a3a2e;
+}
+
+/* GRID */
+.grid{
+max-width:1100px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:20px;
+padding:20px;
+}
+
+/* CARD */
+.card{
+background:white;
+border-radius:16px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+transition:0.3s;
+text-decoration:none;
+color:inherit;
+}
+
+.card:hover{
+transform:translateY(-6px);
+}
+
+.card img{
+width:100%;
+height:260px;
+object-fit:cover;
+}
+
+.card .info{
+padding:14px;
+}
+
+.card h3{
+margin:0;
+}
+
+.card p{
+color:#5a3a2e;
+margin-top:6px;
+}
+
+/* BUTTON */
+.btn{
+display:inline-block;
+margin-top:10px;
+padding:10px 14px;
+background:var(--dark);
+color:white;
+text-decoration:none;
+border-radius:8px;
+}
+
+.btn:hover{
+background:var(--accent);
+color:var(--dark);
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>Colecții Zalmoxis</h1>
+<p>Piele naturală lucrată manual, organizată pe categorii</p>
+</div>
+
+<div class="grid">
+
+<!-- PORTOFELE -->
+<a class="card" href="index.html#produse">
+<img src="https://images.unsplash.com/photo-1600180758890?auto=format&fit=crop&w=800&q=80">
+<div class="info">
+<h3>Portofele</h3>
+<p>Minimaliste & elegante</p>
+</div>
+</a>
+
+<!-- CURELE -->
+<a class="card" href="products/curea-classic.html">
+<img src="https://images.unsplash.com/photo-1620799139507-4b0c3f3b4c2d?auto=format&fit=crop&w=800&q=80">
+<div class="info">
+<h3>Curele</h3>
+<p>Handmade din piele naturală</p>
+</div>
+</a>
+
+<!-- GENȚI -->
+<a class="card" href="products/geanta-vintage.html">
+<img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=800&q=80">
+<div class="info">
+<h3>Genți</h3>
+<p>Design vintage premium</p>
+</div>
+</a>
+
+</div>
+
+</body>
+</html>
