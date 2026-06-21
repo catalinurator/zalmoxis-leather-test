@@ -1,11 +1,10 @@
-/* ===================== DARK MODE - ZALMOXIS ===================== */
+/* ===================== DARK MODE ===================== */
 :root {
     --bg: #f3e7db;
     --paper: #FCFAF7;
     --text: #2a1c16;
     --dark: #2a1c16;
     --accent: #9A6A3A;
-    --gold: #C49A6C;
     --light-text: #555;
     --border: #d4c3b0;
 }
@@ -16,24 +15,19 @@
     --text: #EDE5D8;
     --dark: #EDE5D8;
     --accent: #C49A6C;
-    --gold: #D4B38A;
     --light-text: #B8A78F;
     --border: #4A3F35;
 }
 
-/* Tranziții smooth */
-html, body, .topbar, .sidebar, .card, .step, .btn, .featured, 
-section, .hero::after, .overlay, .atelier, .process {
-    transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+/* Tranziții */
+html, body, .topbar, .sidebar, .card, .btn {
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* ===================== STILURI ORIGINALE ===================== */
+/* ===================== STILURI PRINCIPALE ===================== */
 body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text);
@@ -49,40 +43,29 @@ body {
     align-items: center;
     gap: 15px;
     padding: 14px 18px;
-    background: rgba(243, 231, 219, 0.92);
+    background: rgba(243, 231, 219, 0.95);
     backdrop-filter: blur(14px);
-    z-index: 5000;
+    z-index: 10000;
 }
 
-.dark .topbar {
-    background: rgba(28, 22, 18, 0.95);
-}
+.dark .topbar { background: rgba(28, 22, 18, 0.95); }
 
-.menu-btn {
-    font-size: 26px;
-    cursor: pointer;
-    user-select: none;
-}
+.menu-btn { font-size: 28px; cursor: pointer; }
+.logo { font-weight: 600; letter-spacing: 2px; }
 
-.logo {
-    font-weight: 600;
-    letter-spacing: 2px;
-}
-
-/* SIDEBAR - Reparat */
+/* SIDEBAR - VERSIUNE REPARATĂ */
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     width: 280px;
     height: 100vh;
-    background: rgba(31, 20, 16, 0.95);
-    backdrop-filter: blur(18px);
-    padding: 50px 30px;
-    z-index: 6000;
-    box-shadow: 25px 0 60px rgba(0,0,0,0.4);
+    background: rgba(31, 20, 16, 0.97);
+    padding: 60px 30px 30px;
+    z-index: 11000;
     transform: translateX(-100%);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.4s ease;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.5);
 }
 
 .sidebar.open {
@@ -91,34 +74,30 @@ body {
 
 .sidebar h2 {
     color: var(--accent);
-    font-size: 20px;
-    margin-bottom: 35px;
-    letter-spacing: 2px;
+    margin-bottom: 30px;
 }
 
 .sidebar a {
     display: block;
-    color: #d6c6b8;
+    color: #ddd;
     text-decoration: none;
-    margin: 18px 0;
+    padding: 10px 0;
     font-size: 16px;
-    transition: 0.25s;
 }
 
 .sidebar a:hover {
     color: var(--accent);
-    transform: translateX(6px);
 }
 
 /* OVERLAY */
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6);
     opacity: 0;
     visibility: hidden;
-    transition: 0.25s ease;
-    z-index: 5500;
+    z-index: 10500;
+    transition: 0.3s;
 }
 
 .overlay.active {
@@ -126,182 +105,20 @@ body {
     visibility: visible;
 }
 
-/* HERO */
-.hero {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: url("https://images.unsplash.com/photo-1600180758890?auto=format&fit=crop&w=1600&q=80") center/cover;
-    color: white;
-    position: relative;
-}
-
-.hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.55);
-}
-
-.dark .hero::after {
-    background: rgba(0,0,0,0.68);
-}
-
+/* Restul stilurilor (simplificate) */
+.hero { height: 100vh; background: url("https://images.unsplash.com/photo-1600180758890?auto=format&fit=crop&w=1600&q=80") center/cover; position: relative; color: white; display: flex; align-items: center; justify-content: center; text-align: center; }
+.hero::after { content:""; position:absolute; inset:0; background:rgba(0,0,0,0.55); }
 .hero-content { position: relative; z-index: 2; }
 
-/* ANIMAȚII */
-.fade-in {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: all 0.7s ease;
-}
-.fade-in.show {
-    opacity: 1;
-    transform: translateY(0);
-}
+.fade-in { opacity:0; transform:translateY(20px); transition:all 0.7s; }
+.fade-in.show { opacity:1; transform:translateY(0); }
 
-/* FEATURED */
-.featured {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-    max-width: 1100px;
-    margin: 100px auto;
-    padding: 20px;
-}
+section { padding: 80px 20px; max-width: 1100px; margin: auto; }
 
-.featured img {
-    width: 100%;
-    border-radius: 16px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.18);
-}
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
 
-.featured img:hover {
-    transform: scale(1.03);
-}
+.card { background: var(--paper); border-radius: 12px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
-/* GRID */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-}
+.btn { padding: 12px 24px; background: var(--dark); color: white; text-decoration: none; border-radius: 6px; }
 
-.card {
-    background: var(--paper);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-6px);
-}
-
-.card img {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-}
-
-/* BUTTON */
-.btn {
-    display: inline-block;
-    padding: 14px 28px;
-    border: 1px solid var(--accent);
-    background: transparent;
-    color: var(--text);
-    text-decoration: none;
-    transition: .35s;
-}
-
-.btn:hover {
-    background: var(--accent);
-    color: white;
-    transform: translateY(-2px);
-}
-
-/* ATELIER */
-.atelier {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 70px;
-    align-items: center;
-    margin-top: 80px;
-}
-
-.atelier-image img {
-    width: 100%;
-    border-radius: 18px;
-    box-shadow: 0 20px 50px rgba(0,0,0,.15);
-}
-
-.atelier-image img:hover {
-    transform: scale(1.02);
-}
-
-.atelier-text h2 {
-    font-size: 42px;
-    margin-bottom: 25px;
-}
-
-.atelier-text p {
-    line-height: 1.9;
-    color: var(--light-text);
-}
-
-/* PROCESS */
-.process {
-    padding: 100px 20px;
-    text-align: center;
-}
-
-.process h2 {
-    font-size: 42px;
-    margin-bottom: 60px;
-}
-
-.process-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
-}
-
-.step {
-    background: var(--paper);
-    padding: 40px 25px;
-    border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(0,0,0,.06);
-}
-
-.step:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 18px 40px rgba(0,0,0,.12);
-}
-
-.number {
-    font-size: 44px;
-    font-family: 'Cormorant Garamond', serif;
-    color: var(--accent);
-    margin-bottom: 15px;
-}
-
-/* MOBILE RESPONSIVE */
-@media (max-width: 768px) {
-    .hero h1 { font-size: 36px; }
-    .featured { grid-template-columns: 1fr; text-align: center; }
-    .atelier { grid-template-columns: 1fr; }
-    .sidebar { width: 260px; }
-}
-
-/* Dark Mode Toggle */
-#theme-toggle {
-    margin-left: auto;
-    cursor: pointer;
-    font-size: 24px;
-    transition: transform 0.4s ease;
-}
+#theme-toggle { margin-left: auto; font-size: 26px; cursor: pointer; }
