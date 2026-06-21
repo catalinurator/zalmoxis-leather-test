@@ -14,7 +14,10 @@
     <div class="topbar">
         <div class="menu-btn" onclick="toggleMenu()">☰</div>
         <div class="logo">ZALMOXIS</div>
-        <div id="theme-toggle" style="margin-left:auto; cursor:pointer; font-size:24px;">☀️</div>
+        <div id="theme-toggle" class="theme-toggle">
+            <span class="sun">☀️</span>
+            <span class="moon">☽</span>
+        </div>
     </div>
 
     <!-- SIDEBAR -->
@@ -55,13 +58,19 @@
         <h2>Produse</h2>
         <div class="grid">
             <div class="card fade-in">
-                <a href="products/portofel-minimalistic.html"><img src="image/portmoneu1.jpg" alt=""></a>
+                <a href="products/portofel-minimalistic.html">
+                    <img src="image/portmoneu1.jpg" alt="Portofel Minimalistic">
+                </a>
             </div>
             <div class="card fade-in">
-                <a href="products/curea-classic.html"><img src="image/curea1.png" alt=""></a>
+                <a href="products/curea-classic.html">
+                    <img src="image/curea1.png" alt="Curea">
+                </a>
             </div>
             <div class="card fade-in">
-                <a href="products/geanta-vintage.html"><img src="image/geanta1.jpg" alt=""></a>
+                <a href="products/geanta-vintage.html">
+                    <img src="image/geanta1.jpg" alt="Geantă">
+                </a>
             </div>
         </div>
     </section>
@@ -118,27 +127,17 @@
             document.getElementById("overlay").classList.toggle("active");
         }
 
+        // Dark Mode Modern
         const themeToggle = document.getElementById('theme-toggle');
         const html = document.documentElement;
 
         function setTheme(isDark) {
             if (isDark) {
                 html.classList.add('dark');
-                themeToggle.textContent = '☽';
             } else {
                 html.classList.remove('dark');
-                themeToggle.textContent = '☀️';
             }
             localStorage.setItem('darkMode', isDark);
-        }
-
-        function initTheme() {
-            const saved = localStorage.getItem('darkMode');
-            if (saved !== null) {
-                setTheme(saved === 'true');
-            } else {
-                setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
-            }
         }
 
         themeToggle.addEventListener('click', () => {
@@ -146,19 +145,20 @@
             setTheme(isDark);
         });
 
-        // Scroll reveal
         function reveal() {
-            document.querySelectorAll('.fade-in').forEach(el => {
+            document.querySelectorAll(".fade-in").forEach(el => {
                 if (el.getBoundingClientRect().top < window.innerHeight - 80) {
-                    el.classList.add('show');
+                    el.classList.add("show");
                 }
             });
         }
 
-        window.addEventListener('scroll', reveal);
-        window.addEventListener('load', () => {
+        window.addEventListener("scroll", reveal);
+        window.addEventListener("load", () => {
             reveal();
-            initTheme();
+            const saved = localStorage.getItem('darkMode');
+            if (saved !== null) setTheme(saved === 'true');
+            else setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
         });
     </script>
 </body>
