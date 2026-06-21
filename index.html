@@ -7,20 +7,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Link către CSS extern -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- TOP BAR -->
     <div class="topbar">
         <div class="menu-btn" onclick="toggleMenu()">☰</div>
         <div class="logo">ZALMOXIS</div>
-        
-        <!-- Dark Mode Toggle -->
-        <div style="margin-left: auto; cursor: pointer; font-size: 24px; transition: transform 0.4s ease;" id="theme-toggle">
-            ☀️
-        </div>
+        <div id="theme-toggle" style="margin-left:auto; cursor:pointer; font-size:24px;">☀️</div>
     </div>
 
     <!-- SIDEBAR -->
@@ -52,7 +46,7 @@
             <a class="btn" href="products/portmoneu-masina.html">Vezi produsul</a>
         </div>
         <div>
-            <img src="image/portmoneu-masina-negru.jpg">
+            <img src="image/portmoneu-masina-negru.jpg" alt="Portofel">
         </div>
     </section>
 
@@ -61,19 +55,13 @@
         <h2>Produse</h2>
         <div class="grid">
             <div class="card fade-in">
-                <a href="products/portofel-minimalistic.html">
-                    <img src="image/portmoneu1.jpg">
-                </a>
+                <a href="products/portofel-minimalistic.html"><img src="image/portmoneu1.jpg" alt=""></a>
             </div>
             <div class="card fade-in">
-                <a href="products/curea-classic.html">
-                    <img src="image/curea1.png">
-                </a>
+                <a href="products/curea-classic.html"><img src="image/curea1.png" alt=""></a>
             </div>
             <div class="card fade-in">
-                <a href="products/geanta-vintage.html">
-                    <img src="image/geanta1.jpg">
-                </a>
+                <a href="products/geanta-vintage.html"><img src="image/geanta1.jpg" alt=""></a>
             </div>
         </div>
     </section>
@@ -81,12 +69,12 @@
     <!-- ATELIER -->
     <section id="atelier" class="atelier fade-in">
         <div class="atelier-image">
-            <img src="images/atelier.jpg">
+            <img src="images/atelier.jpg" alt="Atelier">
         </div>
         <div class="atelier-text">
             <h2>Atelierul Zalmoxis</h2>
             <p>Fiecare produs începe cu alegerea atentă a pielii naturale și este realizat manual, fără compromisuri.</p>
-            <p>Ne concentrăm pe detalii, durabilitate și materiale autentice, astfel încât fiecare obiect să poată fi folosit ani de zile.</p>
+            <p>Ne concentrăm pe detalii, durabilitate și materiale autentice.</p>
             <a href="#contact" class="btn">Comandă</a>
         </div>
     </section>
@@ -125,65 +113,50 @@
     </section>
 
     <script>
-        // Toggle Menu
         function toggleMenu() {
             document.getElementById("sidebar").classList.toggle("open");
             document.getElementById("overlay").classList.toggle("active");
         }
 
-        // Dark Mode cu animații smooth
         const themeToggle = document.getElementById('theme-toggle');
         const html = document.documentElement;
 
         function setTheme(isDark) {
-            html.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-            
             if (isDark) {
                 html.classList.add('dark');
                 themeToggle.textContent = '☽';
-                themeToggle.style.transform = 'rotate(30deg)';
             } else {
                 html.classList.remove('dark');
                 themeToggle.textContent = '☀️';
-                themeToggle.style.transform = 'rotate(0deg)';
             }
-            
             localStorage.setItem('darkMode', isDark);
-            
-            setTimeout(() => {
-                themeToggle.style.transform = '';
-            }, 400);
         }
 
         function initTheme() {
-            const savedTheme = localStorage.getItem('darkMode');
-            
-            if (savedTheme !== null) {
-                setTheme(savedTheme === 'true');
+            const saved = localStorage.getItem('darkMode');
+            if (saved !== null) {
+                setTheme(saved === 'true');
             } else {
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                setTheme(prefersDark);
+                setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
             }
         }
 
+        themeToggle.addEventListener('click', () => {
+            const isDark = !html.classList.contains('dark');
+            setTheme(isDark);
+        });
+
         // Scroll reveal
         function reveal() {
-            document.querySelectorAll(".fade-in").forEach(el => {
-                const top = el.getBoundingClientRect().top;
-                if (top < window.innerHeight - 80) {
-                    el.classList.add("show");
+            document.querySelectorAll('.fade-in').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 80) {
+                    el.classList.add('show');
                 }
             });
         }
 
-        // Event listeners
-        themeToggle.addEventListener('click', () => {
-            const isCurrentlyDark = html.classList.contains('dark');
-            setTheme(!isCurrentlyDark);
-        });
-
-        window.addEventListener("scroll", reveal);
-        window.addEventListener("load", () => {
+        window.addEventListener('scroll', reveal);
+        window.addEventListener('load', () => {
             reveal();
             initTheme();
         });
