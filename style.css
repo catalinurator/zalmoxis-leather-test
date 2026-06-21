@@ -19,10 +19,10 @@ top:0;
 left:0;
 width:100%;
 display:flex;
-gap:15px;
 align-items:center;
+gap:15px;
 padding:15px 20px;
-background:rgba(243,231,219,0.9);
+background:rgba(243,231,219,0.95);
 backdrop-filter:blur(10px);
 z-index:1000;
 }
@@ -55,16 +55,11 @@ z-index:2000;
 left:0;
 }
 
-.sidebar h2{
-margin-bottom:20px;
-}
-
 .sidebar a{
 display:block;
 color:#ccc;
 text-decoration:none;
 margin-top:15px;
-transition:0.2s;
 }
 
 .sidebar a:hover{
@@ -118,6 +113,26 @@ max-width:1100px;
 margin:auto;
 }
 
+/* ================= FEATURED ================= */
+.featured{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:60px;
+align-items:center;
+margin:100px auto;
+}
+
+.featured img{
+width:100%;
+border-radius:16px;
+box-shadow:0 20px 40px rgba(0,0,0,0.15);
+transition:0.3s;
+}
+
+.featured img:hover{
+transform:scale(1.03);
+}
+
 /* ================= GRID PRODUSE ================= */
 .grid{
 display:grid;
@@ -156,37 +171,6 @@ transition:0.25s;
 
 .btn:hover{
 background:var(--accent);
-}
-
-/* ================= FEATURED ================= */
-.featured{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:60px;
-align-items:center;
-max-width:1100px;
-margin:100px auto;
-padding:20px;
-}
-
-.featured img{
-width:100%;
-border-radius:16px;
-box-shadow:0 20px 40px rgba(0,0,0,0.15);
-transition:0.4s;
-}
-
-.featured img:hover{
-transform:scale(1.03);
-}
-
-.featured h2{
-font-size:34px;
-margin-bottom:10px;
-}
-
-.featured p{
-color:#5a3a2e;
 }
 
 /* ================= ATELIER ================= */
@@ -228,21 +212,8 @@ color:var(--accent);
 margin-bottom:10px;
 }
 
-/* ================= ANIMATIONS ================= */
-.fade-in{
-opacity:0;
-transform:translateY(20px);
-transition:0.7s ease;
-}
-
-.fade-in.show{
-opacity:1;
-transform:translateY(0);
-}
-
 /* ================= RESPONSIVE ================= */
 @media(max-width:768px){
-
 .featured,
 .atelier{
 grid-template-columns:1fr;
