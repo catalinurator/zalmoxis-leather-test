@@ -6,165 +6,181 @@
 <title>Zalmoxis Leather</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap%22 rel="stylesheet">
+<!-- Link către CSS extern -->
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <!-- TOP BAR -->
 <div class="topbar">
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
-    <div class="logo">ZALMOXIS</div>
-    <div id="theme-toggle" style="margin-left:auto; font-size:26px; cursor:pointer; padding:5px;">☀️</div>
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+<div class="logo">ZALMOXIS</div>
+<!-- Dark Mode Toggle -->
+<div style="margin-left: auto; cursor: pointer; font-size: 24px; transition: transform 0.4s ease;" id="theme-toggle">
+            ☀️
 </div>
-
-<!-- SIDEBAR -->
+</div>
+ 
+    <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
-    <h2>ZALMOXIS</h2>
-    <a href="index.html" onclick="toggleMenu()">Acasă</a>
-    <a href="collections.html" onclick="toggleMenu()">Colecții</a>
-    <a href="#produse" onclick="toggleMenu()">Produse</a>
-    <a href="#atelier" onclick="toggleMenu()">Atelier</a>
-    <a href="#contact" onclick="toggleMenu()">Contact</a>
+<h2>ZALMOXIS</h2>
+<a href="index.html" onclick="toggleMenu()">Acasă</a>
+<a href="collections.html" onclick="toggleMenu()">Colecții</a>
+<a href="#produse" onclick="toggleMenu()">Produse</a>
+<a href="#atelier" onclick="toggleMenu()">Atelier</a>
+<a href="#contact" onclick="toggleMenu()">Contact</a>
 </div>
-
-<!-- OVERLAY -->
+ 
+    <!-- OVERLAY -->
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-
-<!-- HERO -->
+ 
+    <!-- HERO -->
 <section class="hero fade-in">
-    <div class="hero-content">
-        <h1>Zalmoxis Leather</h1>
-        <p>Piele naturală. Lucrat manual. Calitate reală.</p>
-    </div>
+<div class="hero-content">
+<h1>Zalmoxis Leather</h1>
+<p>Piele naturală. Lucrat manual. Calitate reală.</p>
+</div>
 </section>
-
-<!-- FEATURED -->
+ 
+    <!-- FEATURED -->
 <section class="featured fade-in">
-    <div>
-        <h2>Featured Product</h2>
-        <p>Portofel Classic — piele naturală full-grain, cusut manual.</p>
-        <a class="btn" href="products/portmoneu-masina.html">Vezi produsul</a>
-    </div>
-    <div>
-        <img src="image/portmoneu-masina-negru.jpg">
-    </div>
+<div>
+<h2>Featured Product</h2>
+<p>Portofel Classic — piele naturală full-grain, cusut manual.</p>
+<a class="btn" href="products/portmoneu-masina.html">Vezi produsul</a>
+</div>
+<div>
+<img src="image/portmoneu-masina-negru.jpg">
+</div>
 </section>
-
-<!-- PRODUSE -->
+ 
+    <!-- PRODUSE -->
 <section id="produse" class="fade-in">
-    <h2>Produse</h2>
-    <div class="grid">
-        <div class="card fade-in">
-            <a href="products/portofel-minimalistic.html">
-                <img src="image/portmoneu1.jpg">
-            </a>
-        </div>
-        <div class="card fade-in">
-            <a href="products/curea-classic.html">
-                <img src="image/curea1.png">
-            </a>
-        </div>
-        <div class="card fade-in">
-            <a href="products/geanta-vintage.html">
-                <img src="image/geanta1.jpg">
-            </a>
-        </div>
-    </div>
+<h2>Produse</h2>
+<div class="grid">
+<div class="card fade-in">
+<a href="products/portofel-minimalistic.html">
+<img src="image/portmoneu1.jpg">
+</a>
+</div>
+<div class="card fade-in">
+<a href="products/curea-classic.html">
+<img src="image/curea1.png">
+</a>
+</div>
+<div class="card fade-in">
+<a href="products/geanta-vintage.html">
+<img src="image/geanta1.jpg">
+</a>
+</div>
+</div>
 </section>
-
-<!-- ATELIER -->
+ 
+    <!-- ATELIER -->
 <section id="atelier" class="atelier fade-in">
-    <div class="atelier-image">
-        <img src="images/atelier.jpg">
-    </div>
-    <div class="atelier-text">
-        <h2>Atelierul Zalmoxis</h2>
-        <p>Fiecare produs începe cu alegerea atentă a pielii naturale și este realizat manual, fără compromisuri.</p>
-        <p>Ne concentrăm pe detalii, durabilitate și materiale autentice, astfel încât fiecare obiect să poată fi folosit ani de zile.</p>
-        <a href="#contact" class="btn">Comandă</a>
-    </div>
+<div class="atelier-image">
+<img src="images/atelier.jpg">
+</div>
+<div class="atelier-text">
+<h2>Atelierul Zalmoxis</h2>
+<p>Fiecare produs începe cu alegerea atentă a pielii naturale și este realizat manual, fără compromisuri.</p>
+<p>Ne concentrăm pe detalii, durabilitate și materiale autentice, astfel încât fiecare obiect să poată fi folosit ani de zile.</p>
+<a href="#contact" class="btn">Comandă</a>
+</div>
 </section>
-
-<!-- PROCESS -->
+ 
+    <!-- PROCESS -->
 <section class="process fade-in">
-    <h2>Cum ia naștere un produs</h2>
-    <div class="process-grid">
-        <div class="step">
-            <div class="number">01</div>
-            <h3>Alegerea pielii</h3>
-            <p>Folosim doar piele naturală atent selecționată.</p>
-        </div>
-        <div class="step">
-            <div class="number">02</div>
-            <h3>Tăiere manuală</h3>
-            <p>Fiecare piesă este tăiată și verificată individual.</p>
-        </div>
-        <div class="step">
-            <div class="number">03</div>
-            <h3>Cusături</h3>
-            <p>Fiecare produs este cusut cu atenție pentru rezistență și estetică.</p>
-        </div>
-        <div class="step">
-            <div class="number">04</div>
-            <h3>Finisare</h3>
-            <p>Marginile sunt șlefuite și finisate manual pentru un aspect premium.</p>
-        </div>
-    </div>
+<h2>Cum ia naștere un produs</h2>
+<div class="process-grid">
+<div class="step">
+<div class="number">01</div>
+<h3>Alegerea pielii</h3>
+<p>Folosim doar piele naturală atent selecționată.</p>
+</div>
+<div class="step">
+<div class="number">02</div>
+<h3>Tăiere manuală</h3>
+<p>Fiecare piesă este tăiată și verificată individual.</p>
+</div>
+<div class="step">
+<div class="number">03</div>
+<h3>Cusături</h3>
+<p>Fiecare produs este cusut cu atenție pentru rezistență și estetică.</p>
+</div>
+<div class="step">
+<div class="number">04</div>
+<h3>Finisare</h3>
+<p>Marginile sunt șlefuite și finisate manual pentru un aspect premium.</p>
+</div>
+</div>
 </section>
-
-<!-- CONTACT -->
+ 
+    <!-- CONTACT -->
 <section id="contact" class="fade-in">
-    <h2>Contact</h2>
-    <p>Instagram: @zalmoxis_leather</p>
+<h2>Contact</h2>
+<p>Instagram: @zalmoxis_leather</p>
 </section>
-
-<script>
-// Toggle Menu
-function toggleMenu(){
-    document.getElementById("sidebar").classList.toggle("open");
-    document.getElementById("overlay").classList.toggle("active");
-}
-
-// Dark Mode
-const themeToggle = document.getElementById('theme-toggle');
-const html = document.documentElement;
-
-function setTheme(isDark) {
-    if (isDark) {
-        html.classList.add('dark');
-        themeToggle.textContent = '☽';
-    } else {
-        html.classList.remove('dark');
-        themeToggle.textContent = '☀️';
-    }
-    localStorage.setItem('darkMode', isDark);
-}
-
-themeToggle.addEventListener('click', () => {
-    const isDark = !html.classList.contains('dark');
-    setTheme(isDark);
-});
-
-// Scroll reveal
-function reveal(){
-    document.querySelectorAll(".fade-in").forEach(el=>{
-        const top = el.getBoundingClientRect().top;
-        if(top < window.innerHeight - 80){
-            el.classList.add("show");
+ 
+    <script>
+        // Toggle Menu
+        function toggleMenu() {
+            document.getElementById("sidebar").classList.toggle("open");
+            document.getElementById("overlay").classList.toggle("active");
         }
-    });
-}
-
-window.addEventListener("scroll", reveal);
-window.addEventListener("load", () => {
-    reveal();
-    const saved = localStorage.getItem('darkMode');
-    if(saved !== null){
-        setTheme(saved === 'true');
-    } else {
-        setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
-    }
-});
+ 
+        // Dark Mode cu animații smooth
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+ 
+        function setTheme(isDark) {
+            html.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            if (isDark) {
+                html.classList.add('dark');
+                themeToggle.textContent = '☽';
+                themeToggle.style.transform = 'rotate(30deg)';
+            } else {
+                html.classList.remove('dark');
+                themeToggle.textContent = '☀️';
+                themeToggle.style.transform = 'rotate(0deg)';
+            }
+            localStorage.setItem('darkMode', isDark);
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 400);
+        }
+ 
+        function initTheme() {
+            const savedTheme = localStorage.getItem('darkMode');
+            if (savedTheme !== null) {
+                setTheme(savedTheme === 'true');
+            } else {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                setTheme(prefersDark);
+            }
+        }
+ 
+        // Scroll reveal
+        function reveal() {
+            document.querySelectorAll(".fade-in").forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top < window.innerHeight - 80) {
+                    el.classList.add("show");
+                }
+            });
+        }
+ 
+        // Event listeners
+        themeToggle.addEventListener('click', () => {
+            const isCurrentlyDark = html.classList.contains('dark');
+            setTheme(!isCurrentlyDark);
+        });
+ 
+        window.addEventListener("scroll", reveal);
+        window.addEventListener("load", () => {
+            reveal();
+            initTheme();
+        });
 </script>
 </body>
 </html>
