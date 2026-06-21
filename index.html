@@ -1,520 +1,192 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zalmoxis Leather</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">  
-
-<style>
-:root{
---bg:#F6F1EA;
---paper:#FCFAF7;
---dark:#2A211B;
---accent:#9A6A3A;
---gold:#C49A6C;
-}
-
-html, body{
-margin:0;
-padding:0;
-overflow-x:hidden;
-font-family:'Inter',sans-serif;
-background:var(--bg);
-color:var(--dark);
-}
-
-/* ANIMAȚII */
-.fade-in{
-opacity:0;
-transform:translateY(18px);
-transition:all 0.7s ease;
-}
-
-.fade-in.show{
-opacity:1;
-transform:translateY(0);
-}
-
-/* TOP BAR */
-.topbar{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-display:flex;
-align-items:center;
-gap:15px;
-padding:14px 18px;
-background:rgba(243,231,219,0.85);
-backdrop-filter:blur(14px);
-z-index:5000;
-}
-
-.menu-btn{
-font-size:26px;
-cursor:pointer;
-user-select:none;
-}
-
-.logo{
-font-weight:600;
-letter-spacing:2px;
-}
-
-/* SIDEBAR */
-.sidebar{
-position:fixed;
-top:0;
-left:0;
-width:280px;
-height:100vh;
-background:rgba(31,20,16,0.95);
-backdrop-filter:blur(18px);
-padding:50px 30px;
-z-index:6000;
-box-shadow:25px 0 60px rgba(0,0,0,0.4);
-transform:translateX(-100%);
-transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);
-}
-
-.sidebar.open{
-transform:translateX(0);
-}
-
-.sidebar h2{
-color:var(--accent);
-font-size:20px;
-margin-bottom:35px;
-letter-spacing:2px;
-}
-
-.sidebar a{
-display:block;
-color:#d6c6b8;
-text-decoration:none;
-margin:18px 0;
-font-size:16px;
-transition:0.25s;
-}
-
-.sidebar a:hover{
-color:var(--accent);
-transform:translateX(6px);
-}
-
-/* OVERLAY */
-.overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.5);
-opacity:0;
-visibility:hidden;
-transition:0.25s ease;
-z-index:5500;
-}
-
-.overlay.active{
-opacity:1;
-visibility:visible;
-}
-
-/* HERO */
-.hero{
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-background:url("image/portmoneu-masina-negru.jpg") center/cover;
-color:white;
-position:relative;
-}
-
-.hero::after{
-content:"";
-position:absolute;
-inset:0;
-background:rgba(0,0,0,0.55);
-}
-
-.hero-content{
-position:relative;
-z-index:2;
-}
-
-.hero h1{
-font-size:56px;
-}
-
-/* FEATURED */
-.featured{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:60px;
-align-items:center;
-max-width:1100px;
-margin:100px auto;
-padding:20px;
-}
-
-.featured img{
-width:100%;
-border-radius:16px;
-box-shadow:0 25px 50px rgba(0,0,0,0.18);
-transition:0.4s;
-}
-
-.featured img:hover{
-transform:scale(1.03);
-}
-
-/* SECTIONS */
-section{
-padding:80px 20px;
-max-width:1100px;
-margin:auto;
-}
-
-h2{
-font-size:30px;
-}
-
-/* PRODUCTS */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:20px;
-}
-
-.card{
-background:white;
-border-radius:16px;
-overflow:hidden;
-box-shadow:0 10px 25px rgba(0,0,0,0.08);
-transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-6px);
-}
-
-.card img{
-width:100%;
-height:260px;
-object-fit:cover;
-}
-
-/* BUTTON */
-.btn{
-display:inline-block;
-padding:14px 28px;
-border:1px solid #9A6A3A;
-background:transparent;
-color:#2A211B;
-text-decoration:none;
-transition:.35s;
-}
-
-.btn:hover{
-background:#9A6A3A;
-color:white;
-transform:translateY(-2px);
-}
-
-/* MOBILE */
-@media(max-width:768px){
-.hero h1{font-size:36px;}
-.featured{grid-template-columns:1fr;text-align:center;}
-}
-
-/* ATELIER */
-.atelier{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:70px;
-align-items:center;
-margin-top:80px;
-}
-
-.atelier-image img{
-width:100%;
-border-radius:18px;
-box-shadow:0 20px 50px rgba(0,0,0,.15);
-transition:.4s;
-}
-
-.atelier-image img:hover{
-transform:scale(1.02);
-}
-
-.atelier-text h2{
-font-size:42px;
-margin-bottom:25px;
-}
-
-.atelier-text p{
-line-height:1.9;
-margin-bottom:18px;
-color:#555;
-}
-
-@media(max-width:900px){
-.atelier{grid-template-columns:1fr;}
-}
-
-/* PROCESS */
-.process{
-padding:100px 20px;
-text-align:center;
-}
-
-.process h2{
-font-size:42px;
-margin-bottom:60px;
-}
-
-.process-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:30px;
-}
-
-.step{
-background:#fcfaf7;
-padding:40px 25px;
-border-radius:18px;
-transition:.35s;
-box-shadow:0 8px 25px rgba(0,0,0,.06);
-}
-
-.step:hover{
-transform:translateY(-8px);
-box-shadow:0 18px 40px rgba(0,0,0,.12);
-}
-
-.number{
-font-size:44px;
-font-family:'Cormorant Garamond',serif;
-color:#9A6A3A;
-margin-bottom:15px;
-}
-
-.step h3{
-margin-bottom:15px;
-font-size:24px;
-}
-
-.step p{
-line-height:1.7;
-color:#555;
-}
-
-/* COLECȚII */
-.collections{
-max-width:1400px;
-margin:auto;
-padding:120px 20px;
-}
-
-.collections h2{
-text-align:center;
-font-size:48px;
-margin-bottom:80px;
-}
-
-.collection{
-display:grid;
-grid-template-columns:1.2fr 1fr;
-gap:70px;
-align-items:center;
-margin-bottom:120px;
-}
-
-.collection.reverse{
-grid-template-columns:1fr 1.2fr;
-}
-
-.collection.reverse img{order:2;}
-.collection.reverse .collection-info{order:1;}
-
-.collection img{
-width:100%;
-border-radius:22px;
-transition:.5s;
-box-shadow:0 25px 60px rgba(0,0,0,.12);
-}
-
-.collection img:hover{
-transform:scale(1.02);
-}
-
-.collection-info h3{
-font-size:42px;
-margin-bottom:20px;
-}
-
-.collection-info p{
-font-size:18px;
-line-height:1.9;
-color:#666;
-margin-bottom:30px;
-}
-
-@media(max-width:900px){
-.collection,
-.collection.reverse{
-grid-template-columns:1fr;
-}
-.collection.reverse img,
-.collection.reverse .collection-info{
-order:initial;
-}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zalmoxis Leather</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Link către CSS extern -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
-
 <body>
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div class="menu-btn" onclick="toggleMenu()">☰</div>
+        <div class="logo">ZALMOXIS</div>
+        
+        <!-- Dark Mode Toggle -->
+        <div style="margin-left: auto; cursor: pointer; font-size: 24px; transition: transform 0.4s ease;" id="theme-toggle">
+            ☀️
+        </div>
+    </div>
 
-<!-- TOP BAR -->
-<div class="topbar">
-<div class="menu-btn" onclick="toggleMenu()">☰</div>
-<div class="logo">ZALMOXIS</div>
-</div>
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <h2>ZALMOXIS</h2>
+        <a href="index.html" onclick="toggleMenu()">Acasă</a>
+        <a href="collections.html" onclick="toggleMenu()">Colecții</a>
+        <a href="#produse" onclick="toggleMenu()">Produse</a>
+        <a href="#atelier" onclick="toggleMenu()">Atelier</a>
+        <a href="#contact" onclick="toggleMenu()">Contact</a>
+    </div>
 
-<!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
-<h2>ZALMOXIS</h2>
-<a href="index.html" onclick="toggleMenu()">Acasă</a>
-<a href="collections.html" onclick="toggleMenu()">Colecții</a>
-<a href="#produse" onclick="toggleMenu()">Produse</a>
-<a href="#atelier" onclick="toggleMenu()">Atelier</a>
-<a href="#contact" onclick="toggleMenu()">Contact</a>
-</div>
+    <!-- OVERLAY -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-<!-- OVERLAY -->
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+    <!-- HERO -->
+    <section class="hero fade-in">
+        <div class="hero-content">
+            <h1>Zalmoxis Leather</h1>
+            <p>Piele naturală. Lucrat manual. Calitate reală.</p>
+        </div>
+    </section>
 
-<!-- HERO -->
-<section class="hero fade-in">
-<div class="hero-content">
-<h1>Zalmoxis Leather</h1>
-<p>Piele naturală. Lucrat manual. Calitate reală.</p>
-</div>
-</section>
+    <!-- FEATURED -->
+    <section class="featured fade-in">
+        <div>
+            <h2>Featured Product</h2>
+            <p>Portofel Classic — piele naturală full-grain, cusut manual.</p>
+            <a class="btn" href="products/portmoneu-masina.html">Vezi produsul</a>
+        </div>
+        <div>
+            <img src="image/portmoneu-masina-negru.jpg">
+        </div>
+    </section>
 
-<!-- FEATURED -->
-<section class="featured fade-in">
-<div>
-<h2>Featured Product</h2>
-<p>Portofel Classic — piele naturală full-grain, cusut manual.</p>
-<a class="btn" href="products/portmoneu-masina.html">Vezi produsul</a>
-</div>
-<div>
-<img src="image/portmoneu-masina-negru.jpg">
-</div>
-</section>
+    <!-- PRODUSE -->
+    <section id="produse" class="fade-in">
+        <h2>Produse</h2>
+        <div class="grid">
+            <div class="card fade-in">
+                <a href="products/portofel-minimalistic.html">
+                    <img src="image/portmoneu1.jpg">
+                </a>
+            </div>
+            <div class="card fade-in">
+                <a href="products/curea-classic.html">
+                    <img src="image/curea1.png">
+                </a>
+            </div>
+            <div class="card fade-in">
+                <a href="products/geanta-vintage.html">
+                    <img src="image/geanta1.jpg">
+                </a>
+            </div>
+        </div>
+    </section>
 
-<!-- PRODUSE -->
-<section id="produse" class="fade-in">
-<h2>Produse</h2>
-<div class="grid">
+    <!-- ATELIER -->
+    <section id="atelier" class="atelier fade-in">
+        <div class="atelier-image">
+            <img src="images/atelier.jpg">
+        </div>
+        <div class="atelier-text">
+            <h2>Atelierul Zalmoxis</h2>
+            <p>Fiecare produs începe cu alegerea atentă a pielii naturale și este realizat manual, fără compromisuri.</p>
+            <p>Ne concentrăm pe detalii, durabilitate și materiale autentice, astfel încât fiecare obiect să poată fi folosit ani de zile.</p>
+            <a href="#contact" class="btn">Comandă</a>
+        </div>
+    </section>
 
-<div class="card fade-in">
-<a href="products/portofel-minimalistic.html">
-<img src="image/portmoneu1.jpg">
-</a>
-</div>
+    <!-- PROCESS -->
+    <section class="process fade-in">
+        <h2>Cum ia naștere un produs</h2>
+        <div class="process-grid">
+            <div class="step">
+                <div class="number">01</div>
+                <h3>Alegerea pielii</h3>
+                <p>Folosim doar piele naturală atent selecționată.</p>
+            </div>
+            <div class="step">
+                <div class="number">02</div>
+                <h3>Tăiere manuală</h3>
+                <p>Fiecare piesă este tăiată și verificată individual.</p>
+            </div>
+            <div class="step">
+                <div class="number">03</div>
+                <h3>Cusături</h3>
+                <p>Fiecare produs este cusut cu atenție pentru rezistență și estetică.</p>
+            </div>
+            <div class="step">
+                <div class="number">04</div>
+                <h3>Finisare</h3>
+                <p>Marginile sunt șlefuite și finisate manual pentru un aspect premium.</p>
+            </div>
+        </div>
+    </section>
 
-<div class="card fade-in">
-<a href="products/curea-classic.html">
-<img src="image/curea1.png">
-</a>
-</div>
+    <!-- CONTACT -->
+    <section id="contact" class="fade-in">
+        <h2>Contact</h2>
+        <p>Instagram: @zalmoxis_leather</p>
+    </section>
 
-<div class="card fade-in">
-<a href="products/geanta-vintage.html">
-<img src="image/geanta1.jpg">
-</a>
-</div>
+    <script>
+        // Toggle Menu
+        function toggleMenu() {
+            document.getElementById("sidebar").classList.toggle("open");
+            document.getElementById("overlay").classList.toggle("active");
+        }
 
-</div>
-</section>
+        // Dark Mode cu animații smooth
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
 
-<!-- ATELIER -->
-<section id="atelier" class="atelier fade-in">
-<div class="atelier-image">
-<img src="images/atelier.jpg">
-</div>
+        function setTheme(isDark) {
+            html.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            if (isDark) {
+                html.classList.add('dark');
+                themeToggle.textContent = '☽';
+                themeToggle.style.transform = 'rotate(30deg)';
+            } else {
+                html.classList.remove('dark');
+                themeToggle.textContent = '☀️';
+                themeToggle.style.transform = 'rotate(0deg)';
+            }
+            
+            localStorage.setItem('darkMode', isDark);
+            
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 400);
+        }
 
-<div class="atelier-text">
-<h2>Atelierul Zalmoxis</h2>
-<p>Fiecare produs începe cu alegerea atentă a pielii naturale și este realizat manual, fără compromisuri.</p>
-<p>Ne concentrăm pe detalii, durabilitate și materiale autentice, astfel încât fiecare obiect să poată fi folosit ani de zile.</p>
-<a href="#contact" class="btn">Comandă</a>
-</div>
-</section>
+        function initTheme() {
+            const savedTheme = localStorage.getItem('darkMode');
+            
+            if (savedTheme !== null) {
+                setTheme(savedTheme === 'true');
+            } else {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                setTheme(prefersDark);
+            }
+        }
 
-<!-- PROCESS -->
-<section class="process fade-in">
-<h2>Cum ia naștere un produs</h2>
-<div class="process-grid">
+        // Scroll reveal
+        function reveal() {
+            document.querySelectorAll(".fade-in").forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top < window.innerHeight - 80) {
+                    el.classList.add("show");
+                }
+            });
+        }
 
-<div class="step">
-<div class="number">01</div>
-<h3>Alegerea pielii</h3>
-<p>Folosim doar piele naturală atent selecționată.</p>
-</div>
+        // Event listeners
+        themeToggle.addEventListener('click', () => {
+            const isCurrentlyDark = html.classList.contains('dark');
+            setTheme(!isCurrentlyDark);
+        });
 
-<div class="step">
-<div class="number">02</div>
-<h3>Tăiere manuală</h3>
-<p>Fiecare piesă este tăiată și verificată individual.</p>
-</div>
-
-<div class="step">
-<div class="number">03</div>
-<h3>Cusături</h3>
-<p>Fiecare produs este cusut cu atenție pentru rezistență și estetică.</p>
-</div>
-
-<div class="step">
-<div class="number">04</div>
-<h3>Finisare</h3>
-<p>Marginile sunt șlefuite și finisate manual pentru un aspect premium.</p>
-</div>
-
-</div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" class="fade-in">
-<h2>Contact</h2>
-<p>Instagram: @zalmoxis_leather</p>
-</section>
-
-<script>
-function toggleMenu(){
-document.getElementById("sidebar").classList.toggle("open");
-document.getElementById("overlay").classList.toggle("active");
-}
-
-function reveal(){
-document.querySelectorAll(".fade-in").forEach(el=>{
-const top = el.getBoundingClientRect().top;
-if(top < window.innerHeight - 80){
-el.classList.add("show");
-}
-});
-}
-
-window.addEventListener("scroll", reveal);
-window.addEventListener("load", reveal);
-</script>
-
+        window.addEventListener("scroll", reveal);
+        window.addEventListener("load", () => {
+            reveal();
+            initTheme();
+        });
+    </script>
 </body>
 </html>
