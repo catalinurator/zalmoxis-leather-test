@@ -9,36 +9,26 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">  
-  
+
 <style>
 :root{
-
 --bg:#F6F1EA;
-
 --paper:#FCFAF7;
-
 --dark:#2A211B;
-
 --accent:#9A6A3A;
-
 --gold:#C49A6C;
-
 }
 
 html, body{
 margin:0;
 padding:0;
 overflow-x:hidden;
-body{
 font-family:'Inter',sans-serif;
-}
 background:var(--bg);
 color:var(--dark);
 }
 
-/* ===================== */
 /* ANIMAȚII */
-/* ===================== */
 .fade-in{
 opacity:0;
 transform:translateY(18px);
@@ -50,9 +40,7 @@ opacity:1;
 transform:translateY(0);
 }
 
-/* ===================== */
 /* TOP BAR */
-/* ===================== */
 .topbar{
 position:fixed;
 top:0;
@@ -78,26 +66,18 @@ font-weight:600;
 letter-spacing:2px;
 }
 
-/* ===================== */
-/* SIDEBAR FIX (NO BUG VERSION) */
-/* ===================== */
+/* SIDEBAR */
 .sidebar{
 position:fixed;
 top:0;
 left:0;
 width:280px;
 height:100vh;
-
 background:rgba(31,20,16,0.95);
 backdrop-filter:blur(18px);
-
 padding:50px 30px;
-
 z-index:6000;
-
 box-shadow:25px 0 60px rgba(0,0,0,0.4);
-
-/* IMPORTANT FIX */
 transform:translateX(-100%);
 transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);
 }
@@ -127,9 +107,7 @@ color:var(--accent);
 transform:translateX(6px);
 }
 
-/* ===================== */
-/* OVERLAY FIX */
-/* ===================== */
+/* OVERLAY */
 .overlay{
 position:fixed;
 inset:0;
@@ -145,9 +123,7 @@ opacity:1;
 visibility:visible;
 }
 
-/* ===================== */
 /* HERO */
-/* ===================== */
 .hero{
 height:100vh;
 display:flex;
@@ -175,9 +151,7 @@ z-index:2;
 font-size:56px;
 }
 
-/* ===================== */
 /* FEATURED */
-/* ===================== */
 .featured{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -199,9 +173,7 @@ transition:0.4s;
 transform:scale(1.03);
 }
 
-/* ===================== */
 /* SECTIONS */
-/* ===================== */
 section{
 padding:80px 20px;
 max-width:1100px;
@@ -212,9 +184,7 @@ h2{
 font-size:30px;
 }
 
-/* ===================== */
 /* PRODUCTS */
-/* ===================== */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
@@ -238,107 +208,31 @@ width:100%;
 height:260px;
 object-fit:cover;
 }
-<section class="collections fade-in">
 
-<h2>Colecții</h2>
-
-<div class="collection">
-
-<img src="images/portofel1.jpg" alt="Portofele">
-
-<div class="collection-info">
-<h3>Portofele</h3>
-<p>Piele naturală, lucrată manual.</p>
-
-<a href="products/portofel-classic.html" class="btn">
-Descoperă
-</a>
-
-</div>
-
-</div>
-
-<div class="collection reverse">
-
-<img src="images/curea1.jpg" alt="Curele">
-
-<div class="collection-info">
-<h3>Curele</h3>
-<p>Eleganță și rezistență pentru fiecare zi.</p>
-
-<a href="products/curea-classic.html" class="btn">
-Descoperă
-</a>
-
-</div>
-
-</div>
-
-<div class="collection">
-
-<img src="images/geanta1.jpg" alt="Genți">
-
-<div class="collection-info">
-<h3>Genți</h3>
-<p>Design minimalist din piele naturală.</p>
-
-<a href="products/geanta-vintage.html" class="btn">
-Descoperă
-</a>
-
-</div>
-
-</div>
-
-</section>  
-
-/* ===================== */
 /* BUTTON */
-/* ===================== */
 .btn{
-
 display:inline-block;
-
 padding:14px 28px;
-
 border:1px solid #9A6A3A;
-
 background:transparent;
-
 color:#2A211B;
-
 text-decoration:none;
-
 transition:.35s;
 }
 
 .btn:hover{
-
 background:#9A6A3A;
-
 color:white;
-
 transform:translateY(-2px);
-
 }
 
-/* ===================== */
 /* MOBILE */
-/* ===================== */
 @media(max-width:768px){
-.hero h1{
-font-size:36px;
+.hero h1{font-size:36px;}
+.featured{grid-template-columns:1fr;text-align:center;}
 }
 
-.featured{
-grid-template-columns:1fr;
-text-align:center;
-}
-}
-  /* ===================== */
 /* ATELIER */
-/* ===================== */
-
 .atelier{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -370,16 +264,10 @@ color:#555;
 }
 
 @media(max-width:900px){
-
-.atelier{
-grid-template-columns:1fr;
+.atelier{grid-template-columns:1fr;}
 }
 
-}
-  /* ===================== */
-/* PROCES */
-/* ===================== */
-
+/* PROCESS */
 .process{
 padding:100px 20px;
 text-align:center;
@@ -426,123 +314,66 @@ line-height:1.7;
 color:#555;
 }
 
-}  
-  /*========================*/
-/* COLECȚII PREMIUM */
-/*========================*/
-
+/* COLECȚII */
 .collections{
-
 max-width:1400px;
-
 margin:auto;
-
 padding:120px 20px;
-
 }
 
 .collections h2{
-
 text-align:center;
-
 font-size:48px;
-
 margin-bottom:80px;
-
 }
 
 .collection{
-
 display:grid;
-
 grid-template-columns:1.2fr 1fr;
-
 gap:70px;
-
 align-items:center;
-
 margin-bottom:120px;
-
 }
 
 .collection.reverse{
-
 grid-template-columns:1fr 1.2fr;
-
 }
 
-.collection.reverse img{
-
-order:2;
-
-}
-
-.collection.reverse .collection-info{
-
-order:1;
-
-}
+.collection.reverse img{order:2;}
+.collection.reverse .collection-info{order:1;}
 
 .collection img{
-
 width:100%;
-
 border-radius:22px;
-
 transition:.5s;
-
 box-shadow:0 25px 60px rgba(0,0,0,.12);
-
 }
 
 .collection img:hover{
-
 transform:scale(1.02);
-
 }
 
 .collection-info h3{
-
 font-size:42px;
-
 margin-bottom:20px;
-
 }
 
 .collection-info p{
-
 font-size:18px;
-
 line-height:1.9;
-
 color:#666;
-
 margin-bottom:30px;
-
 }
 
 @media(max-width:900px){
-
-.collection{
-
-grid-template-columns:1fr;
-
-}
-
+.collection,
 .collection.reverse{
-
 grid-template-columns:1fr;
-
 }
-
 .collection.reverse img,
-
 .collection.reverse .collection-info{
-
 order:initial;
-
 }
-
 }
 </style>
 </head>
@@ -558,7 +389,6 @@ order:initial;
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
 <h2>ZALMOXIS</h2>
-
 <a href="index.html" onclick="toggleMenu()">Acasă</a>
 <a href="collections.html" onclick="toggleMenu()">Colecții</a>
 <a href="#produse" onclick="toggleMenu()">Produse</a>
@@ -579,24 +409,19 @@ order:initial;
 
 <!-- FEATURED -->
 <section class="featured fade-in">
-
 <div>
 <h2>Featured Product</h2>
 <p>fel Classic — piele naturală full-grain, cusut manual.</p>
 <a class="btn" href="products/portmoneu-masina.html">Vezi produsul</a>
 </div>
-
 <div>
 <img src="image/portmoneu-masina-negru.jpg">
 </div>
-
 </section>
 
 <!-- PRODUSE -->
 <section id="produse" class="fade-in">
-
 <h2>Produse</h2>
-
 <div class="grid">
 
 <div class="card fade-in">
@@ -622,32 +447,21 @@ order:initial;
 
 <!-- ATELIER -->
 <section id="atelier" class="atelier fade-in">
-
 <div class="atelier-image">
-<img src="images/atelier.jpg" alt="Atelier Zalmoxis Leather">
+<img src="images/atelier.jpg">
 </div>
 
 <div class="atelier-text">
-
 <h2>Atelierul Zalmoxis</h2>
-
-<p>
-Fiecare produs începe cu alegerea atentă a pielii naturale și este realizat manual, fără compromisuri.
-</p>
-
-<p>
-Ne concentrăm pe detalii, durabilitate și materiale autentice, astfel încât fiecare obiect să poată fi folosit ani de zile.
-</p>
-
+<p>Fiecare produs începe cu alegerea atentă a pielii naturale și este realizat manual, fără compromisuri.</p>
+<p>Ne concentrăm pe detalii, durabilitate și materiale autentice, astfel încât fiecare obiect să poată fi folosit ani de zile.</p>
 <a href="#contact" class="btn">Comandă</a>
-
 </div>
-
 </section>
-  <section class="process fade-in">
 
+<!-- PROCESS -->
+<section class="process fade-in">
 <h2>Cum ia naștere un produs</h2>
-
 <div class="process-grid">
 
 <div class="step">
@@ -675,8 +489,8 @@ Ne concentrăm pe detalii, durabilitate și materiale autentice, astfel încât 
 </div>
 
 </div>
-
 </section>
+
 <!-- CONTACT -->
 <section id="contact" class="fade-in">
 <h2>Contact</h2>
@@ -689,7 +503,6 @@ document.getElementById("sidebar").classList.toggle("open");
 document.getElementById("overlay").classList.toggle("active");
 }
 
-/* ANIMAȚII */
 function reveal(){
 document.querySelectorAll(".fade-in").forEach(el=>{
 const top = el.getBoundingClientRect().top;
