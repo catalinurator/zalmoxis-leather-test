@@ -33,6 +33,45 @@ body {
     color: var(--text);
 }
 
+/* Buton Dark Mode Elegant */
+.theme-toggle {
+    margin-left: auto;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid rgba(154,106,58,0.2);
+}
+
+.dark .theme-toggle {
+    background: rgba(42,33,27,0.8);
+    border-color: rgba(196,154,108,0.3);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.theme-toggle .moon {
+    display: none;
+}
+
+.dark .theme-toggle .sun {
+    display: none;
+}
+
+.dark .theme-toggle .moon {
+    display: inline;
+}
+
 /* TOP BAR */
 .topbar {
     position: fixed;
