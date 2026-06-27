@@ -380,4 +380,74 @@ document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEvent
 }));
 
 // Închidere la click în afara meniului (pe marginile stânga/dreapta)
-navOverlay.addEventListener("click", (e)
+navOverlay.addEventListener("click", (e) => {
+    const aFostPeLinkSauButon = e.target.closest(".zalmoxis-links-container a") || e.target.closest("#themeToggleBtn");
+    
+    if (!aFostPeLinkSauButon) {
+        hamburger.classList.remove("active");
+        navOverlay.classList.remove("active");
+        document.body.style.overflow = "auto";
+    }
+});
+
+// 2. Logica Dark Mode
+const btn = document.getElementById('themeToggleBtn');
+const sunIcon = btn.querySelector('.sun-icon');
+const moonIcon = btn.querySelector('.moon-icon');
+const themeText = btn.querySelector('.theme-text');
+
+function updateIcons(isDark) {
+    if (isDark) {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+        themeText.textContent = 'Mod Luminos';
+    } else {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+        themeText.textContent = 'Mod Întunecat';
+    }
+}
+
+function setTheme(isDark) {
+    if (isDark) {
+        document.documentElement.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'enabled');
+    } else {
+        document.documentElement.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'disabled');
+    }
+    updateIcons(isDark);
+}
+
+const savedTheme = localStorage.getItem('darkMode');
+const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+if (savedTheme === 'enabled') {
+    setTheme(true);
+} else if (savedTheme === 'disabled') {
+    setTheme(false);
+} else {
+    setTheme(prefersDarkScheme.matches);
+}
+
+btn.addEventListener('click', () => {
+    const isCurrentlyDark = document.documentElement.classList.contains('dark-mode');
+    setTheme(!isCurrentlyDark);
+});
+
+// Schimbare culori produs
+function changeColor(el, color){
+    document.querySelectorAll(".color-btn").forEach(b => {
+        b.classList.remove("active");
+    });
+    el.classList.add("active");
+
+    let img = document.getElementById("productImg");
+    if(color === "black") img.src = "../image/portmoneu-masina-negru.jpg";
+    if(color === "brown") img.src = "../image/portmoneu-masina-negru.jpg";
+    if(color === "cognac") img.src = "../image/portmoneu-masina-negru.jpg";
+}
+</script>
+
+</body>
+</html>
