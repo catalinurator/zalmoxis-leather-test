@@ -358,6 +358,7 @@
 </div>
 
 <script>
+// 1. Logica meniului Hamburger
 const hamburger = document.querySelector(".hamburger");
 const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
 
@@ -378,7 +379,18 @@ document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEvent
     document.body.style.overflow = "auto";
 }));
 
-// Logica Dark Mode
+// Închidere la click în afara meniului (pe marginile stânga/dreapta)
+navOverlay.addEventListener("click", (e) => {
+    const aFostPeLinkSauButon = e.target.closest(".zalmoxis-links-container a") || e.target.closest("#themeToggleBtn");
+    
+    if (!aFostPeLinkSauButon) {
+        hamburger.classList.remove("active");
+        navOverlay.classList.remove("active");
+        document.body.style.overflow = "auto";
+    }
+});
+
+// 2. Logica Dark Mode
 const btn = document.getElementById('themeToggleBtn');
 const sunIcon = btn.querySelector('.sun-icon');
 const moonIcon = btn.querySelector('.moon-icon');
@@ -423,7 +435,7 @@ btn.addEventListener('click', () => {
     setTheme(!isCurrentlyDark);
 });
 
-// Schimbare culori produs
+// Schimbare culori produs (asigură-te că mapezi imaginile corecte pentru maro și coniac dacă diferă)
 function changeColor(el, color){
     document.querySelectorAll(".color-btn").forEach(b => {
         b.classList.remove("active");
@@ -432,7 +444,7 @@ function changeColor(el, color){
 
     let img = document.getElementById("productImg");
     if(color === "black") img.src = "../image/portmoneu1.jpg";
-    if(color === "brown") img.src = "../image/portmoneu1.jpg";
+    if(color === "brown") img.src = "../image/portmoneu1.jpg"; 
     if(color === "cognac") img.src = "../image/portmoneu1.jpg";
 }
 </script>
