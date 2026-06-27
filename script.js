@@ -1,19 +1,16 @@
-function toggleMenu(){
-document.getElementById("sidebar").classList.toggle("open");
-document.getElementById("overlay").classList.toggle("active");
-}
-function revealOnScroll(){
-const elements = document.querySelectorAll(".card, section, .header");
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
 
-elements.forEach(el=>{
-const top = el.getBoundingClientRect().top;
-const windowHeight = window.innerHeight;
+    // Deschide/Închide meniul la click pe butonul hamburger
+    menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
 
-if(top < windowHeight - 100){
-el.classList.add("show");
-}
+    // Închide meniul automat când dai click pe un link (pentru a naviga pe pagină)
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+        });
+    });
 });
-}
-
-window.addEventListener("scroll", revealOnScroll);
-window.addEventListener("load", revealOnScroll);
