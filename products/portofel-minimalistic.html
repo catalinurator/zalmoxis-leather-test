@@ -1,200 +1,220 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofel Minimalist - Zalmoxis Leather</title>
 
-<title>Portofel minimalist</title>
+    <link rel="stylesheet" href="../style.css">
 
-<style>
-body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
-background:#f3e7db;
-color:#2a1c16;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f3e7db;
+            color: #2a1c16;
+            transition: background 0.3s, color 0.3s; /* Schimbare fluidă de culori */
+        }
 
-.container{
-max-width:1100px;
-margin:100px auto;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:60px;
-padding:20px;
-align-items:center;
-}
+        /* --- STILURI PENTRU DARK MODE --- */
+        html.dark-mode body {
+            background: #121212;
+            color: #e0e0e0;
+        }
 
-/* IMAGE */
-.image-box img{
-width:100%;
-border-radius:18px;
-box-shadow:0 20px 50px rgba(0,0,0,0.15);
-transition:0.3s;
-}
+        html.dark-mode .price {
+            color: #c49a6c;
+        }
 
-.image-box img:hover{
-transform:scale(1.02);
-}
+        html.dark-mode .desc {
+            color: #b0a095;
+        }
 
-/* TEXT */
-h1{
-font-size:38px;
-margin:0;
-}
+        html.dark-mode .color-btn {
+            border-color: #c49a6c;
+            color: #e0e0e0;
+        }
 
-.price{
-font-size:24px;
-margin:15px 0;
-font-weight:700;
-color:#5a3a2e;
-}
+        html.dark-mode .color-btn:hover {
+            background: #c49a6c;
+            color: #121212;
+        }
 
-.desc{
-color:#5a3a2e;
-line-height:1.6;
-margin-top:10px;
-}
+        html.dark-mode .color-btn.active {
+            background: #c49a6c;
+            border-color: #c49a6c;
+            color: #121212;
+        }
 
-/* COLORS */
-.colors{
-margin-top:25px;
-}
+        html.dark-mode .btn {
+            border-color: #c49a6c;
+            color: #e0e0e0;
+        }
 
-.color-btn{
- 
-display:inline-block;
- 
-padding:10px 16px;
- 
-border:1px solid #9A6A3A;
- 
-background:transparent;
- 
-color:#2A211B;
- 
-text-decoration:none;
- 
-transition:.35s;
-}
- 
-.color-btn:hover{
- 
-background:#9A6A3A;
- 
-color:white;
- 
-transform:translateY(-2px);
- 
-}
+        html.dark-mode .btn:hover {
+            background: #c49a6c;
+            color: #121212;
+        }
+        /* -------------------------------- */
 
-.color-btn.active{
-background:#c49a6c;
-border-color:#c49a6c;
-color:#2a1c16;
-}
+        .container {
+            max-width: 1100px;
+            margin: 100px auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            padding: 20px;
+            align-items: center;
+        }
 
-/* BUTTON */
-.btn{
+        /* IMAGE */
+        .image-box img {
+            width: 100%;
+            border-radius: 18px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            transition: 0.3s;
+        }
 
-display:inline-block;
+        .image-box img:hover {
+            transform: scale(1.02);
+        }
 
-padding:14px 36px;
+        /* TEXT */
+        h1 {
+            font-size: 38px;
+            margin: 0;
+        }
 
-margin-top:20px; 
- 
-border:1px solid #9A6A3A;
+        .price {
+            font-size: 24px;
+            margin: 15px 0;
+            font-weight: 700;
+            color: #5a3a2e;
+        }
 
-background:transparent;
+        .desc {
+            color: #5a3a2e;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
 
-color:#2A211B;
+        /* COLORS */
+        .colors {
+            margin-top: 25px;
+        }
 
-text-decoration:none;
+        .colors h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
 
-transition:.35s;
-}
+        .color-btn {
+            display: inline-block;
+            padding: 10px 16px;
+            border: 1px solid #9A6A3A;
+            background: transparent;
+            color: #2A211B;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: .35s;
+            margin-right: 5px;
+        }
+         
+        .color-btn:hover {
+            background: #9A6A3A;
+            color: white;
+            transform: translateY(-2px);
+        }
 
-.btn:hover{
+        .color-btn.active {
+            background: #c49a6c;
+            border-color: #c49a6c;
+            color: #2a1c16;
+        }
 
-background:#9A6A3A;
+        /* BUTTON */
+        .btn {
+            display: inline-block;
+            padding: 14px 36px;
+            margin-top: 20px; 
+            border: 1px solid #9A6A3A;
+            background: transparent;
+            color: #2A211B;
+            text-decoration: none;
+            transition: .35s;
+        }
 
-color:white;
+        .btn:hover {
+            background: #9A6A3A;
+            color: white;
+            transform: translateY(-2px);
+        }
 
-transform:translateY(-2px);
-
-}
-/* MOBILE */
-@media(max-width:768px){
-.container{
-grid-template-columns:1fr;
-text-align:center;
-}
-}
-</style>
+        /* MOBILE */
+        @media(max-width:768px){
+            .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="container">
 
-<!-- IMAGE -->
-<div class="image-box">
-<img id="productImg" src="../image/portmoneu1.jpg" alt="Portofel piele naturală">
-</div>
+    <div class="image-box">
+        <img id="productImg" src="../image/portmoneu1.jpg" alt="Portofel piele naturală">
+    </div>
 
-<!-- INFO -->
-<div>
+    <div>
+        <h1>Portofel minimalist</h1>
+        <div class="price">389 MDL</div>
+        <div class="desc">
+            Portofel realizat manual din piele naturală full-grain. Design minimalist, cusut manual pentru durabilitate maximă.
+        </div>
 
-<h1>Portofel minimalist</h1>
+        <div class="colors">
+            <h3>Culori</h3>
+            <button class="color-btn active" onclick="changeColor(this,'black')">Negru</button>
+            <button class="color-btn" onclick="changeColor(this,'brown')">Maro</button>
+            <button class="color-btn" onclick="changeColor(this,'cognac')">Coniac</button>
+        </div>
 
-<div class="price">389 MDL</div>
-
-<div class="desc">
-Portofel realizat manual din piele naturală full-grain.
-Design minimalist, cusut manual pentru durabilitate maximă.
-</div>
-
-<!-- COLORS -->
-<div class="colors">
-<h3>Culori</h3>
-
-<span class="color-btn active" onclick="changeColor(this,'black')">Negru</span>
-<span class="color-btn" onclick="changeColor(this,'brown')">Maro</span>
-<span class="color-btn" onclick="changeColor(this,'cognac')">Coniac</span>
-</div>
-
-<!-- BUTTON -->
-<a class="btn"
-href="https://ig.me/m/zalmoxis_leather?text=Salut!%20Vreau%20sa%20comand%20Portofel%20minimalist"
-target="_blank">
-Comandă 
-</a>
-
-</div>
+        <a class="btn" href="https://ig.me/m/zalmoxis_leather?text=Salut!%20Vreau%20sa%20comand%20Portofel%20minimalist" target="_blank">
+            Comandă
+        </a>
+    </div>
 
 </div>
 
 <script>
 function changeColor(el, color){
+    // Resetăm clasa active de pe toate butoanele
+    document.querySelectorAll(".color-btn").forEach(b => {
+        b.classList.remove("active");
+    });
+    el.classList.add("active");
 
-// reset active
-document.querySelectorAll(".color-btn").forEach(b=>{
-b.classList.remove("active");
-});
-el.classList.add("active");
-
-let img = document.getElementById("productImg");
- 
-if(color === "black"){
-    img.src = "../image/portmoneu1.jpg";
+    let img = document.getElementById("productImg");
+    
+    // Înlocuiește denumirile cu cele reale (de exemplu portmoneu1-maro.jpg) dacă ai poze diferite
+    if(color === "black"){
+        img.src = "../image/portmoneu1.jpg";
+    }
+    if(color === "brown"){ 
+        img.src = "../image/portmoneu1.jpg";
+    }
+    if(color === "cognac"){
+        img.src = "../image/portmoneu1.jpg";
+    }
 }
 
-if(color === "brown"){ 
-    img.src = "../image/portmoneu1.jpg";
-}
-
-if(color === "cognac"){
-    img.src = "../image/portmoneu1.jpg";
-}
+// Verifică starea temei la încărcarea paginii
+if (localStorage.getItem('darkMode') === 'enabled') {
+    document.documentElement.classList.add('dark-mode');
 }
 </script>
 
