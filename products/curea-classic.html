@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curea Classic | Zalmoxis Leather</title>
 
-    <link rel="stylesheet" href="../style.css">
+    <link class="stylesheet" href="../style.css">
 
     <style>
         body {
@@ -338,7 +338,7 @@ document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEvent
     document.body.style.overflow = "auto";
 }));
 
-// Închidere la click în afara meniului (inclusiv în părțile laterale stânga/dreapta ca în image_7ccca6.png)
+// Închidere la click în afara meniului (pe marginile laterale)
 navOverlay.addEventListener("click", (e) => {
     const aFostPeLinkSauButon = e.target.closest(".zalmoxis-links-container a") || e.target.closest("#themeToggleBtn");
     
