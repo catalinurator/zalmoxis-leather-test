@@ -96,16 +96,15 @@ header {
     padding: 20px 5%;
 }
 
+/* REPARAT: Am forțat logo-ul să nu aibă linie dedesubt direct aici */
 .logo {
     font-family: var(--font-heading);
-    color: white;
+    color: white !important;
     font-size: 1.5rem;
     letter-spacing: 3px;
     font-weight: 700;
-}
-
-.logo {
-    text-decoration: none; /* Scoate linia de sub text */
+    text-decoration: none !important; 
+    border-bottom: none !important;
 }
 
 .nav-menu a {
@@ -179,7 +178,7 @@ header {
 /* Despre Atelier */
 .about-section { background-color: #f2eee9; transition: background-color 0.3s; }
 @media (prefers-color-scheme: dark) {
-    .about-section { background-color: #181310; } /* Ajustare nuanță pe modul întunecat */
+    .about-section { background-color: #181310; } 
 }
 .about-image img { width: 100%; max-height: 400px; object-fit: cover; border-radius: 4px; }
 .about-text h2 { font-family: var(--font-heading); font-size: 2.2rem; margin-bottom: 20px; }
@@ -242,9 +241,4 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
     
     .featured-text { order: 2; text-align: center; }
     .featured-image { order: 1; }
-}
-
-/* Elimină linia de sub logo-ul link */
-a.logo {
-    text-decoration: none !important;
 }
