@@ -5,13 +5,31 @@
     box-sizing: border-box;
 }
 
+/* Culorile implicite (Light Mode / Modul Luminos) */
 :root {
-    --color-dark: #1a1512;      /* Negru-maroniu închis */
+    --color-dark: #1a1512;      /* Negru-maroniu închis pentru text */
     --color-accent: #8c6239;    /* Maro pielărie/cognac */
-    --color-light: #fbf9f6;     /* Fundal curat, crem foarte deschis */
+    --color-light: #fbf9f6;     /* Fundal crem foarte deschis */
     --color-grey: #666;
+    --color-card-bg: white;     /* Fundalul cardurilor de produse */
     --font-heading: 'Cinzel', serif;
     --font-body: 'Montserrat', sans-serif;
+}
+
+/* Trecerea automată la Dark Mode în funcție de setările telefonului */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-dark: #fbf9f6;      /* Textul devine deschis la culoare */
+        --color-light: #120e0c;     /* Fundalul general devine foarte închis */
+        --color-card-bg: #1a1512;   /* Cardurile devin maro-închis în loc de alb */
+        --color-grey: #aaa;         /* Textul secundar devine mai ușor de citit */
+        /* Culoarea accent (maro cognac) rămâne aceeași pentru a păstra identitatea brandului */
+    }
+    
+    /* Schimbăm discret fundalul secțiunii "Despre Atelier" ca să se potrivească pe întuneric */
+    .about-section { 
+        background: #181310 !important; 
+    }
 }
 
 html {
