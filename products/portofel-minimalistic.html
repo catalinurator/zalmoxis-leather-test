@@ -181,7 +181,7 @@
             background: transparent;
             border: none;
             padding: 6px;
-            z-index: 10001;
+            z-index: 10002 !important; /* Îl punem peste absolut orice */
         }
 
         .bar {
@@ -198,61 +198,60 @@
         .hamburger.active .bar:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
         .hamburger.active .bar:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-        /* --- MENIUL OVERLAY REPARAT RADICAL PENTRU MOBIL --- */
-        .nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100vh;
-            background-color: #f3e7db;
-            z-index: 9999;
+        /* --- OVERLAY UNIC PENTRU EVITAREA CONFLICTELOR DIN CSS-UL EXTERN --- */
+        .zalmoxis-menu-overlay {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100vh !important;
+            background-color: #f3e7db !important;
+            z-index: 10001 !important; /* Sub buton, dar peste site */
             
-            /* Ascundere exclusivă prin transformare 3D hardware accelerated */
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Ascundere inițială completă */
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transform: translateY(-20px) !important;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease !important;
             
-            /* Forțăm așezarea elementelor în centrul ecranului mobil */
+            /* Forțare aranjare text */
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
-            box-sizing: border-box;
         }
 
-        html.dark-mode .nav-overlay {
-            background-color: #121212;
+        html.dark-mode .zalmoxis-menu-overlay {
+            background-color: #121212 !important;
         }
 
-        /* Când meniul devine activ, revine la poziția inițială (0) */
-        .nav-overlay.active {
-            transform: translateX(0) !important;
+        /* Stilul când meniul este deschis */
+        .zalmoxis-menu-overlay.active {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateY(0) !important;
         }
 
-        .nav-menu {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 35px; /* Spațiu generos între link-uri */
-            width: 100%;
+        .zalmoxis-links-container {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 30px !important;
+            width: 100% !important;
         }
 
-        .nav-menu a {
-            text-decoration: none;
-            color: #2a1c16;
-            font-size: 26px;
-            font-weight: 400;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-            display: block;
-            text-align: center;
-            width: 100%;
+        .zalmoxis-links-container a {
+            text-decoration: none !important;
+            color: #2a1c16 !important;
+            font-size: 26px !important;
+            font-weight: 500 !important;
+            letter-spacing: 1px !important;
+            transition: color 0.3s !important;
+            display: block !important;
+            text-align: center !important;
         }
-        html.dark-mode .nav-menu a { color: #e0e0e0; }
-        .nav-menu a:hover { color: #9A6A3A; }
+        html.dark-mode .zalmoxis-links-container a { color: #e0e0e0 !important; }
+        .zalmoxis-links-container a:hover { color: #9A6A3A !important; }
 
         .menu-spacer {
             height: 10px;
@@ -260,38 +259,24 @@
 
         /* BUTONUL DIN INTERIORUL MENIULUI */
         .theme-toggle-inline {
-            background: transparent;
-            border: 1px solid rgba(154, 106, 58, 0.3);
-            padding: 10px 22px;
-            border-radius: 20px;
-            color: #5a3a2e;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-family: inherit;
-            font-size: 15px;
-            transition: all 0.3s;
+            background: transparent !important;
+            border: 1px solid rgba(154, 106, 58, 0.4) !important;
+            padding: 12px 24px !important;
+            border-radius: 25px !important;
+            color: #5a3a2e !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            font-family: inherit !important;
+            font-size: 15px !important;
+            transition: all 0.3s !important;
         }
 
         html.dark-mode .theme-toggle-inline {
-            border-color: rgba(196, 154, 108, 0.3);
-            color: #b0a095;
-        }
-
-        .theme-toggle-inline:hover {
-            border-color: #9A6A3A;
-            color: #2a1c16;
-        }
-        html.dark-mode .theme-toggle-inline:hover {
-            border-color: #c49a6c;
-            color: #e0e0e0;
-        }
-
-        .theme-icons {
-            display: flex;
-            align-items: center;
+            border-color: rgba(196, 154, 108, 0.4) !important;
+            color: #b0a095 !important;
         }
 
         /* RESPONSIVE DESIGN */
@@ -302,8 +287,8 @@
                 margin-top: 60px !important;
                 padding-top: 20px;
             }
-            .nav-menu a {
-                font-size: 24px;
+            .zalmoxis-links-container a {
+                font-size: 24px !important;
             }
         }
     </style>
@@ -322,8 +307,8 @@
     </div>
 </header>
 
-<div class="nav-overlay">
-    <nav class="nav-menu">
+<div class="zalmoxis-menu-overlay">
+    <nav class="zalmoxis-links-container">
         <a href="../index.html">Acasă</a>
         <a href="../index.html#produse">Produse</a>
         <a href="../index.html#despre">Despre Noi</a>
@@ -373,9 +358,8 @@
 </div>
 
 <script>
-// 1. Logica meniului Hamburger via hardware acceleration (transform)
 const hamburger = document.querySelector(".hamburger");
-const navOverlay = document.querySelector(".nav-overlay");
+const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
 
 hamburger.addEventListener("click", () => {
     hamburger.classList.toggle("active");
@@ -388,13 +372,13 @@ hamburger.addEventListener("click", () => {
     }
 });
 
-document.querySelectorAll(".nav-menu a").forEach(n => n.addEventListener("click", () => {
+document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEventListener("click", () => {
     hamburger.classList.remove("active");
     navOverlay.classList.remove("active");
     document.body.style.overflow = "auto";
 }));
 
-// 2. Logica Dark Mode (Automat + Manual)
+// Logica Dark Mode
 const btn = document.getElementById('themeToggleBtn');
 const sunIcon = btn.querySelector('.sun-icon');
 const moonIcon = btn.querySelector('.moon-icon');
@@ -439,13 +423,7 @@ btn.addEventListener('click', () => {
     setTheme(!isCurrentlyDark);
 });
 
-prefersDarkScheme.addEventListener('change', (e) => {
-    if (!localStorage.getItem('darkMode')) {
-        setTheme(e.matches);
-    }
-});
-
-// 3. Logica schimbării culorilor la produs
+// Schimbare culori produs
 function changeColor(el, color){
     document.querySelectorAll(".color-btn").forEach(b => {
         b.classList.remove("active");
@@ -453,16 +431,9 @@ function changeColor(el, color){
     el.classList.add("active");
 
     let img = document.getElementById("productImg");
-    
-    if(color === "black"){
-        img.src = "../image/portmoneu1.jpg";
-    }
-    if(color === "brown"){ 
-        img.src = "../image/portmoneu1.jpg";
-    }
-    if(color === "cognac"){
-        img.src = "../image/portmoneu1.jpg";
-    }
+    if(color === "black") img.src = "../image/portmoneu1.jpg";
+    if(color === "brown") img.src = "../image/portmoneu1.jpg";
+    if(color === "cognac") img.src = "../image/portmoneu1.jpg";
 }
 </script>
 
