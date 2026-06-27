@@ -206,28 +206,27 @@
 
 <!-- STILURILE CSS (Adaugă-le în tag-ul tău <style>) -->
 <style>
-/* --- STIL HEADER FIX --- */
+/* --- STIL HEADER ULTRA MINIMALIST --- */
 .main-header {
-    background: transparent;
+    background: transparent; /* Perfect transparent, fără fundal alb/crem */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 10000; /* Foarte înalt pentru a sta deasupra meniului când se deschide */
-    transition: background 0.3s;
+    z-index: 10000;
 }
 
 .header-container {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 25px 30px;
+    padding: 30px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .logo {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     text-decoration: none;
     color: #2a1c16;
@@ -236,49 +235,47 @@
 }
 html.dark-mode .logo { color: #e0e0e0; }
 
-/* --- STIL BUTON HAMBURGER (PERMANENT) --- */
+/* --- HAMBURGER DISCRET ȘI SUBȚIRE --- */
 .hamburger {
     display: block;
     cursor: pointer;
     background: transparent;
     border: none;
-    padding: 10px;
+    padding: 8px;
     z-index: 10001;
 }
 
 .bar {
     display: block;
-    width: 28px;
-    height: 2px;
+    width: 26px;
+    height: 1.5px; /* Liniile hamburgerului sunt mai subțiri și elegante */
     margin: 6px auto;
     transition: all 0.3s ease-in-out;
     background-color: #2a1c16;
 }
 html.dark-mode .bar { background-color: #e0e0e0; }
 
-/* Animație Hamburger -> 'X' */
 .hamburger.active .bar:nth-child(2) { opacity: 0; }
-.hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-.hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+.hamburger.active .bar:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.hamburger.active .bar:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-/* --- MENIUL OVERLAY (Apare din dreapta sau ecran complet) --- */
+/* --- MENIUL OVERLAY PREMIUM --- */
 .nav-overlay {
     position: fixed;
     top: 0;
     right: -100%;
     width: 100%;
-    height: 100ffff; /* Acoperă tot ecranul */
     height: 100vh;
-    background-color: rgba(243, 231, 219, 0.98); /* Fundalul tău crem, ușor transparent */
+    background-color: #f3e7db; /* Fundal solid curat (fără transparență dubioasă) */
     z-index: 9999;
-    transition: right 0.4s cubic-bezier(0.77,0.2,0.05,1.0);
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Animație mult mai fluidă */
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 html.dark-mode .nav-overlay {
-    background-color: rgba(18, 18, 18, 0.98); /* Fundal închis pentru Dark Mode */
+    background-color: #121212; /* Fundal solid închis */
 }
 
 .nav-overlay.active {
@@ -289,60 +286,55 @@ html.dark-mode .nav-overlay {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 25px;
-    width: 100%;
-    max-width: 400px;
+    gap: 30px;
 }
 
 .nav-menu a {
     text-decoration: none;
     color: #2a1c16;
-    font-size: 24px;
-    font-weight: 500;
+    font-size: 26px; /* Text ușor mai mare, aerisit */
+    font-weight: 400;
     letter-spacing: 1px;
     transition: color 0.3s, transform 0.2s;
 }
 html.dark-mode .nav-menu a { color: #e0e0e0; }
 .nav-menu a:hover { 
-    color: #9A6A3A; 
-    transform: scale(1.05);
+    color: #9A6A3A;
 }
 
-.menu-divider {
-    width: 40px;
-    height: 1px;
-    background: #9A6A3A;
-    margin: 10px 0;
+/* Am înlocuit linia lată cu un spațiu gol discret */
+.menu-spacer {
+    height: 15px;
 }
 
-/* --- BUTONUL DE DARK MODE DIN INTERIORUL MENIULUI --- */
+/* --- BUTONUL DE DARK MODE MINIMALIST --- */
 .theme-toggle-inline {
     background: transparent;
-    border: 1px solid #9A6A3A;
-    padding: 10px 20px;
-    border-radius: 30px;
-    color: #2a1c16;
+    border: 1px solid rgba(154, 106, 58, 0.3); /* Bordură foarte fină */
+    padding: 8px 18px;
+    border-radius: 20px;
+    color: #5a3a2e;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 14px;
     transition: all 0.3s;
 }
 
 html.dark-mode .theme-toggle-inline {
-    border-color: #c49a6c;
-    color: #e0e0e0;
+    border-color: rgba(196, 154, 108, 0.3);
+    color: #b0a095;
 }
 
 .theme-toggle-inline:hover {
-    background: #9A6A3A;
-    color: #fff;
+    border-color: #9A6A3A;
+    color: #2a1c16;
 }
 html.dark-mode .theme-toggle-inline:hover {
-    background: #c49a6c;
-    color: #121212;
+    border-color: #c49a6c;
+    color: #e0e0e0;
 }
 
 .theme-icons {
@@ -350,12 +342,9 @@ html.dark-mode .theme-toggle-inline:hover {
     align-items: center;
 }
 
-/* Ajustare spațiu pentru conținutul paginii (deoarece header-ul e fixat sus) */
+/* Ajustare spațiu conținut */
 .container {
-    margin-top: 140px !important; 
-}
-@media (max-width: 768px) {
-    .container { margin-top: 100px !important; }
+    margin-top: 120px !important; 
 }
 </style>
 
