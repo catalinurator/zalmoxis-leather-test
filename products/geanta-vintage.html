@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Geantă Vintage</title>
+
+<title>Geanta</title>
 
 <style>
 body{
 margin:0;
-font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
 background:#f3e7db;
 color:#2a1c16;
 }
@@ -18,28 +19,89 @@ max-width:1100px;
 margin:100px auto;
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:40px;
+gap:60px;
 padding:20px;
+align-items:center;
 }
 
-img{
+/* IMAGE */
+.image-box img{
 width:100%;
-border-radius:16px;
-box-shadow:0 10px 30px rgba(0,0,0,0.15);
+border-radius:18px;
+box-shadow:0 20px 50px rgba(0,0,0,0.15);
+transition:0.3s;
 }
 
-h1{font-size:34px;}
+.image-box img:hover{
+transform:scale(1.02);
+}
 
-.price{font-size:22px;font-weight:600;margin:10px 0;}
+/* TEXT */
+h1{
+font-size:38px;
+margin:0;
+}
 
-.desc{color:#5a3a2e;line-height:1.5;}
+.price{
+font-size:24px;
+margin:15px 0;
+font-weight:700;
+color:#5a3a2e;
+}
 
+.desc{
+color:#5a3a2e;
+line-height:1.6;
+margin-top:10px;
+}
+
+/* COLORS */
+.colors{
+margin-top:25px;
+}
+
+.color-btn{
+ 
+display:inline-block;
+ 
+padding:10px 16px;
+ 
+border:1px solid #9A6A3A;
+ 
+background:transparent;
+ 
+color:#2A211B;
+ 
+text-decoration:none;
+ 
+transition:.35s;
+}
+ 
+.color-btn:hover{
+ 
+background:#9A6A3A;
+ 
+color:white;
+ 
+transform:translateY(-2px);
+ 
+}
+
+.color-btn.active{
+background:#c49a6c;
+border-color:#c49a6c;
+color:#2a1c16;
+}
+
+/* BUTTON */
 .btn{
 
 display:inline-block;
 
-padding:14px 28px;
+padding:14px 36px;
 
+margin-top:20px; 
+ 
 border:1px solid #9A6A3A;
 
 background:transparent;
@@ -60,6 +122,13 @@ color:white;
 transform:translateY(-2px);
 
 }
+/* MOBILE */
+@media(max-width:768px){
+.container{
+grid-template-columns:1fr;
+text-align:center;
+}
+}
 </style>
 </head>
 
@@ -67,26 +136,66 @@ transform:translateY(-2px);
 
 <div class="container">
 
-<div>
-<img src="../image/geanta1.jpg">
+<!-- IMAGE -->
+<div class="image-box">
+<img id="productImg" src="../image/geanta1.jpg" alt="Geanta">
 </div>
 
+<!-- INFO -->
 <div>
-<h1>Geantă Vintage</h1>
-<div class="price">1799 MDL</div>
+
+<h1>Geanta clasica 1</h1>
+
+<div class="price">1899 MDL</div>
 
 <div class="desc">
-Geantă premium din piele naturală, design vintage handmade.
+Geanta realizata manual.........
 </div>
 
+<!-- COLORS -->
+<div class="colors">
+<h3>Culori</h3>
+
+<span class="color-btn active" onclick="changeColor(this,'black')">Negru</span>
+<span class="color-btn" onclick="changeColor(this,'brown')">Maro</span>
+<span class="color-btn" onclick="changeColor(this,'cognac')">Coniac</span>
+</div>
+
+<!-- BUTTON -->
 <a class="btn"
-href="https://ig.me/m/zalmoxis_leather?text=Salut!%20Vreau%20sa%20comand%20Portofel%20Masina"
+href="https://ig.me/m/zalmoxis_leather?text=Salut!%20Vreau%20sa%20comand%20Portofel%20minimalist"
 target="_blank">
-Comandă
+Comandă 
 </a>
+
 </div>
 
 </div>
+
+<script>
+function changeColor(el, color){
+
+// reset active
+document.querySelectorAll(".color-btn").forEach(b=>{
+b.classList.remove("active");
+});
+el.classList.add("active");
+
+let img = document.getElementById("productImg");
+ 
+if(color === "black"){
+    img.src = "../image/geanta1.jpg";
+}
+
+if(color === "brown"){ 
+    img.src = "../image/geanta1.jpg";
+}
+
+if(color === "cognac"){
+    img.src = "../image/geanta1.jpg";
+}
+}
+</script>
 
 </body>
 </html>
