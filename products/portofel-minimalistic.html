@@ -140,13 +140,13 @@
 
         /* --- HEADER ULTRA MINIMALIST ȘI COMPACT --- */
         .main-header {
-            background: #f3e7db; /* Fundal solid mat, elimină transparența */
+            background: #f3e7db; 
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 10000;
-            border-bottom: 1px solid rgba(42, 28, 22, 0.08); /* Linie fină de delimitare */
+            border-bottom: 1px solid rgba(42, 28, 22, 0.08); 
             transition: background 0.3s, border-color 0.3s;
         }
 
@@ -158,7 +158,7 @@
         .header-container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 12px 20px; /* Înălțime strânsă și elegantă */
+            padding: 12px 20px; 
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -168,7 +168,7 @@
             font-size: 18px;
             font-weight: 700;
             text-decoration: none;
-            color: #2a1c16; /* Vizibilitate ridicată pe fundalul crem */
+            color: #2a1c16; 
             letter-spacing: 3px;
             transition: color 0.3s;
         }
@@ -198,7 +198,7 @@
         .hamburger.active .bar:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
         .hamburger.active .bar:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-        /* --- MENIUL OVERLAY FULLSCREEN --- */
+        /* --- MENIUL OVERLAY FULLSCREEN CORECTAT --- */
         .nav-overlay {
             position: fixed;
             top: 0;
@@ -209,8 +209,9 @@
             z-index: 9999;
             transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
-            align-items: center;
+            align-items: flex-start; /* Aliniat sus pentru a controla corect spațiul pe mobil */
             justify-content: center;
+            box-sizing: border-box;
         }
 
         html.dark-mode .nav-overlay {
@@ -225,22 +226,25 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 30px;
+            gap: 25px;
+            padding-top: 100px; /* Împinge conținutul sub nivelul header-ului să fie vizibil pe telefon */
+            width: 100%;
         }
 
         .nav-menu a {
             text-decoration: none;
             color: #2a1c16;
-            font-size: 26px;
+            font-size: 24px; /* Un pic mai mic pentru ecrane de telefoane înguste */
             font-weight: 400;
             letter-spacing: 1px;
             transition: color 0.3s;
+            padding: 5px 0;
         }
         html.dark-mode .nav-menu a { color: #e0e0e0; }
         .nav-menu a:hover { color: #9A6A3A; }
 
         .menu-spacer {
-            height: 15px;
+            height: 10px;
         }
 
         /* BUTONUL DIN INTERIORUL MENIULUI */
@@ -285,6 +289,13 @@
                 text-align: center;
                 margin-top: 60px !important;
                 padding-top: 20px;
+            }
+            .nav-menu {
+                padding-top: 120px; /* Spațiu extra pe telefoane pentru siguranță */
+                gap: 20px;
+            }
+            .nav-menu a {
+                font-size: 22px;
             }
         }
     </style>
