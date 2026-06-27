@@ -242,3 +242,25 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
     .featured-text { order: 2; text-align: center; }
     .featured-image { order: 1; }
 }
+
+/* Stiluri pentru link-urile cardurilor de produse */
+.product-card-link {
+    text-decoration: none !important;
+    color: inherit;
+    display: block;
+}
+
+.view-more {
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: var(--color-accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .view-more {
+    transform: translateX(5px);
+}
