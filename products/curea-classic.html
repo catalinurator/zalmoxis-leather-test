@@ -342,12 +342,65 @@ document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEvent
 }));
 
 // Închidere la click în afara meniului (pe spațiul gol)
+// 1. Logica meniului Hamburger
+const hamburger = document.querySelector(".hamburger");
+const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
+
+hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    navOverlay.classList.toggle("active");
+    
+    if(navOverlay.classList.contains("active")) {
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
+    }
+});
+
+document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEventListener("click", () => {
+    hamburger.classList.remove("active");
+    navOverlay.classList.remove("active");
+    document.body.style.overflow = "auto";
+}));
+
+// 1. Logica meniului Hamburger
+const hamburger = document.querySelector(".hamburger");
+const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
+
+hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    navOverlay.classList.toggle("active");
+    
+    if(navOverlay.classList.contains("active")) {
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
+    }
+});
+
+document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEventListener("click", () => {
+    hamburger.classList.remove("active");
+    navOverlay.classList.remove("active");
+    document.body.style.overflow = "auto";
+}));
+
+// --- AICI ESTE MODIFICAREA NOUĂ ---
+// Închidere la click în afara meniului (inclusiv în părțile laterale stânga/dreapta)
 navOverlay.addEventListener("click", (e) => {
-    if (e.target === navOverlay) {
+    const aFostPeLinkSauButon = e.target.closest(".zalmoxis-links-container a") || e.target.closest("#themeToggleBtn");
+    
+    if (!aFostPeLinkSauButon) {
         hamburger.classList.remove("active");
         navOverlay.classList.remove("active");
         document.body.style.overflow = "auto";
     }
+});
+// ----------------------------------
+
+// 2. Logica Dark Mode completă... (continuă codul exact așa cum era înainte)
+// ----------------------------------
+
+// 2. Logica Dark Mode completă... (continuă codul exact așa cum era înainte)
 });
 
 // 2. Logica Dark Mode completă
