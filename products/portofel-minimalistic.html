@@ -163,6 +163,280 @@
 </head>
 <body>
 
+    <!-- HEADER DISCRET CU BUTON HAMBURGER -->
+<header class="main-header">
+    <div class="header-container">
+        <!-- Logo / Nume Brand -->
+        <a href="../index.html" class="logo">ZALMOXIS</a>
+        
+        <!-- Butonul Hamburger (Acum este vizibil și pe PC, și pe Mobil) -->
+        <button class="hamburger" aria-label="Deschide meniul">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </div>
+</header>
+
+<!-- MENIUL CARE SE DESCHIDE (OVERLAY) -->
+<div class="nav-overlay">
+    <nav class="nav-menu">
+        <a href="../index.html">Acasă</a>
+        <a href="../index.html#produse">Produse</a>
+        <a href="../index.html#despre">Despre Noi</a>
+        <a href="../index.html#contact">Contact</a>
+        
+        <!-- Spațiator pentru design -->
+        <div class="menu-divider"></div>
+
+        <!-- Butonul Dark Mode integrat în meniu -->
+        <button id="themeToggleBtn" class="theme-toggle-inline" aria-label="Schimbă tema">
+            <span class="theme-text">Mod Întunecat</span>
+            <span class="theme-icons">
+                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none; width:22px; height:22px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.344l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                </svg>
+                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:22px; height:22px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </span>
+        </button>
+    </nav>
+</div>
+
+<!-- STILURILE CSS (Adaugă-le în tag-ul tău <style>) -->
+<style>
+/* --- STIL HEADER FIX --- */
+.main-header {
+    background: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10000; /* Foarte înalt pentru a sta deasupra meniului când se deschide */
+    transition: background 0.3s;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+    text-decoration: none;
+    color: #2a1c16;
+    letter-spacing: 3px;
+    transition: color 0.3s;
+}
+html.dark-mode .logo { color: #e0e0e0; }
+
+/* --- STIL BUTON HAMBURGER (PERMANENT) --- */
+.hamburger {
+    display: block;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    z-index: 10001;
+}
+
+.bar {
+    display: block;
+    width: 28px;
+    height: 2px;
+    margin: 6px auto;
+    transition: all 0.3s ease-in-out;
+    background-color: #2a1c16;
+}
+html.dark-mode .bar { background-color: #e0e0e0; }
+
+/* Animație Hamburger -> 'X' */
+.hamburger.active .bar:nth-child(2) { opacity: 0; }
+.hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* --- MENIUL OVERLAY (Apare din dreapta sau ecran complet) --- */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100ffff; /* Acoperă tot ecranul */
+    height: 100vh;
+    background-color: rgba(243, 231, 219, 0.98); /* Fundalul tău crem, ușor transparent */
+    z-index: 9999;
+    transition: right 0.4s cubic-bezier(0.77,0.2,0.05,1.0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+html.dark-mode .nav-overlay {
+    background-color: rgba(18, 18, 18, 0.98); /* Fundal închis pentru Dark Mode */
+}
+
+.nav-overlay.active {
+    right: 0;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #2a1c16;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: color 0.3s, transform 0.2s;
+}
+html.dark-mode .nav-menu a { color: #e0e0e0; }
+.nav-menu a:hover { 
+    color: #9A6A3A; 
+    transform: scale(1.05);
+}
+
+.menu-divider {
+    width: 40px;
+    height: 1px;
+    background: #9A6A3A;
+    margin: 10px 0;
+}
+
+/* --- BUTONUL DE DARK MODE DIN INTERIORUL MENIULUI --- */
+.theme-toggle-inline {
+    background: transparent;
+    border: 1px solid #9A6A3A;
+    padding: 10px 20px;
+    border-radius: 30px;
+    color: #2a1c16;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: inherit;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+html.dark-mode .theme-toggle-inline {
+    border-color: #c49a6c;
+    color: #e0e0e0;
+}
+
+.theme-toggle-inline:hover {
+    background: #9A6A3A;
+    color: #fff;
+}
+html.dark-mode .theme-toggle-inline:hover {
+    background: #c49a6c;
+    color: #121212;
+}
+
+.theme-icons {
+    display: flex;
+    align-items: center;
+}
+
+/* Ajustare spațiu pentru conținutul paginii (deoarece header-ul e fixat sus) */
+.container {
+    margin-top: 140px !important; 
+}
+@media (max-width: 768px) {
+    .container { margin-top: 100px !important; }
+}
+</style>
+
+<!-- SCRIPTUL JAVASCRIPT (Hamburger universal + Dark Mode) -->
+<script>
+// --- LOGICA DESCHIDERII MENIULUI ---
+const hamburger = document.querySelector(".hamburger");
+const navOverlay = document.querySelector(".nav-overlay");
+
+hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    navOverlay.classList.toggle("active");
+    
+    // Blocăm scroll-ul pe pagină când meniul e deschis
+    if(navOverlay.classList.contains("active")) {
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
+    }
+});
+
+// Închidem meniul automat când se dă click pe un link
+document.querySelectorAll(".nav-menu a").forEach(n => n.addEventListener("click", () => {
+    hamburger.classList.remove("active");
+    navOverlay.classList.remove("active");
+    document.body.style.overflow = "auto";
+}));
+
+
+// --- LOGICA INTELIGENTĂ DARK MODE ---
+const btn = document.getElementById('themeToggleBtn');
+const sunIcon = btn.querySelector('.sun-icon');
+const moonIcon = btn.querySelector('.moon-icon');
+const themeText = btn.querySelector('.theme-text');
+
+function updateIcons(isDark) {
+    if (isDark) {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+        themeText.textContent = 'Mod Luminos';
+    } else {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+        themeText.textContent = 'Mod Întunecat';
+    }
+}
+
+function setTheme(isDark) {
+    if (isDark) {
+        document.documentElement.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'enabled');
+    } else {
+        document.documentElement.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'disabled');
+    }
+    updateIcons(isDark);
+}
+
+const savedTheme = localStorage.getItem('darkMode');
+const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+if (savedTheme === 'enabled') {
+    setTheme(true);
+} else if (savedTheme === 'disabled') {
+    setTheme(false);
+} else {
+    setTheme(prefersDarkScheme.matches);
+}
+
+btn.addEventListener('click', () => {
+    const isCurrentlyDark = document.documentElement.classList.contains('dark-mode');
+    setTheme(!isCurrentlyDark);
+});
+
+prefersDarkScheme.addEventListener('change', (e) => {
+    if (!localStorage.getItem('darkMode')) {
+        setTheme(e.matches);
+    }
+});
+</script>
+
 <div class="container">
 
     <div class="image-box">
@@ -259,58 +533,5 @@ html.dark-mode .theme-toggle-btn {
 }
 </style>
 
-<script>
-const btn = document.getElementById('themeToggleBtn');
-const sunIcon = btn.querySelector('.sun-icon');
-const moonIcon = btn.querySelector('.moon-icon');
-
-function updateIcons(isDark) {
-    if (isDark) {
-        sunIcon.style.display = 'block';
-        moonIcon.style.display = 'none';
-    } else {
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
-    }
-}
-
-function setTheme(isDark) {
-    if (isDark) {
-        document.documentElement.classList.add('dark-mode');
-        localStorage.setItem('darkMode', 'enabled');
-    } else {
-        document.documentElement.classList.remove('dark-mode');
-        localStorage.setItem('darkMode', 'disabled');
-    }
-    updateIcons(isDark);
-}
-
-// 1. Verificare inițială (Manuală sau Automată bazată pe sistemul telefonului/PC-ului)
-const savedTheme = localStorage.getItem('darkMode');
-const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-
-if (savedTheme === 'enabled') {
-    setTheme(true);
-} else if (savedTheme === 'disabled') {
-    setTheme(false);
-} else {
-    // Dacă utilizatorul nu a setat manual nimic, verificăm automat setările sistemului lui
-    setTheme(prefersDarkScheme.matches);
-}
-
-// 2. Schimbare manuală la click pe buton
-btn.addEventListener('click', () => {
-    const isCurrentlyDark = document.documentElement.classList.contains('dark-mode');
-    setTheme(!isCurrentlyDark);
-});
-
-// 3. Ascultă dacă utilizatorul își schimbă setarea de sistem live în telefon
-prefersDarkScheme.addEventListener('change', (e) => {
-    if (!localStorage.getItem('darkMode')) { // Schimbă doar dacă utilizatorul nu a ales deja manual
-        setTheme(e.matches);
-    }
-});
-</script>
-    
 </body>
 </html>
