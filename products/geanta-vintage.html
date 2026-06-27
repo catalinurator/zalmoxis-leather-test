@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geantă Clasică | Zalmoxis Leather</title>
-    
+    <title>Geanta | Zalmoxis Leather</title>
+
     <link rel="stylesheet" href="../style.css">
 
     <style>
@@ -13,13 +13,13 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background: #f3e7db;
             color: #2a1c16;
-            transition: background 0.3s, color 0.3s; /* Schimbare fluidă de culori */
+            transition: background 0.3s, color 0.3s; /* Tranziție fină când se schimbă tema */
         }
 
-        /* --- STILURI PENTRU DARK MODE --- */
+        /* --- REGULI PENTRU DARK MODE --- */
         html.dark-mode body {
-            background: #121212;
-            color: #e0e0e0;
+            background: #121212; /* Fundal închis la culoare */
+            color: #e0e0e0;      /* Text deschis la culoare */
         }
 
         html.dark-mode .price {
@@ -27,23 +27,7 @@
         }
 
         html.dark-mode .desc {
-            color: #b0a095;
-        }
-
-        html.dark-mode .color-btn {
-            border-color: #c49a6c;
-            color: #e0e0e0;
-        }
-
-        html.dark-mode .color-btn:hover {
-            background: #c49a6c;
-            color: #121212;
-        }
-
-        html.dark-mode .color-btn.active {
-            background: #c49a6c;
-            border-color: #c49a6c;
-            color: #121212;
+            color: #b0a095;      /* Text descriere mai lizibil pe fundal negru */
         }
 
         html.dark-mode .btn {
@@ -63,7 +47,7 @@
             margin-top: 100px !important; /* Spațiu adăugat pentru a nu intra sub header-ul fix */
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            gap: 40px;
             padding: 40px 20px;
             align-items: center;
         }
@@ -71,8 +55,8 @@
         /* IMAGE */
         .image-box img {
             width: 100%;
-            border-radius: 18px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             transition: 0.3s;
         }
 
@@ -82,64 +66,26 @@
 
         /* TEXT */
         h1 {
-            font-size: 38px;
+            font-size: 34px;
             margin: 0;
         }
 
         .price {
-            font-size: 24px;
-            margin: 15px 0;
-            font-weight: 700;
-            color: #5a3a2e;
+            font-size: 22px;
+            font-weight: 600;
+            margin: 10px 0;
         }
 
         .desc {
             color: #5a3a2e;
-            line-height: 1.6;
-            margin-top: 10px;
-        }
-
-        /* COLORS */
-        .colors {
-            margin-top: 25px;
-        }
-
-        .colors h3 {
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
-        .color-btn {
-            display: inline-block;
-            padding: 10px 16px;
-            border: 1px solid #9A6A3A;
-            background: transparent;
-            color: #2A211B;
-            text-decoration: none;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 14px;
-            transition: .35s;
-            margin-right: 5px;
-        }
-         
-        .color-btn:hover {
-            background: #9A6A3A;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .color-btn.active {
-            background: #c49a6c;
-            border-color: #c49a6c;
-            color: #2a1c16;
+            line-height: 1.5;
         }
 
         /* BUTTON */
         .btn {
             display: inline-block;
-            padding: 14px 36px;
-            margin-top: 20px; 
+            padding: 14px 28px;
+            margin-top: 20px;
             border: 1px solid #9A6A3A;
             background: transparent;
             color: #2A211B;
@@ -148,9 +94,9 @@
         }
 
         .btn:hover {
-            background: #9A6A3A;
-            color: white;
-            transform: translateY(-2px);
+            background:#9A6A3A;
+            color:white;
+            transform:translateY(-2px);
         }
 
         /* --- HEADER FIXED --- */
@@ -307,6 +253,7 @@
         }
     </style>
 </head>
+
 <body>
 
 <!-- HEADER DISCRET ȘI FIX -->
@@ -322,7 +269,7 @@
     </div>
 </header>
 
-<!-- MENIUL OVERLAY REFORMAȚI CU CLASE UNICE -->
+<!-- MENIUL OVERLAY CU CLASE UNICE -->
 <div class="zalmoxis-menu-overlay">
     <nav class="zalmoxis-links-container">
         <a href="../index.html">Acasă</a>
@@ -350,25 +297,19 @@
 <div class="container">
 
     <div class="image-box">
-        <img id="productImg" src="../image/geanta1.jpg" alt="Geanta">
+        <img id="productImg" src="../image/geanta1.jpg" alt="Geanta din piele naturală">
     </div>
 
     <div>
-        <h1>Geantă Clasică 1</h1>
+        <h1>Geanta </h1>
         <div class="price">1899 MDL</div>
+
         <div class="desc">
-            Geantă realizată manual din piele naturală premium full-grain. Dispune de compartimente inteligente și finisaje de înaltă calitate, fiind concepută pentru utilizarea zilnică.
+            Geanta din piele naturală, lucrată manual pentru rezistență.
         </div>
 
-        <div class="colors">
-            <h3>Culori disponibile:</h3>
-            <button class="color-btn active" onclick="changeColor(this,'black')">Negru</button>
-            <button class="color-btn" onclick="changeColor(this,'brown')">Maro</button>
-            <button class="color-btn" onclick="changeColor(this,'cognac')">Coniac</button>
-        </div>
-
-        <a class="btn" href="https://ig.me/m/zalmoxis_leather?text=Salut!%20Vreau%20sa%20comand%20Geanta%20clasica%201" target="_blank">
-            Comandă acum
+        <a class="btn" href="https://ig.me/m/zalmoxis_leather?text=Salut!%20Vreau%20sa%20comand%20geanta" target="_blank">
+            Comandă
         </a>
     </div>
 
@@ -397,7 +338,18 @@ document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEvent
     document.body.style.overflow = "auto";
 }));
 
-// 2. Logica Dark Mode completă (Schimbare automată + manuală din buton)
+// Închidere la click în afara meniului (inclusiv în părțile laterale stânga/dreapta ca în image_7ccca6.png)
+navOverlay.addEventListener("click", (e) => {
+    const aFostPeLinkSauButon = e.target.closest(".zalmoxis-links-container a") || e.target.closest("#themeToggleBtn");
+    
+    if (!aFostPeLinkSauButon) {
+        hamburger.classList.remove("active");
+        navOverlay.classList.remove("active");
+        document.body.style.overflow = "auto";
+    }
+});
+
+// 2. Logica Dark Mode completă
 const btn = document.getElementById('themeToggleBtn');
 const sunIcon = btn.querySelector('.sun-icon');
 const moonIcon = btn.querySelector('.moon-icon');
@@ -429,7 +381,6 @@ function setTheme(isDark) {
 const savedTheme = localStorage.getItem('darkMode');
 const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
-// Inițializare temă la deschidere
 if (savedTheme === 'enabled') {
     setTheme(true);
 } else if (savedTheme === 'disabled') {
@@ -438,31 +389,10 @@ if (savedTheme === 'enabled') {
     setTheme(prefersDarkScheme.matches);
 }
 
-// Click buton temă
 btn.addEventListener('click', () => {
     const isCurrentlyDark = document.documentElement.classList.contains('dark-mode');
     setTheme(!isCurrentlyDark);
 });
-
-// 3. Logica schimbării culorilor la produs
-function changeColor(el, color){
-    document.querySelectorAll(".color-btn").forEach(b => {
-        b.classList.remove("active");
-    });
-    el.classList.add("active");
-
-    let img = document.getElementById("productImg");
-    
-    if(color === "black"){
-        img.src = "../image/geanta1-negru.jpg"; 
-    }
-    if(color === "brown"){ 
-        img.src = "../image/geanta1-maro.jpg";  
-    }
-    if(color === "cognac"){
-        img.src = "../image/geanta1.jpg";        
-    }
-}
 </script>
 
 </body>
