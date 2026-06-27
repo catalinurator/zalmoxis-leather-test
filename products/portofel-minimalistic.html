@@ -218,5 +218,99 @@ if (localStorage.getItem('darkMode') === 'enabled') {
 }
 </script>
 
+    <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Schimbă tema">
+    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none; width:22px; height:22px;">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.344l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+    </svg>
+    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:22px; height:22px;">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+    </svg>
+</button>
+
+<style>
+.theme-toggle-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #2a1c16; /* Culoarea brandului tău */
+    color: #f3e7db;
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    z-index: 9999;
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+/* Stil când site-ul e pe modul întunecat */
+html.dark-mode .theme-toggle-btn {
+    background: #f3e7db;
+    color: #121212;
+}
+</style>
+
+<script>
+const btn = document.getElementById('themeToggleBtn');
+const sunIcon = btn.querySelector('.sun-icon');
+const moonIcon = btn.querySelector('.moon-icon');
+
+function updateIcons(isDark) {
+    if (isDark) {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+    } else {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+    }
+}
+
+function setTheme(isDark) {
+    if (isDark) {
+        document.documentElement.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'enabled');
+    } else {
+        document.documentElement.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'disabled');
+    }
+    updateIcons(isDark);
+}
+
+// 1. Verificare inițială (Manuală sau Automată bazată pe sistemul telefonului/PC-ului)
+const savedTheme = localStorage.getItem('darkMode');
+const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+if (savedTheme === 'enabled') {
+    setTheme(true);
+} else if (savedTheme === 'disabled') {
+    setTheme(false);
+} else {
+    // Dacă utilizatorul nu a setat manual nimic, verificăm automat setările sistemului lui
+    setTheme(prefersDarkScheme.matches);
+}
+
+// 2. Schimbare manuală la click pe buton
+btn.addEventListener('click', () => {
+    const isCurrentlyDark = document.documentElement.classList.contains('dark-mode');
+    setTheme(!isCurrentlyDark);
+});
+
+// 3. Ascultă dacă utilizatorul își schimbă setarea de sistem live în telefon
+prefersDarkScheme.addEventListener('change', (e) => {
+    if (!localStorage.getItem('darkMode')) { // Schimbă doar dacă utilizatorul nu a ales deja manual
+        setTheme(e.matches);
+    }
+});
+</script>
+    
 </body>
 </html>
