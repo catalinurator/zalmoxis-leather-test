@@ -317,9 +317,6 @@
 
 <!-- SCRIPTURI LOGICE PENTRU INTERACȚIUNE -->
 <script>
-
-// 2. ȘTERGE tot ce era scris aici în interior și Pune noul cod în locul lui:
-
 // 1. Logica meniului Hamburger
 const hamburger = document.querySelector(".hamburger");
 const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
@@ -341,51 +338,7 @@ document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEvent
     document.body.style.overflow = "auto";
 }));
 
-// Închidere la click în afara meniului (pe spațiul gol)
-// 1. Logica meniului Hamburger
-const hamburger = document.querySelector(".hamburger");
-const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
-
-hamburger.addEventListener("click", () => {
-    hamburger.classList.toggle("active");
-    navOverlay.classList.toggle("active");
-    
-    if(navOverlay.classList.contains("active")) {
-        document.body.style.overflow = "hidden";
-    } else {
-        document.body.style.overflow = "auto";
-    }
-});
-
-document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEventListener("click", () => {
-    hamburger.classList.remove("active");
-    navOverlay.classList.remove("active");
-    document.body.style.overflow = "auto";
-}));
-
-// 1. Logica meniului Hamburger
-const hamburger = document.querySelector(".hamburger");
-const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
-
-hamburger.addEventListener("click", () => {
-    hamburger.classList.toggle("active");
-    navOverlay.classList.toggle("active");
-    
-    if(navOverlay.classList.contains("active")) {
-        document.body.style.overflow = "hidden";
-    } else {
-        document.body.style.overflow = "auto";
-    }
-});
-
-document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEventListener("click", () => {
-    hamburger.classList.remove("active");
-    navOverlay.classList.remove("active");
-    document.body.style.overflow = "auto";
-}));
-
-// --- AICI ESTE MODIFICAREA NOUĂ ---
-// Închidere la click în afara meniului (inclusiv în părțile laterale stânga/dreapta)
+// Închidere la click în afara meniului (inclusiv în părțile laterale stânga/dreapta ca în image_7ccca6.png)
 navOverlay.addEventListener("click", (e) => {
     const aFostPeLinkSauButon = e.target.closest(".zalmoxis-links-container a") || e.target.closest("#themeToggleBtn");
     
@@ -394,13 +347,6 @@ navOverlay.addEventListener("click", (e) => {
         navOverlay.classList.remove("active");
         document.body.style.overflow = "auto";
     }
-});
-// ----------------------------------
-
-// 2. Logica Dark Mode completă... (continuă codul exact așa cum era înainte)
-// ----------------------------------
-
-// 2. Logica Dark Mode completă... (continuă codul exact așa cum era înainte)
 });
 
 // 2. Logica Dark Mode completă
@@ -447,13 +393,7 @@ btn.addEventListener('click', () => {
     const isCurrentlyDark = document.documentElement.classList.contains('dark-mode');
     setTheme(!isCurrentlyDark);
 });
-
-// !!! NOTĂ: La pagina de GENȚI și PORTOFEL, lasă sub această linie și funcția "changeColor" pe care o aveai deja acolo.
-
 </script>
-
-</body>
-</html>
 
 </body>
 </html>
