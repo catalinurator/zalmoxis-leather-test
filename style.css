@@ -243,24 +243,35 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
     .featured-image { order: 1; }
 }
 
-/* Stiluri pentru link-urile cardurilor de produse */
-.product-card-link {
+/* ==========================================================================
+   REPARARE CORECTĂ LINK-URI PRODUSE (Șterge textul albastru și sublinierile)
+   ========================================================================== */
+.products-section a,
+.products-grid a,
+.product-card-link,
+.product-card-link:visited,
+.product-card-link:hover,
+.product-card-link:active {
     text-decoration: none !important;
-    color: inherit;
-    display: block;
+    color: var(--color-dark) !important; /* Forțează culoarea setată pe site (Light/Dark mode) */
+    border-bottom: none !important;
+    outline: none !important;
 }
 
+/* Stil pentru textul "Vezi colecția →" ca să aibă o culoare maro/cognac frumoasă */
 .view-more {
     display: inline-block;
     margin-top: 15px;
     font-size: 0.85rem;
-    color: var(--color-accent);
+    color: var(--color-accent) !important;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: transform 0.3s ease;
+    text-decoration: none !important;
 }
 
+/* Efect de mișcare discret când pui degetul/mouse-ul pe card */
 .product-card:hover .view-more {
     transform: translateX(5px);
 }
