@@ -1,37 +1,36 @@
-/* Resetare elemente de bază */
+/* ==========================================================================
+   1. RESETARE ELEMENTE & VARIABLE (Light/Dark Mode)
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Culorile implicite (Light Mode / Modul Luminos) */
+/* Culorile implicite: Modul Luminos (Light Mode) */
 :root {
     --color-dark: #1a1512;      /* Negru-maroniu închis pentru text */
-    --color-accent: #8c6239;    /* Maro pielărie/cognac */
-    --color-light: #fbf9f6;     /* Fundal crem foarte deschis */
-    --color-grey: #666;
-    --color-card-bg: white;     /* Fundalul cardurilor de produse */
+    --color-accent: #8c6239;    /* Maro pielărie / cognac */
+    --color-light: #fbf9f6;     /* Fundal general crem foarte deschis */
+    --color-grey: #666;         /* Text secundar gri */
+    --color-card-bg: white;     /* Fundalul casetelor de produse/pași */
     --font-heading: 'Cinzel', serif;
     --font-body: 'Montserrat', sans-serif;
 }
 
-/* Trecerea automată la Dark Mode în funcție de setările telefonului */
+/* DETECTARE AUTOMATĂ: Modul Întunecat (Dark Mode) după setarea telefonului */
 @media (prefers-color-scheme: dark) {
     :root {
         --color-dark: #fbf9f6;      /* Textul devine deschis la culoare */
         --color-light: #120e0c;     /* Fundalul general devine foarte închis */
-        --color-card-bg: #1a1512;   /* Cardurile devin maro-închis în loc de alb */
-        --color-grey: #aaa;         /* Textul secundar devine mai ușor de citit */
-        /* Culoarea accent (maro cognac) rămâne aceeași pentru a păstra identitatea brandului */
-    }
-    
-    /* Schimbăm discret fundalul secțiunii "Despre Atelier" ca să se potrivească pe întuneric */
-    .about-section { 
-        background: #181310 !important; 
+        --color-card-bg: #1a1512;   /* Casetele devin maro-închis în loc de alb */
+        --color-grey: #aaa;         /* Textul secundar devine mai deschis/lizibil */
     }
 }
 
+/* ==========================================================================
+   2. STRUCTURĂ GENERALĂ & TIPOGRAFIE
+   ========================================================================== */
 html {
     scroll-behavior: smooth;
 }
@@ -41,6 +40,7 @@ body {
     background-color: var(--color-light);
     color: var(--color-dark);
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -53,7 +53,9 @@ body {
 .text-center { text-align: center; }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
 
-/* Butoane */
+/* ==========================================================================
+   3. BUTOANE
+   ========================================================================== */
 .btn {
     display: inline-block;
     padding: 12px 28px;
@@ -68,11 +70,13 @@ body {
     transition: all 0.3s ease;
     margin-top: 20px;
 }
-.btn:hover { background-color: var(--color-dark); }
-.btn-dark { background-color: var(--color-dark); }
-.btn-dark:hover { background-color: var(--color-accent); }
+.btn:hover { background-color: var(--color-dark); color: var(--color-light); }
+.btn-dark { background-color: var(--color-dark); color: var(--color-light); }
+.btn-dark:hover { background-color: var(--color-accent); color: white; }
 
-/* Header & Navigație */
+/* ==========================================================================
+   4. HEADER & NAVIGAȚIE
+   ========================================================================== */
 header {
     background-color: rgba(26, 21, 18, 0.95);
     position: fixed;
@@ -118,12 +122,15 @@ header {
     color: white;
     font-size: 1.8rem;
     cursor: pointer;
+    z-index: 1001;
 }
 
-/* Secțiunea Hero */
+/* ==========================================================================
+   5. SECȚIUNI PAGINĂ (Hero, Featured, Produse, Atelier, Proces)
+   ========================================================================== */
+/* Hero */
 .hero {
     height: 80vh;
-    /* Corectat: folderul image */
     background: linear-gradient(rgba(26, 21, 18, 0.6), rgba(26, 21, 18, 0.7)), url('image/atelier.jpg') center/cover no-repeat;
     display: flex;
     align-items: center;
@@ -147,17 +154,18 @@ header {
 }
 
 /* Produs Recomandat */
-.featured-product { background: white; }
+.featured-product { background-color: var(--color-card-bg); transition: background-color 0.3s; }
 .tag { font-size: 0.75rem; text-transform: uppercase; color: var(--color-accent); font-weight: 600; letter-spacing: 2px; }
 .featured-text h2 { font-family: var(--font-heading); font-size: 2.5rem; margin: 10px 0 20px; }
 .featured-image img { width: 100%; max-height: 450px; object-fit: cover; border-radius: 4px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
 
-/* Produse */
+/* Secțiunea Titluri */
 .section-title { font-family: var(--font-heading); font-size: 2.2rem; margin-bottom: 40px; text-align: center; position: relative; }
 .section-title::after { content: ''; display: block; width: 50px; height: 2px; background: var(--color-accent); margin: 15px auto 0; }
 
+/* Grilă Produse */
 .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-.product-card { background: white; padding: 20px; text-align: center; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); transition: transform 0.3s; }
+.product-card { background-color: var(--color-card-bg); padding: 20px; text-align: center; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); transition: transform 0.3s, background-color 0.3s; }
 .product-card:hover { transform: translateY(-5px); }
 .product-img-box { height: 250px; margin-bottom: 20px; overflow: hidden; border-radius: 2px; }
 .product-img-box img { width: 100%; height: 100%; object-fit: cover; }
@@ -165,34 +173,43 @@ header {
 .product-card p { color: var(--color-grey); font-size: 0.9rem; }
 
 /* Despre Atelier */
-.about-section { background: #f2eee9; }
+.about-section { background-color: #f2eee9; transition: background-color 0.3s; }
+@media (prefers-color-scheme: dark) {
+    .about-section { background-color: #181310; } /* Ajustare nuanță pe modul întunecat */
+}
 .about-image img { width: 100%; max-height: 400px; object-fit: cover; border-radius: 4px; }
 .about-text h2 { font-family: var(--font-heading); font-size: 2.2rem; margin-bottom: 20px; }
-.about-text p { margin-bottom: 15px; font-size: 0.95rem; color: #444; }
+.about-text p { margin-bottom: 15px; font-size: 0.95rem; }
 
 /* Proces Tehnologic */
 .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; }
-.process-step { background: white; padding: 30px 20px; border-radius: 4px; border-top: 3px solid var(--color-accent); position: relative; }
+.process-step { background-color: var(--color-card-bg); padding: 30px 20px; border-radius: 4px; border-top: 3px solid var(--color-accent); position: relative; transition: background-color 0.3s; }
 .step-number { font-family: var(--font-heading); font-size: 2.5rem; color: rgba(140, 98, 57, 0.2); font-weight: 700; position: absolute; top: 10px; right: 20px; }
 .process-step h3 { font-size: 1.1rem; margin-bottom: 10px; font-weight: 600; margin-top: 10px; }
 .process-step p { font-size: 0.85rem; color: var(--color-grey); }
 
-/* Contact */
-.contact-section { background: var(--color-dark); color: white; padding: 80px 0; }
+/* ==========================================================================
+   6. CONTACT & SUBSOL
+   ========================================================================== */
+.contact-section { background-color: #1a1512; color: #fbf9f6; padding: 80px 0; }
 .contact-section h2 { font-family: var(--font-heading); font-size: 2.2rem; margin-bottom: 15px; }
 .contact-section p { color: #ccc; max-width: 600px; margin: 0 auto 30px; }
-.btn-instagram { background-color: #cb2027; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+.btn-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; border: none; }
 .instagram-handle { margin-top: 10px !important; font-size: 0.85rem; color: var(--color-accent) !important; letter-spacing: 1px; }
 
-/* Subsol */
-footer { background: #110e0c; color: #555; text-align: center; padding: 25px 0; font-size: 0.8rem; border-top: 1px solid #221c18; }
+footer { background-color: #110e0c; color: #555; text-align: center; padding: 25px 0; font-size: 0.8rem; border-top: 1px solid #221c18; }
 
-/* Responsivitate pentru ecrane mici (Telefoane/Tablete) */
+/* ==========================================================================
+   7. RESPONSIVITATE PENTRU TABLETE ȘI TELEFOANE
+   ========================================================================== */
 @media (max-width: 768px) {
     .grid-2 { grid-template-columns: 1fr; }
     .hero h1 { font-size: 2.3rem; }
     .slogan { font-size: 1rem; }
-    .menu-toggle { display: block; }
+    
+    .menu-toggle { 
+        display: block !important; 
+    }
     
     .nav-menu {
         display: none;
@@ -201,15 +218,24 @@ footer { background: #110e0c; color: #555; text-align: center; padding: 25px 0; 
         top: 100%;
         left: 0;
         width: 100%;
-        background-color: var(--color-dark);
+        background-color: #1a1512;
         padding: 20px 0;
         border-bottom: 2px solid var(--color-accent);
     }
     
     .nav-menu.active { 
-    display: flex !important; 
-}
-    .nav-menu a { margin: 12px 0; text-align: center; width: 100%; display: block; font-size: 0.9rem; }
+        display: flex !important; 
+    }
+    
+    .nav-menu a { 
+        margin: 12px 0; 
+        text-align: center; 
+        width: 100%; 
+        display: block; 
+        font-size: 0.9rem; 
+        color: #e5e5e5;
+    }
+    
     .featured-text { order: 2; text-align: center; }
     .featured-image { order: 1; }
 }
