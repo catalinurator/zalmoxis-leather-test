@@ -3,67 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofel Mașină - Zalmoxis Leather</title>
+    <title>Portofel Auto - Zalmoxis Leather</title>
 
     <link rel="stylesheet" href="../style.css">
 
     <style>
+        /* --- STILURI GENERALE ȘI PAGINĂ --- */
         body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background: #f3e7db;
             color: #2a1c16;
-            transition: background 0.3s, color 0.3s; /* Tranziție fină la schimbarea temei */
+            transition: background 0.3s, color 0.3s;
         }
 
-        /* --- STILURI PENTRU DARK MODE --- */
         html.dark-mode body {
             background: #121212;
             color: #e0e0e0;
         }
 
-        html.dark-mode .price {
-            color: #c49a6c;
-        }
-
-        html.dark-mode .desc {
-            color: #b0a095;
-        }
-
-        html.dark-mode .color-btn {
-            border-color: #c49a6c;
-            color: #e0e0e0;
-        }
-
-        html.dark-mode .color-btn:hover {
-            background: #c49a6c;
-            color: #121212;
-        }
-
-        html.dark-mode .color-btn.active {
-            background: #c49a6c;
-            border-color: #c49a6c;
-            color: #121212;
-        }
-
-        html.dark-mode .btn {
-            border-color: #c49a6c;
-            color: #e0e0e0;
-        }
-
-        html.dark-mode .btn:hover {
-            background: #c49a6c;
-            color: #121212;
-        }
-        /* -------------------------------- */
-
         .container {
             max-width: 1100px;
-            margin: 100px auto;
+            margin: 0 auto;
+            margin-top: 80px !important; 
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
-            padding: 20px;
+            padding: 40px 20px;
             align-items: center;
         }
 
@@ -79,7 +45,7 @@
             transform: scale(1.02);
         }
 
-        /* TEXT */
+        /* TEXT ȘI DETALII PRODUS */
         h1 {
             font-size: 38px;
             margin: 0;
@@ -91,12 +57,14 @@
             font-weight: 700;
             color: #5a3a2e;
         }
+        html.dark-mode .price { color: #c49a6c; }
 
         .desc {
             color: #5a3a2e;
             line-height: 1.6;
             margin-top: 10px;
         }
+        html.dark-mode .desc { color: #b0a095; }
 
         /* COLORS */
         .colors {
@@ -114,7 +82,6 @@
             border: 1px solid #9A6A3A;
             background: transparent;
             color: #2A211B;
-            text-decoration: none;
             cursor: pointer;
             font-family: inherit;
             font-size: 14px;
@@ -134,7 +101,17 @@
             color: #2a1c16;
         }
 
-        /* BUTTON */
+        html.dark-mode .color-btn {
+            border-color: #c49a6c;
+            color: #e0e0e0;
+        }
+        html.dark-mode .color-btn:hover,
+        html.dark-mode .color-btn.active {
+            background: #c49a6c;
+            color: #121212;
+        }
+
+        /* BUTTON CUMPĂRĂ/COMANDĂ */
         .btn {
             display: inline-block;
             padding: 14px 36px;
@@ -152,16 +129,206 @@
             transform: translateY(-2px);
         }
 
-        /* MOBILE */
+        html.dark-mode .btn {
+            border-color: #c49a6c;
+            color: #e0e0e0;
+        }
+        html.dark-mode .btn:hover {
+            background: #c49a6c;
+            color: #121212;
+        }
+
+        /* --- HEADER FIXED --- */
+        .main-header {
+            background: #f3e7db; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10000;
+            border-bottom: 1px solid rgba(42, 28, 22, 0.08); 
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        html.dark-mode .main-header {
+            background: #121212; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .header-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 12px 20px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            color: #2a1c16; 
+            letter-spacing: 3px;
+            transition: color 0.3s;
+        }
+        html.dark-mode .logo { color: #e0e0e0; }
+
+        /* HAMBURGER DISCRET */
+        .hamburger {
+            display: block;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 6px;
+            z-index: 10002 !important; /* Îl punem peste absolut orice */
+        }
+
+        .bar {
+            display: block;
+            width: 24px;
+            height: 1.5px;
+            margin: 5px auto;
+            transition: all 0.3s ease-in-out;
+            background-color: #2a1c16;
+        }
+        html.dark-mode .bar { background-color: #e0e0e0; }
+
+        .hamburger.active .bar:nth-child(2) { opacity: 0; }
+        .hamburger.active .bar:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .hamburger.active .bar:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        /* --- OVERLAY UNIC PENTRU EVITAREA CONFLICTELOR DIN CSS-UL EXTERN --- */
+        .zalmoxis-menu-overlay {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100vh !important;
+            background-color: #f3e7db !important;
+            z-index: 10001 !important; /* Sub buton, dar peste site */
+            
+            /* Ascundere inițială completă */
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transform: translateY(-20px) !important;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease !important;
+            
+            /* Forțare aranjare text */
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        html.dark-mode .zalmoxis-menu-overlay {
+            background-color: #121212 !important;
+        }
+
+        /* Stilul când meniul este deschis */
+        .zalmoxis-menu-overlay.active {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateY(0) !important;
+        }
+
+        .zalmoxis-links-container {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 30px !important;
+            width: 100% !important;
+        }
+
+        .zalmoxis-links-container a {
+            text-decoration: none !important;
+            color: #2a1c16 !important;
+            font-size: 26px !important;
+            font-weight: 500 !important;
+            letter-spacing: 1px !important;
+            transition: color 0.3s !important;
+            display: block !important;
+            text-align: center !important;
+        }
+        html.dark-mode .zalmoxis-links-container a { color: #e0e0e0 !important; }
+        .zalmoxis-links-container a:hover { color: #9A6A3A !important; }
+
+        .menu-spacer {
+            height: 10px;
+        }
+
+        /* BUTONUL DIN INTERIORUL MENIULUI */
+        .theme-toggle-inline {
+            background: transparent !important;
+            border: 1px solid rgba(154, 106, 58, 0.4) !important;
+            padding: 12px 24px !important;
+            border-radius: 25px !important;
+            color: #5a3a2e !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            font-family: inherit !important;
+            font-size: 15px !important;
+            transition: all 0.3s !important;
+        }
+
+        html.dark-mode .theme-toggle-inline {
+            border-color: rgba(196, 154, 108, 0.4) !important;
+            color: #b0a095 !important;
+        }
+
+        /* RESPONSIVE DESIGN */
         @media(max-width:768px){
             .container {
                 grid-template-columns: 1fr;
                 text-align: center;
+                margin-top: 60px !important;
+                padding-top: 20px;
+            }
+            .zalmoxis-links-container a {
+                font-size: 24px !important;
             }
         }
     </style>
 </head>
 <body>
+
+<header class="main-header">
+    <div class="header-container">
+        <a href="../index.html" class="logo">ZALMOXIS</a>
+        
+        <button class="hamburger" aria-label="Deschide meniul">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </div>
+</header>
+
+<div class="zalmoxis-menu-overlay">
+    <nav class="zalmoxis-links-container">
+        <a href="../index.html">Acasă</a>
+        <a href="../index.html#produse">Produse</a>
+        <a href="../index.html#despre">Despre Noi</a>
+        <a href="../index.html#contact">Contact</a>
+        
+        <div class="menu-spacer"></div>
+
+        <button id="themeToggleBtn" class="theme-toggle-inline" aria-label="Schimbă tema">
+            <span class="theme-text">Mod Întunecat</span>
+            <span class="theme-icons">
+                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none; width:18px; height:18px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.344l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                </svg>
+                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px; height:18px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </span>
+        </button>
+    </nav>
+</div>
 
 <div class="container">
 
@@ -170,8 +337,8 @@
     </div>
 
     <div>
-        <h1>Portofel Mașină</h1>
-        <div class="price">549 MDL</div>
+        <h1>Portmoneu Auto</h1>
+        <div class="price">389 MDL</div>
         <div class="desc">
             Portofel realizat manual din piele naturală full-grain. Design minimalist, cusut manual pentru durabilitate maximă.
         </div>
@@ -183,7 +350,7 @@
             <button class="color-btn" onclick="changeColor(this,'cognac')">Coniac</button>
         </div>
 
-        <a class="btn" href="https://ig.me/m/zalmoxis_leather?text=Salut!%20Vreau%20sa%20comand%20Portofel%20Masina" target="_blank">
+        <a class="btn" href="https://ig.me/m/zalmoxis_leather?text=Salut!%20Vreau%20sa%20comand%20Portofel%20minimalist" target="_blank">
             Comandă
         </a>
     </div>
@@ -191,29 +358,82 @@
 </div>
 
 <script>
+const hamburger = document.querySelector(".hamburger");
+const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
+
+hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    navOverlay.classList.toggle("active");
+    
+    if(navOverlay.classList.contains("active")) {
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
+    }
+});
+
+document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEventListener("click", () => {
+    hamburger.classList.remove("active");
+    navOverlay.classList.remove("active");
+    document.body.style.overflow = "auto";
+}));
+
+// Logica Dark Mode
+const btn = document.getElementById('themeToggleBtn');
+const sunIcon = btn.querySelector('.sun-icon');
+const moonIcon = btn.querySelector('.moon-icon');
+const themeText = btn.querySelector('.theme-text');
+
+function updateIcons(isDark) {
+    if (isDark) {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+        themeText.textContent = 'Mod Luminos';
+    } else {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+        themeText.textContent = 'Mod Întunecat';
+    }
+}
+
+function setTheme(isDark) {
+    if (isDark) {
+        document.documentElement.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'enabled');
+    } else {
+        document.documentElement.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'disabled');
+    }
+    updateIcons(isDark);
+}
+
+const savedTheme = localStorage.getItem('darkMode');
+const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+if (savedTheme === 'enabled') {
+    setTheme(true);
+} else if (savedTheme === 'disabled') {
+    setTheme(false);
+} else {
+    setTheme(prefersDarkScheme.matches);
+}
+
+btn.addEventListener('click', () => {
+    const isCurrentlyDark = document.documentElement.classList.contains('dark-mode');
+    setTheme(!isCurrentlyDark);
+});
+
+// Schimbare culori produs
 function changeColor(el, color){
-    // Resetăm clasa active de pe toate butoanele
     document.querySelectorAll(".color-btn").forEach(b => {
         b.classList.remove("active");
     });
     el.classList.add("active");
 
     let img = document.getElementById("productImg");
-    
-    if(color === "black"){
-        img.src = "../image/portmoneu-masina-negru.jpg";
-    }
-    if(color === "brown"){ 
-        img.src = "../image/portmomeu-masina-maro.jpg";
-    }
-    if(color === "cognac"){
-        img.src = "../image/portmoneu-masina-cognac.jpg";
-    }
-}
-
-// Verifică starea temei la încărcarea paginii
-if (localStorage.getItem('darkMode') === 'enabled') {
-    document.documentElement.classList.add('dark-mode');
+    if(color === "black") img.src = "../image/portmoneu-masina-negru.jpg";
+    if(color === "brown") img.src = "../image/portmoneu-masina-negru.jpg";
+    if(color === "cognac") img.src = "../image/portmoneu-masina-negru.jpg";
 }
 </script>
 
