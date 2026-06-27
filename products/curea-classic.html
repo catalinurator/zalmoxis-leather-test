@@ -317,6 +317,9 @@
 
 <!-- SCRIPTURI LOGICE PENTRU INTERACȚIUNE -->
 <script>
+
+// 2. ȘTERGE tot ce era scris aici în interior și Pune noul cod în locul lui:
+
 // 1. Logica meniului Hamburger
 const hamburger = document.querySelector(".hamburger");
 const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
@@ -338,7 +341,16 @@ document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEvent
     document.body.style.overflow = "auto";
 }));
 
-// 2. Logica Dark Mode completă (Schimbare automată + manuală din buton)
+// Închidere la click în afara meniului (pe spațiul gol)
+navOverlay.addEventListener("click", (e) => {
+    if (e.target === navOverlay) {
+        hamburger.classList.remove("active");
+        navOverlay.classList.remove("active");
+        document.body.style.overflow = "auto";
+    }
+});
+
+// 2. Logica Dark Mode completă
 const btn = document.getElementById('themeToggleBtn');
 const sunIcon = btn.querySelector('.sun-icon');
 const moonIcon = btn.querySelector('.moon-icon');
@@ -370,7 +382,6 @@ function setTheme(isDark) {
 const savedTheme = localStorage.getItem('darkMode');
 const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
-// Inițializare temă la deschidere
 if (savedTheme === 'enabled') {
     setTheme(true);
 } else if (savedTheme === 'disabled') {
@@ -379,12 +390,17 @@ if (savedTheme === 'enabled') {
     setTheme(prefersDarkScheme.matches);
 }
 
-// Click buton temă
 btn.addEventListener('click', () => {
     const isCurrentlyDark = document.documentElement.classList.contains('dark-mode');
     setTheme(!isCurrentlyDark);
 });
+
+// !!! NOTĂ: La pagina de GENȚI și PORTOFEL, lasă sub această linie și funcția "changeColor" pe care o aveai deja acolo.
+
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
