@@ -243,3 +243,8 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
     .featured-text { order: 2; text-align: center; }
     .featured-image { order: 1; }
 }
+
+/* Elimină linia de sub logo-ul link */
+a.logo {
+    text-decoration: none !important;
+}
