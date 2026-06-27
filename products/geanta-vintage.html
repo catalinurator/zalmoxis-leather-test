@@ -4,13 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geantă Clasică | Zalmoxis Leather</title>
+    
+    <link rel="stylesheet" href="../style.css">
+
     <style>
         body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background: #f3e7db;
             color: #2a1c16;
+            transition: background 0.3s, color 0.3s; /* Schimbare fluidă de culori */
         }
+
+        /* --- STILURI PENTRU DARK MODE --- */
+        html.dark-mode body {
+            background: #121212;
+            color: #e0e0e0;
+        }
+
+        html.dark-mode .price {
+            color: #c49a6c;
+        }
+
+        html.dark-mode .desc {
+            color: #b0a095;
+        }
+
+        html.dark-mode .color-btn {
+            border-color: #c49a6c;
+            color: #e0e0e0;
+        }
+
+        html.dark-mode .color-btn:hover {
+            background: #c49a6c;
+            color: #121212;
+        }
+
+        html.dark-mode .color-btn.active {
+            background: #c49a6c;
+            border-color: #c49a6c;
+            color: #121212;
+        }
+
+        html.dark-mode .btn {
+            border-color: #c49a6c;
+            color: #e0e0e0;
+        }
+
+        html.dark-mode .btn:hover {
+            background: #c49a6c;
+            color: #121212;
+        }
+        /* -------------------------------- */
 
         .container {
             max-width: 1100px;
@@ -121,12 +166,10 @@
 
 <div class="container">
 
-    <!-- IMAGE -->
     <div class="image-box">
         <img id="productImg" src="../image/geanta1.jpg" alt="Geanta">
     </div>
 
-    <!-- INFO -->
     <div>
         <h1>Geantă Clasică 1</h1>
         <div class="price">1899 MDL</div>
@@ -134,7 +177,6 @@
             Geantă realizată manual din piele naturală premium full-grain. Dispune de compartimente inteligente și finisaje de înaltă calitate, fiind concepută pentru utilizarea zilnică.
         </div>
 
-        <!-- COLORS -->
         <div class="colors">
             <h3>Culori disponibile:</h3>
             <button class="color-btn active" onclick="changeColor(this,'black')">Negru</button>
@@ -142,7 +184,6 @@
             <button class="color-btn" onclick="changeColor(this,'cognac')">Coniac</button>
         </div>
 
-        <!-- BUTTON (Reparat textul pentru Instagram) -->
         <a class="btn" href="https://ig.me/m/zalmoxis_leather?text=Salut!%20Vreau%20sa%20comand%20Geanta%20clasica%201" target="_blank">
             Comandă acum
         </a>
@@ -161,16 +202,21 @@ function changeColor(el, color){
 
     let img = document.getElementById("productImg");
     
-    // Schimbă aici numele fișierelor cu pozele tale reale din folderul image
+    // Înlocuiește denumirile de mai jos cu cele reale când adaugi imaginile în folder
     if(color === "black"){
-        img.src = "../image/geanta1.jpg"; // <-- Schimbă dacă ai alt nume
+        img.src = "../image/geanta1-negru.jpg"; 
     }
     if(color === "brown"){ 
-        img.src = "../image/geanta1.jpg";  // <-- Schimbă dacă ai alt nume
+        img.src = "../image/geanta1-maro.jpg";  
     }
     if(color === "cognac"){
-        img.src = "../image/geanta1.jpg";        // <-- Poza implicită/Coniac
+        img.src = "../image/geanta1.jpg";        
     }
+}
+
+// Verifică instant starea temei din stocarea locală la deschiderea paginii
+if (localStorage.getItem('darkMode') === 'enabled') {
+    document.documentElement.classList.add('dark-mode');
 }
 </script>
 
