@@ -78,9 +78,95 @@
 </head>
 <body>
 
-    <header>
-        <div class="nav-container">
-            <a href="#" class="logo" style="text-decoration: none !important; border: none !important;">ZALMOXIS</a>
+    <style>
+    /* --- STILUL INTEGRAT PENTRU DARK MODE (DESKTOP + MOBIL IN HAMPURGER) --- */
+    .theme-toggle-header {
+        background: transparent !important;
+        border: none !important;
+        cursor: pointer !important;
+        padding: 8px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 40px;
+        height: 40px;
+        border-radius: 50% !important;
+        color: #2a1c16 !important; /* Maro închis implicit */
+        transition: color 0.3s ease, background-color 0.3s ease !important;
+        z-index: 1002;
+    }
+
+    html.dark-mode .theme-toggle-header {
+        color: #e0e0e0 !important;
+    }
+
+    /* Iconițele din interior */
+    .theme-toggle-header svg {
+        position: absolute !important;
+        width: 22px !important;
+        height: 22px !important;
+        transition: transform 0.5s ease, opacity 0.5s ease !important;
+    }
+
+    /* Logica vizuală Soare / Lună */
+    .theme-toggle-header .sun-icon {
+        opacity: 0 !important;
+        transform: rotate(90deg) !important;
+    }
+
+    .theme-toggle-header .moon-icon {
+        opacity: 1 !important;
+        transform: rotate(0deg) !important;
+    }
+
+    html.dark-mode .theme-toggle-header .sun-icon {
+        opacity: 1 !important;
+        transform: rotate(0deg) !important;
+    }
+
+    html.dark-mode .theme-toggle-header .moon-icon {
+        opacity: 0 !important;
+        transform: rotate(-90deg) !important;
+    }
+
+    /* COMPORTAMENT PE COMPUTER (Ecran Mare) */
+    @media (min-width: 769px) {
+        .theme-toggle-header {
+            position: absolute !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            right: 20px !important; /* Îl fixează în colțul din dreapta pe PC */
+        }
+        .theme-toggle-header:hover {
+            background-color: rgba(154, 106, 58, 0.1) !important;
+        }
+    }
+
+    /* COMPORTAMENT PE TELEFON (În interiorul meniului) */
+    @media (max-width: 768px) {
+        .theme-toggle-header {
+            position: relative !important;
+            margin: 20px auto 0 auto !important; /* Îl centrează frumos jos, în meniul deschis */
+            padding: 12px !important;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(154, 106, 58, 0.1) !important; /* Un fundal discret pe mobil */
+        }
+    }
+</style>
+
+<header>
+    <div class="nav-container">
+        <a href="#" class="logo" style="text-decoration: none !important; border: none !important;">ZALMOXIS</a>
+        
+        <button class="menu-toggle" aria-label="Deschide meniul">☰</button>
+        
+        <nav class="nav-menu">
+            <a href="index.html" class="active">Acasă</a>
+            <a href="#produse">Produse</a>
+            <a href="#atelier">Atelier</a>
+            <a href="#proces">Cum lucrăm</a>
+            <a href="#contact">Contact</a>
             
             <button id="headerThemeToggle" class="theme-toggle-header" aria-label="Schimbă tema">
                 <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -90,17 +176,9 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                 </svg>
             </button>
-
-            <button class="menu-toggle" aria-label="Deschide meniul">☰</button>
-            <nav class="nav-menu">
-                <a href="index.html" class="active">Acasă</a>
-                <a href="#produse">Produse</a>
-                <a href="#atelier">Atelier</a>
-                <a href="#proces">Cum lucrăm</a>
-                <a href="#contact">Contact</a>
-            </nav>
-        </div>
-    </header>
+        </nav>
+    </div>
+</header>
 
     <section class="hero">
         <div class="hero-content">
