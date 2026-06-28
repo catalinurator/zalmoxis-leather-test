@@ -588,7 +588,7 @@ btn.addEventListener('click', () => {
     setTheme(!isCurrentlyDark);
 });
 
-// 3. Logica Pop-up-urilor
+// 3. Logica Pop-up-urilor (Corectată pentru Mobil)
 const openOrderBtn = document.getElementById("openOrderPopup");
 const closeOrderBtn = document.getElementById("closeOrderPopup");
 const orderPopup = document.getElementById("orderPopup");
@@ -607,16 +607,24 @@ function closeModal(modal) {
     document.body.style.overflow = "auto";
 }
 
+// Deschidere/Închidere Comandă
 openOrderBtn.addEventListener("click", () => openModal(orderPopup));
 closeOrderBtn.addEventListener("click", () => closeModal(orderPopup));
-orderPopup.addEventListener("click", (e) => {
-    if (e.target === orderPopup) closeModal(orderPopup);
-});
 
+// Deschidere/Închidere Chat
 openChatBtn.addEventListener("click", () => openModal(socialPopup));
 closeChatBtn.addEventListener("click", () => closeModal(socialPopup));
-socialPopup.addEventListener("click", (e) => {
-    if (e.target === socialPopup) closeModal(socialPopup);
+
+// !!! REZOLVAREA PENTRU MOBIL !!! 
+// Închidem pop-up-ul doar dacă click-ul a fost STRICT pe fundalul exterior negru/transparent,
+// fără a bloca acțiunile elementelor din interior (linkuri, butoane).
+window.addEventListener("click", (e) => {
+    if (e.target === orderPopup) {
+        closeModal(orderPopup);
+    }
+    if (e.target === socialPopup) {
+        closeModal(socialPopup);
+    }
 });
 </script>
 
