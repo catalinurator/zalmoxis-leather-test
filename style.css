@@ -287,20 +287,3 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
     transform: translateX(5px);
 }
 
-.theme-toggle-btn {
-    background: transparent;
-    border: 1px solid currentColor;
-    color: inherit;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 20px;
-    font-size: 1.2rem;
-    margin-left: 20px;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-}
-
-.theme-toggle-btn:hover {
-    background: rgba(128, 128, 128, 0.1);
-}
