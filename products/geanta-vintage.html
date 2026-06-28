@@ -16,6 +16,12 @@
             transition: background 0.3s, color 0.3s;
         }
 
+        /* --- REZOLVARE CLICK MOBIL ȘI TOUCH STIL --- */
+        .btn-main, .channel-link, .hamburger, .theme-toggle-inline, .zalmoxis-links-container a {
+            -webkit-tap-highlight-color: transparent; /* Scoate overlay-ul albastru nativ pe iOS */
+            cursor: pointer;
+        }
+
         /* --- REGULI PENTRU DARK MODE --- */
         html.dark-mode body {
             background: #121212;
@@ -487,7 +493,6 @@
         <p>Alege platforma preferată pentru a lua legătura direct cu noi.</p>
         
         <div class="social-channels-grid">
-            <!-- CORECTAT: Acum folosește linkul direct de profil sigur pentru mobil + desktop -->
             <a href="https://www.instagram.com/zalmoxis_leather/" target="_blank" class="channel-link instagram"> 
                 <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                 Instagram
@@ -513,10 +518,10 @@
 const hamburger = document.querySelector(".hamburger");
 const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
 
-hamburger.addEventListener("click", () => {
+hamburger.addEventListener("click", (e) => {
+    e.stopPropagation(); // Previne problemele de click fantomă pe mobil
     hamburger.classList.toggle("active");
     
-    // Corectat: adăugăm/eliminăm flex și display fizic în mod dinamic
     if (navOverlay.classList.contains("active")) {
         hamburger.classList.remove("active");
         navOverlay.classList.remove("active");
@@ -547,7 +552,7 @@ navOverlay.addEventListener("click", (e) => {
     }
 });
 
-// 2. Logica Dark Mode
+// 2. Logica Dark Mode (Automatizat + Manual)
 const btn = document.getElementById('themeToggleBtn');
 const sunIcon = btn.querySelector('.sun-icon');
 const moonIcon = btn.querySelector('.moon-icon');
@@ -568,28 +573,48 @@ function updateIcons(isDark) {
 function setTheme(isDark) {
     if (isDark) {
         document.documentElement.classList.add('dark-mode');
-        localStorage.setItem('darkMode', 'enabled');
     } else {
         document.documentElement.classList.remove('dark-mode');
-        localStorage.setItem('darkMode', 'disabled');
     }
     updateIcons(isDark);
 }
 
-const savedTheme = localStorage.getItem('darkMode');
-const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+// Inițializare temă la încărcare
+function initTheme() {
+    const savedTheme = localStorage.getItem('darkMode');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-if (savedTheme === 'enabled') {
-    setTheme(true);
-} else if (savedTheme === 'disabled') {
-    setTheme(false);
-} else {
-    setTheme(prefersDarkScheme.matches);
+    if (savedTheme === 'enabled') {
+        setTheme(true);
+    } else if (savedTheme === 'disabled') {
+        setTheme(false);
+    } else {
+        // Dacă nu s-a salvat manual nimic, preia AUTOMAT setarea telefonului
+        setTheme(prefersDarkScheme);
+    }
 }
 
-btn.addEventListener('click', () => {
+// Rulează funcția imediat ce se încarcă scriptul
+initTheme();
+
+// Comutator manual (La click pe buton)
+btn.addEventListener('click', (e) => {
+    e.stopPropagation();
     const isCurrentlyDark = document.documentElement.classList.contains('dark-mode');
-    setTheme(!isCurrentlyDark);
+    if (!isCurrentlyDark) {
+        setTheme(true);
+        localStorage.setItem('darkMode', 'enabled');
+    } else {
+        setTheme(false);
+        localStorage.setItem('darkMode', 'disabled');
+    }
+});
+
+// Ascultă în timp real dacă telefonul își schimbă modul (zi/noapte) automat
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!localStorage.getItem('darkMode')) { // Doar dacă nu a ales deja manual de pe buton
+        setTheme(e.matches);
+    }
 });
 
 // 3. Logica Pop-up-urilor
