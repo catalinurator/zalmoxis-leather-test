@@ -10,291 +10,93 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* --- STILUL PENTRU BUTONUL ELEGANT DE DARK MODE DIN HEADER --- */
+        /* Stilul consolidat pentru butonul de Dark Mode */
         .theme-toggle-header {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: transparent !important;
+            border: none !important;
+            cursor: pointer !important;
+            padding: 8px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
             width: 40px;
             height: 40px;
-            border-radius: 50%;
-            color: #2a1c16; /* Culoarea maro închis nativă */
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            border-radius: 50% !important;
+            color: #2a1c16 !important;
+            transition: all 0.3s ease !important;
             z-index: 1002;
-            margin-left: auto; /* Îl împinge automat în spațiul gol din dreapta */
-            margin-right: 15px;
         }
 
         html.dark-mode .theme-toggle-header {
-            color: #e0e0e0;
+            color: #e0e0e0 !important;
         }
 
-        .theme-toggle-header:hover {
-            background-color: rgba(154, 106, 58, 0.1); /* Efect fin de hover premium */
-            transform: scale(1.05);
-        }
-
-        /* Animația fluidă a iconițelor */
         .theme-toggle-header svg {
-            position: absolute;
-            width: 21px;
-            height: 21px;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+            position: absolute !important;
+            width: 22px !important;
+            height: 22px !important;
+            transition: transform 0.5s ease, opacity 0.5s ease !important;
         }
 
-        /* Mod Luminat (Implicit) -> Luna se vede, Soarele e ascuns și rotit */
-        .theme-toggle-header .sun-icon {
-            opacity: 0;
-            transform: rotate(90deg);
+        .theme-toggle-header .sun-icon { opacity: 0 !important; transform: rotate(90deg) !important; }
+        .theme-toggle-header .moon-icon { opacity: 1 !important; transform: rotate(0deg) !important; }
+
+        html.dark-mode .theme-toggle-header .sun-icon { opacity: 1 !important; transform: rotate(0deg) !important; }
+        html.dark-mode .theme-toggle-header .moon-icon { opacity: 0 !important; transform: rotate(-90deg) !important; }
+
+        /* Desktop: Poziție fixă în dreapta sus */
+        @media (min-width: 769px) {
+            .theme-toggle-header {
+                position: absolute !important;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+                right: 20px !important;
+            }
+            .theme-toggle-header:hover { background-color: rgba(154, 106, 58, 0.1) !important; }
         }
 
-        .theme-toggle-header .moon-icon {
-            opacity: 1;
-            transform: rotate(0deg);
-        }
-
-        /* Mod Întunecat -> Soarele devine vizibil, Luna se rotește și dispare */
-        html.dark-mode .theme-toggle-header .sun-icon {
-            opacity: 1;
-            transform: rotate(0deg);
-        }
-
-        html.dark-mode .theme-toggle-header .moon-icon {
-            opacity: 0;
-            transform: rotate(-90deg);
-        }
-
+        /* Mobil: Poziție în interiorul meniului */
         @media (max-width: 768px) {
             .theme-toggle-header {
-                margin-right: 10px;
+                position: relative !important;
+                margin: 20px auto 0 auto !important;
+                padding: 12px !important;
+                width: 50px;
+                height: 50px;
+                background-color: rgba(154, 106, 58, 0.1) !important;
             }
         }
     </style>
 </head>
 <body>
 
-    <style>
-    /* --- STILUL INTEGRAT PENTRU DARK MODE (DESKTOP + MOBIL IN HAMPURGER) --- */
-    .theme-toggle-header {
-        background: transparent !important;
-        border: none !important;
-        cursor: pointer !important;
-        padding: 8px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 40px;
-        height: 40px;
-        border-radius: 50% !important;
-        color: #2a1c16 !important; /* Maro închis implicit */
-        transition: color 0.3s ease, background-color 0.3s ease !important;
-        z-index: 1002;
-    }
-
-    html.dark-mode .theme-toggle-header {
-        color: #e0e0e0 !important;
-    }
-
-    /* Iconițele din interior */
-    .theme-toggle-header svg {
-        position: absolute !important;
-        width: 22px !important;
-        height: 22px !important;
-        transition: transform 0.5s ease, opacity 0.5s ease !important;
-    }
-
-    /* Logica vizuală Soare / Lună */
-    .theme-toggle-header .sun-icon {
-        opacity: 0 !important;
-        transform: rotate(90deg) !important;
-    }
-
-    .theme-toggle-header .moon-icon {
-        opacity: 1 !important;
-        transform: rotate(0deg) !important;
-    }
-
-    html.dark-mode .theme-toggle-header .sun-icon {
-        opacity: 1 !important;
-        transform: rotate(0deg) !important;
-    }
-
-    html.dark-mode .theme-toggle-header .moon-icon {
-        opacity: 0 !important;
-        transform: rotate(-90deg) !important;
-    }
-
-    /* COMPORTAMENT PE COMPUTER (Ecran Mare) */
-    @media (min-width: 769px) {
-        .theme-toggle-header {
-            position: absolute !important;
-            top: 50% !important;
-            transform: translateY(-50%) !important;
-            right: 20px !important; /* Îl fixează în colțul din dreapta pe PC */
-        }
-        .theme-toggle-header:hover {
-            background-color: rgba(154, 106, 58, 0.1) !important;
-        }
-    }
-
-    /* COMPORTAMENT PE TELEFON (În interiorul meniului) */
-    @media (max-width: 768px) {
-        .theme-toggle-header {
-            position: relative !important;
-            margin: 20px auto 0 auto !important; /* Îl centrează frumos jos, în meniul deschis */
-            padding: 12px !important;
-            width: 50px;
-            height: 50px;
-            background-color: rgba(154, 106, 58, 0.1) !important; /* Un fundal discret pe mobil */
-        }
-    }
-</style>
-
-<header>
-    <div class="nav-container">
-        <a href="#" class="logo" style="text-decoration: none !important; border: none !important;">ZALMOXIS</a>
-        
-        <button class="menu-toggle" aria-label="Deschide meniul">☰</button>
-        
-        <nav class="nav-menu">
-            <a href="index.html" class="active">Acasă</a>
-            <a href="#produse">Produse</a>
-            <a href="#atelier">Atelier</a>
-            <a href="#proces">Cum lucrăm</a>
-            <a href="#contact">Contact</a>
-            
-            <button id="headerThemeToggle" class="theme-toggle-header" aria-label="Schimbă tema">
-                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.344l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
-                </svg>
-                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-            </button>
-        </nav>
-    </div>
-</header>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Zalmoxis Leather</h1>
-            <p class="slogan">Piele naturală. Lucrat manual. Calitate reală.</p>
-            <a href="#produse" class="btn">Vezi Colecția</a>
-        </div>
-    </section>
-
-    <section class="featured-product">
-        <div class="container grid-2">
-            <div class="featured-text">
-                <span class="tag">Recomandarea Noastră</span>
-                <h2>Portofel Auto</h2>
-                <p>Realizat integral din piele naturală full-grain, tăiat și cusut manual cu ață cerată extrem de rezistentă. Un accesoriu care nu doar că rezistă în timp, dar capătă caracter cu fiecare an de utilizare.</p>
-                <a href="#contact" class="btn btn-dark">Comandă prin Mesaj</a>
-            </div>
-            
-            <div class="featured-image">
-                <a href="products/portmoneu-masina.html" style="display: block; border: none !important; text-decoration: none !important;">
-                    <img src="image/portmoneu-masina-negru.jpg" alt="Portofel Classic Zalmoxis">
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section id="produse" class="products-section">
-        <div class="container">
-            <h2 class="section-title">Produsele Noastre</h2>
-            <div class="products-grid">
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo" style="text-decoration: none !important; border: none !important;">ZALMOXIS</a>
+            <button class="menu-toggle" aria-label="Deschide meniul">☰</button>
+            <nav class="nav-menu">
+                <a href="index.html" class="active">Acasă</a>
+                <a href="#produse">Produse</a>
+                <a href="#atelier">Atelier</a>
+                <a href="#proces">Cum lucrăm</a>
+                <a href="#contact">Contact</a>
                 
-                <a href="portofele.html" class="product-card-link">
-                    <div class="product-card">
-                        <div class="product-img-box">
-                            <img src="image/portmoneu1.jpg" alt="Portofel Minimalist">
-                        </div>
-                        <h3>Portofele</h3>
-                        <p>Subțiri, compacte și durabile.</p>
-                        <span class="view-more">Vezi colecția →</span>
-                    </div>
-                </a>
-
-                <a href="curele.html" class="product-card-link">
-                    <div class="product-card">
-                        <div class="product-img-box">
-                            <img src="image/curea1.png" alt="Curea Classic">
-                        </div>
-                        <h3>Curele</h3>
-                        <p>Din piele groasă, pentru o viață întreagă.</p>
-                        <span class="view-more">Vezi colecția →</span>
-                    </div>
-                </a>
-
-                <a href="genti.html" class="product-card-link">
-                    <div class="product-card">
-                        <div class="product-img-box">
-                            <img src="image/geanta1.jpg" alt="Geantă Vintage">
-                        </div>
-                        <h3>Genți & Accesorii</h3>
-                        <p>Design clasic și utilitate maximă.</p>
-                        <span class="view-more">Vezi colecția →</span>
-                    </div>
-                </a>
-
-            </div>
+                <button id="headerThemeToggle" class="theme-toggle-header" aria-label="Schimbă tema">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.344l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </nav>
         </div>
-    </section>
+    </header>
 
-    <section id="atelier" class="about-section">
-        <div class="container grid-2">
-            <div class="about-image">
-                <img src="image/atelier.jpg" alt="Atelierul Zalmoxis">
-            </div>
-            <div class="about-text">
-                <h2>Atelierul Zalmoxis</h2>
-                <p>Fiecare produs începe cu alegerea atentă a pielii naturale și este realizat în totalitate manual, în atelierul nostru. Nu folosim mașini de serie, ci ne bazăm pe tehnici tradiționale de marochinărie.</p>
-                <p>Ne concentrăm pe detalii, pe robustețea cusăturilor și pe finisarea perfectă a marginilor, astfel încât fiecare obiect să devină o piesă unică cu propria poveste.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="proces" class="process-section">
-        <div class="container">
-            <div class="process-grid">
-                <div class="process-step">
-                    <div class="step-number">03</div>
-                    <h3>Cusătură manuală</h3>
-                    <p>Folosim cusătură tradițională în două ace (saddle stitch), mult mai rezistentă decât cea la mașină.</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">04</div>
-                    <h3>Finisare premium</h3>
-                    <p>Marginile sunt rotunjite, șlefuite succesiv și tratate cu ceară specială pentru un aspect fin.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact-section">
-        <div class="container text-center">
-            <h2>Vrei un produs personalizat?</h2>
-            <p>Deoarece lucrăm totul manual, putem adapta produsele după preferințele tale (culoarea pielii, culoarea aței sau gravură).</p>
-            <div class="contact-links">
-                <a href="https://www.instagram.com/zalmoxis_leather" target="_blank" class="btn btn-instagram">Urmărește-ne pe Instagram</a>
-                <p class="instagram-handle">@zalmoxis_leather</p>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2026 Zalmoxis Leather. 100% Lucrat Manual în România.</p>
-    </footer>
+    ...
 
     <script>
         const headerThemeBtn = document.getElementById('headerThemeToggle');
-
         function reflectTheme(isDark) {
             if (isDark) {
                 document.documentElement.classList.add('dark-mode');
@@ -312,17 +114,11 @@
             });
         }
 
-        // Verifică starea salvată la pornire
         const currentSavedTheme = localStorage.getItem('darkMode');
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-        if (currentSavedTheme === 'enabled') {
-            reflectTheme(true);
-        } else if (currentSavedTheme === 'disabled') {
-            reflectTheme(false);
-        } else {
-            reflectTheme(systemPrefersDark.matches);
-        }
+        if (currentSavedTheme === 'enabled') reflectTheme(true);
+        else if (currentSavedTheme === 'disabled') reflectTheme(false);
+        else reflectTheme(systemPrefersDark.matches);
     </script>
     <script src="script.js"></script>
 </body>
