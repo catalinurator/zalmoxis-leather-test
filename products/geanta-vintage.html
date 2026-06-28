@@ -526,7 +526,8 @@
 const hamburger = document.querySelector(".hamburger");
 const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
 
-hamburger.addEventListener("click", () => {
+hamburger.addEventListener("click", (e) => {
+    e.stopPropagation();
     if (navOverlay.classList.contains("active")) {
         hamburger.classList.remove("active");
         navOverlay.classList.remove("active");
@@ -577,22 +578,15 @@ function setTheme(isDark) {
 }
 
 const savedTheme = localStorage.getItem('darkMode');
-const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-
-if (savedTheme === 'enabled') {
-    setTheme(true);
-} else if (savedTheme === 'disabled') {
-    setTheme(false);
-} else {
-    setTheme(prefersDarkScheme.matches);
-}
+if (savedTheme === 'enabled') setTheme(true);
+else if (savedTheme === 'disabled') setTheme(false);
 
 btn.addEventListener('click', () => {
     const isCurrentlyDark = document.documentElement.classList.contains('dark-mode');
     setTheme(!isCurrentlyDark);
 });
 
-// 3. Logica Pop-up-urilor COMPLET CURĂȚATĂ DE INTERCEPTĂRI DE INTERFAȚĂ
+// 3. Logica Pop-up-urilor (REPARATĂ ȘI STABILĂ)
 const openOrderBtn = document.getElementById("openOrderPopup");
 const closeOrderBtn = document.getElementById("closeOrderPopup");
 const orderPopup = document.getElementById("orderPopup");
@@ -602,29 +596,51 @@ const closeChatBtn = document.getElementById("closeChatPopup");
 const socialPopup = document.getElementById("socialPopup");
 
 function openModal(modal) {
+    if (!modal) return;
     modal.style.display = "flex";
     setTimeout(() => { modal.classList.add("active"); }, 10);
     document.body.style.overflow = "hidden";
 }
 
 function closeModal(modal) {
+    if (!modal) return;
     modal.classList.remove("active");
     setTimeout(() => { modal.style.display = "none"; }, 300);
     document.body.style.overflow = "auto";
 }
 
-openOrderBtn.addEventListener("click", () => openModal(orderPopup));
-openChatBtn.addEventListener("click", () => openModal(socialPopup));
+// Deschidere pe click simplu (Funcționează garantat pe orice dispozitiv)
+if(openOrderBtn) openOrderBtn.addEventListener("click", (e) => { e.preventDefault(); openModal(orderPopup); });
+if(openChatBtn) openChatBtn.addEventListener("click", (e) => { e.preventDefault(); openModal(socialPopup); });
 
-closeOrderBtn.addEventListener("click", () => closeModal(orderPopup));
-closeChatBtn.addEventListener("click", () => closeModal(socialPopup));
+if(closeOrderBtn) closeOrderBtn.addEventListener("click", (e) => { e.preventDefault(); closeModal(orderPopup); });
+if(closeChatBtn) closeChatBtn.addEventListener("click", (e) => { e.preventDefault(); closeModal(socialPopup); });
 
-// Închidere doar la click pe exterior, dar verificăm strict clasa de fundal
+// Prevenim închiderea pop-up-ului când se apasă în interiorul lui
+document.querySelectorAll('.zalmoxis-popup-content').forEach(content => {
+    content.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+});
+
+// Închidere doar când se apasă pe zona exterioară gri
 window.addEventListener("click", (e) => {
     if (e.target.classList.contains('zalmoxis-popup-overlay')) {
         closeModal(orderPopup);
         closeModal(socialPopup);
     }
+});
+
+// 4. Forțare deschidere linkuri de socializare (Soluția JavaScript sigură)
+document.querySelectorAll('.channel-link').forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const url = button.getAttribute('data-url');
+        if (url) {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+    });
 });
 </script>
 
