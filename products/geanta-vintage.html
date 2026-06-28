@@ -16,12 +16,6 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        /* --- REZOLVARE CLICK MOBIL ȘI TOUCH STIL --- */
-        .btn-main, .channel-link, .hamburger, .theme-toggle-inline, .zalmoxis-links-container a {
-            -webkit-tap-highlight-color: transparent; /* Scoate overlay-ul albastru nativ pe iOS */
-            cursor: pointer;
-        }
-
         /* --- REGULI PENTRU DARK MODE --- */
         html.dark-mode body {
             background: #121212;
@@ -94,7 +88,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 10000;
+            z-index: 1000;
             border-bottom: 1px solid rgba(42, 28, 22, 0.08); 
             transition: background 0.3s, border-color 0.3s;
         }
@@ -121,7 +115,7 @@
             letter-spacing: 3px;
             transition: color 0.3s;
             position: relative;
-            z-index: 10003;
+            z-index: 1002;
         }
         html.dark-mode .logo { color: #e0e0e0; }
 
@@ -132,7 +126,7 @@
             background: transparent;
             border: none;
             padding: 6px;
-            z-index: 10003 !important;
+            z-index: 1002 !important;
             position: relative;
         }
 
@@ -158,14 +152,11 @@
             width: 100% !important;
             height: 100vh !important;
             background-color: #f3e7db !important;
-            z-index: 10001 !important;
-            
-            /* REZOLVARE MOBIL: display none complet când este închis */
+            z-index: 1001 !important;
             display: none !important; 
             opacity: 0 !important;
             transform: translateY(-20px) !important;
             transition: opacity 0.3s ease, transform 0.3s ease !important;
-            
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
@@ -179,6 +170,12 @@
             display: flex !important;
             opacity: 1 !important;
             transform: translateY(0) !important;
+        }
+
+        /* FIX IMPORTANT: Când meniul e închis, îl ascundem complet din calea click-urilor */
+        .zalmoxis-menu-overlay:not(.active) {
+            z-index: -100 !important;
+            pointer-events: none !important;
         }
 
         .zalmoxis-links-container {
@@ -270,7 +267,7 @@
             height: 100vh;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
-            z-index: 20000;
+            z-index: 5000 !important; /* Mult mai mare decât meniul */
             display: none; 
             align-items: center;
             justify-content: center;
@@ -280,7 +277,6 @@
 
         .zalmoxis-popup-overlay.active {
             display: flex;
-            opacity: 1;
         }
 
         .zalmoxis-popup-content {
@@ -296,6 +292,7 @@
             transition: transform 0.3s ease;
             max-height: 90vh;
             overflow-y: auto;
+            z-index: 5001 !important;
         }
 
         .zalmoxis-popup-overlay.active .zalmoxis-popup-content {
@@ -317,6 +314,7 @@
             cursor: pointer;
             color: #2a1c16;
             line-height: 1;
+            z-index: 5005 !important;
         }
         html.dark-mode .close-popup-btn { color: #e0e0e0; }
 
@@ -361,19 +359,31 @@
 
         .social-channels-grid { display: flex; flex-direction: column; gap: 12px; }
         
+        /* FIX DEFINITIV PENTRU ETICHETA LINKURILOR */
         .channel-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 12px;
-            text-decoration: none;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 12px !important;
+            padding: 14px !important;
+            text-decoration: none !important;
             color: white !important;
-            font-weight: 600;
-            font-size: 15px;
-            border-radius: 8px;
-            transition: transform 0.2s, filter 0.2s;
+            font-weight: 600 !important;
+            font-size: 15px !important;
+            border-radius: 8px !important;
+            transition: transform 0.2s, filter 0.2s !important;
+            position: relative !important;
+            z-index: 6000 !important; /* Peste orice alt element din site */
+            cursor: pointer !important;
+            -webkit-user-select: auto !important;
+            user-select: auto !important;
         }
+        
+        /* Dezactivăm intercepțiile de pointer pe elementele text/svg interioare */
+        .channel-link * {
+            pointer-events: none !important;
+        }
+
         .channel-link:hover { transform: translateY(-2px); filter: brightness(1.1); }
         .channel-link svg { width: 20px; height: 20px; fill: currentColor; }
 
@@ -451,7 +461,6 @@
     </div>
 </div>
 
-<!-- POP-UP 1: COMANDĂ -->
 <div id="orderPopup" class="zalmoxis-popup-overlay">
     <div class="zalmoxis-popup-content">
         <button class="close-popup-btn" id="closeOrderPopup" aria-label="Închide">&times;</button>
@@ -484,7 +493,6 @@
     </div>
 </div>
 
-<!-- POP-UP 2: CHAT -->
 <div id="socialPopup" class="zalmoxis-popup-overlay">
     <div class="zalmoxis-popup-content">
         <button class="close-popup-btn" id="closeChatPopup" aria-label="Închide">&times;</button>
@@ -493,19 +501,19 @@
         <p>Alege platforma preferată pentru a lua legătura direct cu noi.</p>
         
         <div class="social-channels-grid">
-            <a href="https://www.instagram.com/zalmoxis_leather/" target="_blank" class="channel-link instagram"> 
+            <a href="https://www.instagram.com/zalmoxis_leather/" target="_blank" rel="noopener noreferrer" class="channel-link instagram"> 
                 <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                 Instagram
             </a>
-            <a href="https://www.tiktok.com/@zalmoxis.leather" target="_blank" class="channel-link tiktok">
+            <a href="https://www.tiktok.com/@zalmoxis.leather" target="_blank" rel="noopener noreferrer" class="channel-link tiktok">
                 <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.93.02 1.85.01 2.78.02v3.69c-.93 0-1.85-.02-2.78-.02-.39 0-.78-.04-1.16-.13a6.233 6.233 0 01-2.31-1.12c-.28-.23-.53-.49-.76-.78v7.55c0 1.25-.26 2.47-.79 3.6-.52 1.05-1.3 1.95-2.25 2.62a7.1 7.1 0 01-4.09 1.18c-1.31 0-2.6-.32-3.75-.95a6.83 6.83 0 01-2.67-2.58A7.472 7.472 0 010 13.55c0-1.38.35-2.73 1.01-3.92a6.972 6.972 0 012.79-2.72c1.23-.62 2.62-.92 4-.87v3.62c-.74-.03-1.48.11-2.15.44-.61.32-1.12.82-1.46 1.44-.36.69-.53 1.46-.5 2.24.03.75.26 1.48.66 2.11.41.6.98 1.07 1.64 1.35.74.3 1.55.39 2.33.25.7-.12 1.36-.45 1.89-.95.58-.58.93-1.34.98-2.15.03-1.01.01-2.03.01-3.04V0h2.52z"/></svg>
                 TikTok
             </a>
-            <a href="https://wa.me/37369639506" target="_blank" class="channel-link whatsapp">
+            <a href="https://wa.me/37369639506" target="_blank" rel="noopener noreferrer" class="channel-link whatsapp">
                 <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.623-1.023-5.086-2.885-6.948C16.53 2.0 14.083 1.01 11.477 1.01c-5.437 0-9.863 4.369-9.867 9.796-.001 1.765.474 3.486 1.377 5.041L1.879 22.03l6.401-1.677c-1.484.81-2.222.846-1.633.746zM17.486 14.34c-.314-.157-1.858-.915-2.134-1.015-.276-.101-.477-.151-.678.151-.201.302-.779.915-.955 1.116-.176.201-.352.226-.666.069-.314-.157-1.327-.489-2.528-1.559-.933-.832-1.564-1.86-1.747-2.162-.182-.302-.02-.465.131-.614.136-.134.314-.367.472-.55.157-.183.21-.314.314-.524.104-.21.052-.393-.026-.546-.078-.153-.678-1.633-.93-2.239-.244-.588-.492-.51-.678-.519-.176-.009-.377-.01-.578-.01-.201 0-.528.075-.804.377-.276.302-1.056 1.03-1.056 2.513s1.081 2.915 1.232 3.116c.151.201 2.128 3.249 5.156 4.554.72.31 1.282.496 1.721.636.724.23 1.381.197 1.902.12.58-.087 1.858-.759 2.121-1.456.265-.697.265-1.295.187-1.42-.077-.125-.276-.2-.59-.357z"/></svg>
                 WhatsApp
             </a>
-            <a href="https://t.me/Felicia0708" target="_blank" class="channel-link telegram">
+            <a href="https://t.me/Felicia0708" target="_blank" rel="noopener noreferrer" class="channel-link telegram">
                 <svg viewBox="0 0 24 24"><path d="M9.417 15.181l-.397 5.584c.568 0 .814-.244 1.109-.537l2.663-2.545 5.518 4.041c1.012.564 1.725.267 1.998-.931L23.93 3.821c.369-1.479-.572-2.127-1.534-1.68L1.752 10.364c-1.441.564-1.43 1.37-.26 1.729l5.447 1.696 12.63-7.912c.592-.391 1.136-.177.69.219z"/></svg>
                 Telegram
             </a>
@@ -518,10 +526,7 @@
 const hamburger = document.querySelector(".hamburger");
 const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
 
-hamburger.addEventListener("click", (e) => {
-    e.stopPropagation(); // Previne problemele de click fantomă pe mobil
-    hamburger.classList.toggle("active");
-    
+hamburger.addEventListener("click", () => {
     if (navOverlay.classList.contains("active")) {
         hamburger.classList.remove("active");
         navOverlay.classList.remove("active");
@@ -542,17 +547,7 @@ document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEvent
     document.body.style.overflow = "auto";
 }));
 
-navOverlay.addEventListener("click", (e) => {
-    const aFostPeLinkSauButon = e.target.closest(".zalmoxis-links-container a") || e.target.closest("#themeToggleBtn");
-    if (!aFostPeLinkSauButon) {
-        hamburger.classList.remove("active");
-        navOverlay.classList.remove("active");
-        setTimeout(() => { navOverlay.style.display = "none"; }, 300);
-        document.body.style.overflow = "auto";
-    }
-});
-
-// 2. Logica Dark Mode (Automatizat + Manual)
+// 2. Logica Dark Mode
 const btn = document.getElementById('themeToggleBtn');
 const sunIcon = btn.querySelector('.sun-icon');
 const moonIcon = btn.querySelector('.moon-icon');
@@ -573,51 +568,31 @@ function updateIcons(isDark) {
 function setTheme(isDark) {
     if (isDark) {
         document.documentElement.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'enabled');
     } else {
         document.documentElement.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'disabled');
     }
     updateIcons(isDark);
 }
 
-// Inițializare temă la încărcare
-function initTheme() {
-    const savedTheme = localStorage.getItem('darkMode');
-    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const savedTheme = localStorage.getItem('darkMode');
+const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
-    if (savedTheme === 'enabled') {
-        setTheme(true);
-    } else if (savedTheme === 'disabled') {
-        setTheme(false);
-    } else {
-        // Dacă nu s-a salvat manual nimic, preia AUTOMAT setarea telefonului
-        setTheme(prefersDarkScheme);
-    }
+if (savedTheme === 'enabled') {
+    setTheme(true);
+} else if (savedTheme === 'disabled') {
+    setTheme(false);
+} else {
+    setTheme(prefersDarkScheme.matches);
 }
 
-// Rulează funcția imediat ce se încarcă scriptul
-initTheme();
-
-// Comutator manual (La click pe buton)
-btn.addEventListener('click', (e) => {
-    e.stopPropagation();
+btn.addEventListener('click', () => {
     const isCurrentlyDark = document.documentElement.classList.contains('dark-mode');
-    if (!isCurrentlyDark) {
-        setTheme(true);
-        localStorage.setItem('darkMode', 'enabled');
-    } else {
-        setTheme(false);
-        localStorage.setItem('darkMode', 'disabled');
-    }
+    setTheme(!isCurrentlyDark);
 });
 
-// Ascultă în timp real dacă telefonul își schimbă modul (zi/noapte) automat
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    if (!localStorage.getItem('darkMode')) { // Doar dacă nu a ales deja manual de pe buton
-        setTheme(e.matches);
-    }
-});
-
-// 3. Logica Pop-up-urilor - FIX DEFINITIV PENTRU MOBIL (Touch & Click)
+// 3. Logica Pop-up-urilor COMPLET CURĂȚATĂ DE INTERCEPTĂRI DE INTERFAȚĂ
 const openOrderBtn = document.getElementById("openOrderPopup");
 const closeOrderBtn = document.getElementById("closeOrderPopup");
 const orderPopup = document.getElementById("orderPopup");
@@ -628,77 +603,29 @@ const socialPopup = document.getElementById("socialPopup");
 
 function openModal(modal) {
     modal.style.display = "flex";
-    // Forțăm browserul să randeze elementul înainte de a aplica clasa de opacitate
-    modal.offsetHeight; 
-    modal.classList.add("active");
+    setTimeout(() => { modal.classList.add("active"); }, 10);
     document.body.style.overflow = "hidden";
 }
 
 function closeModal(modal) {
     modal.classList.remove("active");
-    setTimeout(() => { 
-        modal.style.display = "none"; 
-    }, 300);
+    setTimeout(() => { modal.style.display = "none"; }, 300);
     document.body.style.overflow = "auto";
 }
 
-// Folosim o funcție universală care ascultă atât de click, cât și de atingere rapidă pe mobil
-function adaugaEvenimentButon(element, actiune) {
-    if (!element) return;
-    
-    // Pentru mobil - reacționează instant la atingere, fără delay sau propagare greșită
-    element.addEventListener("touchstart", (e) => {
-        e.preventDefault(); // Oprește transformarea în click fantomă
-        e.stopPropagation();
-        actiune();
-    }, { passive: false });
+openOrderBtn.addEventListener("click", () => openModal(orderPopup));
+openChatBtn.addEventListener("click", () => openModal(socialPopup));
 
-    // Pentru desktop/PC
-    element.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        actiune();
-    });
-}
+closeOrderBtn.addEventListener("click", () => closeModal(orderPopup));
+closeChatBtn.addEventListener("click", () => closeModal(socialPopup));
 
-// Atribuirea acțiunilor pentru butoane
-adaugaEvenimentButon(openOrderBtn, () => openModal(orderPopup));
-adaugaEvenimentButon(openChatBtn, () => openModal(socialPopup));
-adaugaEvenimentButon(closeOrderBtn, () => closeModal(orderPopup));
-adaugaEvenimentButon(closeChatBtn, () => closeModal(socialPopup));
-
-// IMPORTANT: Permitem link-urilor din interior să funcționeze nativ la touch direct
-document.querySelectorAll('.channel-link').forEach(link => {
-    link.addEventListener('touchstart', (e) => {
-        // Lăsăm evenimentul să treacă nativ, oprim doar propagarea către overlay-ul din spate
-        e.stopPropagation(); 
-    }, { passive: true });
-    
-    link.addEventListener('click', (e) => {
-        e.stopPropagation();
-    });
-});
-
-// Protejăm conținutul ferestrei albe pentru a nu declanșa închiderea pop-up-ului
-document.querySelectorAll('.zalmoxis-popup-content').forEach(content => {
-    content.addEventListener('touchstart', (e) => { e.stopPropagation(); }, { passive: true });
-    content.addEventListener('click', (e) => { e.stopPropagation(); });
-});
-
-// Închidere pop-up DOAR când se atinge zona exterioară (fundalul întunecat)
+// Închidere doar la click pe exterior, dar verificăm strict clasa de fundal
 window.addEventListener("click", (e) => {
     if (e.target.classList.contains('zalmoxis-popup-overlay')) {
         closeModal(orderPopup);
         closeModal(socialPopup);
     }
 });
-
-window.addEventListener("touchstart", (e) => {
-    if (e.target.classList.contains('zalmoxis-popup-overlay')) {
-        closeModal(orderPopup);
-        closeModal(socialPopup);
-    }
-}, { passive: true });
 </script>
 
 </body>
