@@ -617,7 +617,7 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
     }
 });
 
-// 3. Logica Pop-up-urilor (Varianta optimizată pentru ecrane tactile)
+// 3. Logica Pop-up-urilor - FIX DEFINITIV PENTRU MOBIL (Touch & Click)
 const openOrderBtn = document.getElementById("openOrderPopup");
 const closeOrderBtn = document.getElementById("closeOrderPopup");
 const orderPopup = document.getElementById("orderPopup");
@@ -628,42 +628,77 @@ const socialPopup = document.getElementById("socialPopup");
 
 function openModal(modal) {
     modal.style.display = "flex";
-    setTimeout(() => { modal.classList.add("active"); }, 10);
+    // Forțăm browserul să randeze elementul înainte de a aplica clasa de opacitate
+    modal.offsetHeight; 
+    modal.classList.add("active");
     document.body.style.overflow = "hidden";
 }
 
 function closeModal(modal) {
     modal.classList.remove("active");
-    setTimeout(() => { modal.style.display = "none"; }, 300);
+    setTimeout(() => { 
+        modal.style.display = "none"; 
+    }, 300);
     document.body.style.overflow = "auto";
 }
 
-// Deschidere butoane principale
-openOrderBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); openModal(orderPopup); });
-openChatBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); openModal(socialPopup); });
+// Folosim o funcție universală care ascultă atât de click, cât și de atingere rapidă pe mobil
+function adaugaEvenimentButon(element, actiune) {
+    if (!element) return;
+    
+    // Pentru mobil - reacționează instant la atingere, fără delay sau propagare greșită
+    element.addEventListener("touchstart", (e) => {
+        e.preventDefault(); // Oprește transformarea în click fantomă
+        e.stopPropagation();
+        actiune();
+    }, { passive: false });
 
-// Închidere din butoanele "X"
-closeOrderBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); closeModal(orderPopup); });
-closeChatBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); closeModal(socialPopup); });
+    // Pentru desktop/PC
+    element.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        actiune();
+    });
+}
 
-// Permite click-ul normal pe elementele din interiorul pop-up-ului (inclusiv link-urile de socializare)
-document.querySelectorAll('.zalmoxis-popup-content').forEach(content => {
-    content.addEventListener('click', (e) => {
-        // Dacă s-a apăsat pe un link (clasa channel-link), îl lăsăm să se deschidă normal
-        if (e.target.closest('.channel-link')) {
-            return; 
-        }
-        e.stopPropagation(); // Oprește transmiterea click-ului către fundalul gri
+// Atribuirea acțiunilor pentru butoane
+adaugaEvenimentButon(openOrderBtn, () => openModal(orderPopup));
+adaugaEvenimentButon(openChatBtn, () => openModal(socialPopup));
+adaugaEvenimentButon(closeOrderBtn, () => closeModal(orderPopup));
+adaugaEvenimentButon(closeChatBtn, () => closeModal(socialPopup));
+
+// IMPORTANT: Permitem link-urilor din interior să funcționeze nativ la touch direct
+document.querySelectorAll('.channel-link').forEach(link => {
+    link.addEventListener('touchstart', (e) => {
+        // Lăsăm evenimentul să treacă nativ, oprim doar propagarea către overlay-ul din spate
+        e.stopPropagation(); 
+    }, { passive: true });
+    
+    link.addEventListener('click', (e) => {
+        e.stopPropagation();
     });
 });
 
-// Închidere DOAR când se apasă pe zona gri din exterior
+// Protejăm conținutul ferestrei albe pentru a nu declanșa închiderea pop-up-ului
+document.querySelectorAll('.zalmoxis-popup-content').forEach(content => {
+    content.addEventListener('touchstart', (e) => { e.stopPropagation(); }, { passive: true });
+    content.addEventListener('click', (e) => { e.stopPropagation(); });
+});
+
+// Închidere pop-up DOAR când se atinge zona exterioară (fundalul întunecat)
 window.addEventListener("click", (e) => {
     if (e.target.classList.contains('zalmoxis-popup-overlay')) {
         closeModal(orderPopup);
         closeModal(socialPopup);
     }
 });
+
+window.addEventListener("touchstart", (e) => {
+    if (e.target.classList.contains('zalmoxis-popup-overlay')) {
+        closeModal(orderPopup);
+        closeModal(socialPopup);
+    }
+}, { passive: true });
 </script>
 
 </body>
