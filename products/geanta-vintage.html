@@ -3,47 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geantă Vintage din Piele | Zalmoxis Leather</title>
+    <title>Zalmoxis Leather | Geantă Vintage</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css"> <style>
-        /* REZOLVARE CLICK MOBIL: Previne blocarea link-urilor la atingere pe telefon */
-        .product-card-link, .btn, .nav-menu a {
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        /* REZOLVARE CLICK MOBIL: Previne blocarea link-urilor și butoanelor la atingere pe telefon */
+        .product-card-link, .btn, .nav-menu a, .menu-toggle, .btn-order {
             display: inline-block;
             cursor: pointer;
-            -webkit-tap-highlight-color: transparent; /* Scoate flash-ul albastru pe iOS */
+            -webkit-tap-highlight-color: transparent;
         }
         
-        /* Dezactivează evenimentele interne pe elemente de text/imagini din carduri ca să nu fure click-ul */
-        .product-card, .product-card * {
-            pointer-events: none; 
-        }
-        .product-card-link {
-            pointer-events: auto !important;
-        }
-
-        /* Stiluri de bază pentru Dark Mode (dacă nu sunt deja în style.css) */
-        body.dark-mode {
-            background-color: #121212 !important;
-            color: #f5f5f5 !important;
-        }
-        body.dark-mode header, body.dark-mode footer {
-            background-color: #1a1a1a !important;
-        }
-        body.dark-mode .product-card {
-            background-color: #1e1e1e !important;
-            color: #ffffff !important;
-        }
-
-        /* Stil pentru butonul de Dark Mode din header */
-        .theme-toggle-btn {
-            background: none;
-            border: none;
-            color: inherit;
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 5px 10px;
+        /* Evită situațiile în care textul din interiorul butoanelor blochează click-ul pe mobil */
+        .btn *, .menu-toggle * {
+            pointer-events: none;
         }
     </style>
 </head>
@@ -55,110 +31,90 @@
             <button class="menu-toggle" aria-label="Deschide meniul">☰</button>
             <nav class="nav-menu">
                 <a href="../index.html">Acasă</a>
-                <a href="../index.html#produse" class="active">Produse</a>
+                <a href="../index.html#produse">Produse</a>
                 <a href="../index.html#atelier">Atelier</a>
                 <a href="../index.html#proces">Cum lucrăm</a>
                 <a href="../index.html#contact">Contact</a>
-                <button class="theme-toggle-btn" id="theme-toggle" aria-label="Schimbă tema">🌙</button>
             </nav>
         </div>
     </header>
 
-    <main class="container page-product" style="padding: 40px 20px; max-width: 1200px; margin: 0 auto;">
-        <section class="grid-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; align-items: center;">
-            
-            <div class="product-gallery">
-                <img src="../image/geanta1.jpg" alt="Geantă Vintage Zalmoxis" style="width: 100%; max-width: 500px; border-radius: 4px; display: block; margin: 0 auto;">
+    <section class="featured-product">
+        <div class="container grid-2">
+            <div class="featured-image">
+                <img src="../image/geanta1.jpg" alt="Geantă Vintage Zalmoxis">
             </div>
-            
-            <div class="product-details">
-                <span class="tag" style="text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; color: #b5835a;">Colecția Premium</span>
-                <h1 style="font-family: 'Cinzel', serif; margin: 10px 0 20px 0; font-size: 2.5rem;">Geantă Vintage</h1>
-                <p class="price" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 20px; color: #b5835a;">Preț la cerere</p>
+            <div class="featured-text">
+                <span class="tag">Colecția Premium</span>
+                <h2>Geantă Vintage</h2>
+                <div class="product-price" style="font-size: 1.8rem; font-weight: 600; margin: 15px 0; color: #b5835a;">450 RON</div>
+                <p>Realizată integral din piele naturală full-grain, tăiată și cusută manual cu ață cerată extrem de rezistentă. Un accesoriu premium, spațios și elegant, conceput să reziste o viață întreagă.</p>
                 
-                <p style="line-height: 1.6; margin-bottom: 20px;">
-                    Realizată manual din piele naturală groasă, această geantă combină estetica vintage cu utilitatea zilnică. Dispune de compartimente interioare optimizate și o baretă reglabilă pentru umăr. Finisajele premium și cusătura manuală îi garantează o durabilitate de zeci de ani.
-                </p>
-
-                <ul style="margin-bottom: 30px; padding-left: 20px; line-height: 1.8;">
-                    <li>100% Piele naturală full-grain</li>
-                    <li>Cusută integral manual cu ață cerată</li>
-                    <li>Accesorii metalice rezistente (antichizate)</li>
-                    <li>Dimensiuni adaptabile la comandă</li>
-                </ul>
-                
-                <a href="../index.html#contact" class="btn btn-dark" style="padding: 12px 24px; background: #1a1a1a; color: #fff; text-decoration: none; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px;">Comandă prin Mesaj</a>
+                <div class="order-buttons" style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap;">
+                    <a href="https://m.me/zalmoxis_leather" target="_blank" class="btn btn-dark">Comandă în Chat</a>
+                    <a href="../index.html#contact" class="btn">Comandă Rapidă</a>
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
     <footer>
-        <p style="text-align: center; padding: 20px; font-size: 0.9rem;">&copy; 2026 Zalmoxis Leather. 100% Lucrat Manual în România.</p>
+        <p>&copy; 2026 Zalmoxis Leather. 100% Lucrat Manual în România.</p>
     </footer>
 
     <script>
-        const themeToggleBtn = document.getElementById('theme-toggle');
-
-        // 1. Funcție care aplică tema în funcție de telefon sau de ce s-a salvat manual
-        function initTheme() {
-            const savedTheme = localStorage.getItem('theme');
+        // Funcție pentru verificarea și aplicarea automată a temei de pe telefon
+        function verificaTemaAutomata() {
+            const temaSalvata = localStorage.getItem('theme');
             
-            if (savedTheme === 'dark') {
+            if (temaSalvata === 'dark') {
                 document.body.classList.add('dark-mode');
-                themeToggleBtn.textContent = '☀️';
-            } else if (savedTheme === 'light') {
+            } else if (temaSalvata === 'light') {
                 document.body.classList.remove('dark-mode');
-                themeToggleBtn.textContent = '🌙';
             } else {
-                // Dacă nu există nimic salvat în istoric, ascultă setarea AUTOMATĂ a telefonului
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (prefersDark) {
+                // Dacă utilizatorul nu a setat manual, verificăm setarea sistemului (telefonului)
+                const vreaDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (vreaDarkMode) {
                     document.body.classList.add('dark-mode');
-                    themeToggleBtn.textContent = '☀️';
                 } else {
                     document.body.classList.remove('dark-mode');
-                    themeToggleBtn.textContent = '🌙';
                 }
             }
         }
 
-        // Execută verificarea automată imediat ce se încarcă structura paginii
-        document.addEventListener('DOMContentLoaded', initTheme);
+        // Se execută automat când se încarcă pagina
+        document.addEventListener('DOMContentLoaded', () => {
+            verificaTemaAutomata();
 
-        // 2. Funcționarea butonului Manual (la click/atingere)
-        themeToggleBtn.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
+            // Meniul Hamburger original
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
             
-            if (document.body.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'dark');
-                themeToggleBtn.textContent = '☀️';
-            } else {
-                localStorage.setItem('theme', 'light');
-                themeToggleBtn.textContent = '🌙';
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    navMenu.classList.toggle('active');
+                });
+
+                // Închide meniul dacă se apasă în afara lui (rezolvă problema blocării pe mobil)
+                document.addEventListener('click', (e) => {
+                    if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                        navMenu.classList.remove('active');
+                    }
+                });
             }
         });
 
-        // 3. Ascultă în timp real dacă utilizatorul schimbă tema din setările sistemului iOS/Android
+        // Ascultă în timp real dacă utilizatorul schimbă tema din setările telefonului (și nu a ales manual din buton)
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (!localStorage.getItem('theme')) { // Rulează doar dacă utilizatorul nu a setat o preferință manuală din buton
+            if (!localStorage.getItem('theme')) {
                 if (e.matches) {
                     document.body.classList.add('dark-mode');
-                    themeToggleBtn.textContent = '☀️';
                 } else {
                     document.body.classList.remove('dark-mode');
-                    themeToggleBtn.textContent = '🌙';
                 }
             }
         });
-
-        // Meniu mobil (Hamburger) simplu funcțional
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navMenu = document.querySelector('.nav-menu');
-        if(menuToggle && navMenu) {
-            menuToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-            });
-        }
     </script>
 </body>
 </html>
