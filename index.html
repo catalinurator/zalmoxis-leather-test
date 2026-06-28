@@ -1,99 +1,284 @@
 <!DOCTYPE html>
+
 <html lang="ro">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Zalmoxis Leather | Piele Naturală & Lucru Manual</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 
-    <style>
-        /* Butonul devine un element de navigare normal, nu mai folosim absolute */
-        .theme-toggle-header {
-            background: transparent !important;
-            border: none !important;
-            cursor: pointer !important;
-            padding: 8px !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            width: 40px;
-            height: 40px;
-            border-radius: 50% !important;
-            color: inherit !important;
-            transition: all 0.3s ease !important;
-            margin-left: 15px; /* Spațiu în meniu pe desktop */
-        }
-
-        .theme-toggle-header svg {
-            width: 22px !important;
-            height: 22px !important;
-            transition: opacity 0.3s ease !important;
-        }
-
-        /* Logica de afișare iconițe */
-        .sun-icon { opacity: 0; transform: rotate(90deg); transition: 0.5s; }
-        .moon-icon { opacity: 1; transform: rotate(0deg); transition: 0.5s; }
-
-        html.dark-mode .sun-icon { opacity: 1; transform: rotate(0deg); }
-        html.dark-mode .moon-icon { opacity: 0; transform: rotate(-90deg); }
-
-        /* Mobil */
-        @media (max-width: 768px) {
-            .theme-toggle-header {
-                margin: 20px auto !important; /* Centrat în meniul mobil */
-                background-color: rgba(154, 106, 58, 0.1) !important;
-            }
-        }
-    </style>
 </head>
+
 <body>
 
+
+
     <header>
+
         <div class="nav-container">
-            <a href="#" class="logo">ZALMOXIS</a>
+
+            <a href="#" class="logo" style="text-decoration: none !important; border: none !important;">ZALMOXIS</a>
+
             <button class="menu-toggle" aria-label="Deschide meniul">☰</button>
-            
-            <!-- Butonul este acum un membru legitim al meniului -->
+
             <nav class="nav-menu">
+
                 <a href="index.html" class="active">Acasă</a>
+
                 <a href="#produse">Produse</a>
+
                 <a href="#atelier">Atelier</a>
+
                 <a href="#proces">Cum lucrăm</a>
+
                 <a href="#contact">Contact</a>
-                
-                <button id="headerThemeToggle" class="theme-toggle-header" aria-label="Schimbă tema">
-                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.344l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
-                    </svg>
-                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                </button>
+
             </nav>
+
         </div>
+
     </header>
 
-    <!-- Conținutul tău aici -->
 
-    <script>
-        const headerThemeBtn = document.getElementById('headerThemeToggle');
-        
-        function reflectTheme(isDark) {
-            document.documentElement.classList.toggle('dark-mode', isDark);
-            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
-        }
 
-        headerThemeBtn?.addEventListener('click', () => {
-            reflectTheme(!document.documentElement.classList.contains('dark-mode'));
-        });
+    <section class="hero">
 
-        // Inițializare
-        const savedTheme = localStorage.getItem('darkMode');
-        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        reflectTheme(savedTheme === 'enabled' || (!savedTheme && systemDark));
-    </script>
+        <div class="hero-content">
+
+            <h1>Zalmoxis Leather</h1>
+
+            <p class="slogan">Piele naturală. Lucrat manual. Calitate reală.</p>
+
+            <a href="#produse" class="btn">Vezi Colecția</a>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="featured-product">
+
+        <div class="container grid-2">
+
+            <div class="featured-text">
+
+                <span class="tag">Recomandarea Noastră</span>
+
+                <h2>Portofel Auto</h2>
+
+                <p>Realizat integral din piele naturală full-grain, tăiat și cusut manual cu ață cerată extrem de rezistentă. Un accesoriu care nu doar că rezistă în timp, dar capătă caracter cu fiecare an de utilizare.</p>
+
+                <a href="#contact" class="btn btn-dark">Comandă prin Mesaj</a>
+
+            </div>
+
+            
+
+            <!-- Aici am adăugat link-ul pe imagine -->
+
+            <div class="featured-image">
+
+                <a href="products/portmoneu-masina.html" style="display: block; border: none !important; text-decoration: none !important;">
+
+                    <img src="image/portmoneu-masina-negru.jpg" alt="Portofel Classic Zalmoxis">
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section id="produse" class="products-section">
+
+        <div class="container">
+
+            <h2 class="section-title">Produsele Noastre</h2>
+
+            <div class="products-grid">
+
+                
+
+                <!-- Card Portofele -->
+
+                <a href="portofele.html" class="product-card-link">
+
+                    <div class="product-card">
+
+                        <div class="product-img-box">
+
+                            <img src="image/portmoneu1.jpg" alt="Portofel Minimalist">
+
+                        </div>
+
+                        <h3>Portofele</h3>
+
+                        <p>Subțiri, compacte și durabile.</p>
+
+                        <span class="view-more">Vezi colecția →</span>
+
+                    </div>
+
+                </a>
+
+
+
+                <!-- Card Curele -->
+
+                <a href="curele.html" class="product-card-link">
+
+                    <div class="product-card">
+
+                        <div class="product-img-box">
+
+                            <img src="image/curea1.png" alt="Curea Classic">
+
+                        </div>
+
+                        <h3>Curele</h3>
+
+                        <p>Din piele groasă, pentru o viață întreagă.</p>
+
+                        <span class="view-more">Vezi colecția →</span>
+
+                    </div>
+
+                </a>
+
+
+
+                <!-- Card Genți -->
+
+                <a href="genti.html" class="product-card-link">
+
+                    <div class="product-card">
+
+                        <div class="product-img-box">
+
+                            <img src="image/geanta1.jpg" alt="Geantă Vintage">
+
+                        </div>
+
+                        <h3>Genți & Accesorii</h3>
+
+                        <p>Design clasic și utilitate maximă.</p>
+
+                        <span class="view-more">Vezi colecția →</span>
+
+                    </div>
+
+                </a>
+
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="atelier" class="about-section">
+
+        <div class="container grid-2">
+
+            <div class="about-image">
+
+                <img src="image/atelier.jpg" alt="Atelierul Zalmoxis">
+
+            </div>
+
+            <div class="about-text">
+
+                <h2>Atelierul Zalmoxis</h2>
+
+                <p>Fiecare produs începe cu alegerea atentă a pielii naturale și este realizat în totalitate manual, în atelierul nostru. Nu folosim mașini de serie, ci ne bazăm pe tehnici tradiționale de marochinărie.</p>
+
+                <p>Ne concentrăm pe detalii, pe robustețea cusăturilor și pe finisarea perfectă a marginilor, astfel încât fiecare obiect să devină o piesă unică cu propria poveste.</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+   <div class="process-step">
+
+                    <div class="step-number">03</div>
+
+                    <h3>Cusătură manuală</h3>
+
+                    <p>Folosim cusătura tradițională în două ace (saddle stitch), mult mai rezistentă decât cea la mașină.</p>
+
+                </div>
+
+                <div class="process-step">
+
+                    <div class="step-number">04</div>
+
+                    <h3>Finisare premium</h3>
+
+                    <p>Marginile sunt rotunjite, șlefuite succesiv și tratate cu ceară specială pentru un aspect fin.</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section id="contact" class="contact-section">
+
+        <div class="container text-center">
+
+            <h2>Vrei un produs personalizat?</h2>
+
+            <p>Deoarece lucrăm totul manual, putem adapta produsele după preferințele tale (culoarea pielii, culoarea aței sau gravură).</p>
+
+            <div class="contact-links">
+
+                <a href="https://www.instagram.com/zalmoxis_leather" target="_blank" class="btn btn-instagram">Urmărește-ne pe Instagram</a>
+
+                <p class="instagram-handle">@zalmoxis_leather</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <footer>
+
+        <p>&copy; 2026 Zalmoxis Leather. 100% Lucrat Manual în România.</p>
+
+    </footer>
+
+
+
+    <script src="script.js"></script>
+
 </body>
-</html>
+
+</html> 
+
