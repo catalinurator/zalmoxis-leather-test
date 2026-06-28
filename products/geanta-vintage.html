@@ -617,7 +617,7 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
     }
 });
 
-// 3. Logica Pop-up-urilor
+// 3. Logica Pop-up-urilor (Corectată pentru funcționarea linkurilor)
 const openOrderBtn = document.getElementById("openOrderPopup");
 const closeOrderBtn = document.getElementById("closeOrderPopup");
 const orderPopup = document.getElementById("orderPopup");
@@ -638,12 +638,20 @@ function closeModal(modal) {
     document.body.style.overflow = "auto";
 }
 
-openOrderBtn.addEventListener("click", () => openModal(orderPopup));
-closeOrderBtn.addEventListener("click", () => closeModal(orderPopup));
+// Prevenim închiderea pop-up-ului când se dă click pe conținutul lui interior (inclusiv pe butoane)
+document.querySelectorAll('.zalmoxis-popup-content').forEach(content => {
+    content.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+    });
+});
 
-openChatBtn.addEventListener("click", () => openModal(socialPopup));
-closeChatBtn.addEventListener("click", () => closeModal(socialPopup));
+openOrderBtn.addEventListener("click", (e) => { e.stopPropagation(); openModal(orderPopup); });
+closeOrderBtn.addEventListener("click", (e) => { e.stopPropagation(); closeModal(orderPopup); });
 
+openChatBtn.addEventListener("click", (e) => { e.stopPropagation(); openModal(socialPopup); });
+closeChatBtn.addEventListener("click", (e) => { e.stopPropagation(); closeModal(socialPopup); });
+
+// Închiderea doar când se apasă STRICT pe fundalul gri din exterior
 window.addEventListener("click", (e) => {
     if (e.target === orderPopup) {
         closeModal(orderPopup);
