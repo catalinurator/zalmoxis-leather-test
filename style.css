@@ -133,14 +133,23 @@ header {
    ========================================================================== */
 /* Hero */
 .hero {
-    height: 80vh;
-    background: linear-gradient(rgba(26, 21, 18, 0.6), rgba(26, 21, 18, 0.7)), url('image/atelier.jpg') center/cover no-repeat;
+    /* Calea către imaginea ta de fundal */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('image/portmoneu-masina-negru.jpg');
+    
+    /* Proprietăți pentru centrarea și acoperirea corectă a spațiului */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Înălțimea secțiunii (ajustează valoarea dacă vrei să fie mai înaltă sau mai scundă) */
+    min-height: 80vh; 
+    
+    /* Alinierea textului pe centru */
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: white;
-    padding-top: 80px;
+    color: #ffffff; /* Schimbă textul în alb ca să fie vizibil peste imagine */
 }
 
 .hero h1 {
