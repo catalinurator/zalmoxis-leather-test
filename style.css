@@ -43,6 +43,12 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+/* Adaugă și alte stiluri necesare pentru dark mode aici */
+
 .container {
     width: 90%;
     max-width: 1100px;
