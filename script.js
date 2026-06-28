@@ -14,4 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+const toggleBtn = document.getElementById('theme-toggle');
+
+toggleBtn.addEventListener('click', () => {
+    // Verificăm dacă documentul are clasa 'dark-mode'
+    document.body.classList.toggle('dark-mode');
+    
+    // Schimbăm iconița
+    if (document.body.classList.contains('dark-mode')) {
+        toggleBtn.textContent = '☀️';
+    } else {
+        toggleBtn.textContent = '🌙';
+    }
 });
