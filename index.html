@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* Stilul consolidat pentru butonul de Dark Mode */
+        /* Butonul devine un element de navigare normal, nu mai folosim absolute */
         .theme-toggle-header {
             background: transparent !important;
             border: none !important;
@@ -22,47 +22,28 @@
             width: 40px;
             height: 40px;
             border-radius: 50% !important;
-            color: #2a1c16 !important;
+            color: inherit !important;
             transition: all 0.3s ease !important;
-            z-index: 1002;
-        }
-
-        html.dark-mode .theme-toggle-header {
-            color: #e0e0e0 !important;
+            margin-left: 15px; /* Spațiu în meniu pe desktop */
         }
 
         .theme-toggle-header svg {
-            position: absolute !important;
             width: 22px !important;
             height: 22px !important;
-            transition: transform 0.5s ease, opacity 0.5s ease !important;
+            transition: opacity 0.3s ease !important;
         }
 
-        .theme-toggle-header .sun-icon { opacity: 0 !important; transform: rotate(90deg) !important; }
-        .theme-toggle-header .moon-icon { opacity: 1 !important; transform: rotate(0deg) !important; }
+        /* Logica de afișare iconițe */
+        .sun-icon { opacity: 0; transform: rotate(90deg); transition: 0.5s; }
+        .moon-icon { opacity: 1; transform: rotate(0deg); transition: 0.5s; }
 
-        html.dark-mode .theme-toggle-header .sun-icon { opacity: 1 !important; transform: rotate(0deg) !important; }
-        html.dark-mode .theme-toggle-header .moon-icon { opacity: 0 !important; transform: rotate(-90deg) !important; }
+        html.dark-mode .sun-icon { opacity: 1; transform: rotate(0deg); }
+        html.dark-mode .moon-icon { opacity: 0; transform: rotate(-90deg); }
 
-        /* Desktop: Poziție fixă în dreapta sus */
-        @media (min-width: 769px) {
-            .theme-toggle-header {
-                position: absolute !important;
-                top: 50% !important;
-                transform: translateY(-50%) !important;
-                right: 20px !important;
-            }
-            .theme-toggle-header:hover { background-color: rgba(154, 106, 58, 0.1) !important; }
-        }
-
-        /* Mobil: Poziție în interiorul meniului */
+        /* Mobil */
         @media (max-width: 768px) {
             .theme-toggle-header {
-                position: relative !important;
-                margin: 20px auto 0 auto !important;
-                padding: 12px !important;
-                width: 50px;
-                height: 50px;
+                margin: 20px auto !important; /* Centrat în meniul mobil */
                 background-color: rgba(154, 106, 58, 0.1) !important;
             }
         }
@@ -72,8 +53,10 @@
 
     <header>
         <div class="nav-container">
-            <a href="#" class="logo" style="text-decoration: none !important; border: none !important;">ZALMOXIS</a>
+            <a href="#" class="logo">ZALMOXIS</a>
             <button class="menu-toggle" aria-label="Deschide meniul">☰</button>
+            
+            <!-- Butonul este acum un membru legitim al meniului -->
             <nav class="nav-menu">
                 <a href="index.html" class="active">Acasă</a>
                 <a href="#produse">Produse</a>
@@ -93,33 +76,24 @@
         </div>
     </header>
 
-    ...
+    <!-- Conținutul tău aici -->
 
     <script>
         const headerThemeBtn = document.getElementById('headerThemeToggle');
+        
         function reflectTheme(isDark) {
-            if (isDark) {
-                document.documentElement.classList.add('dark-mode');
-                localStorage.setItem('darkMode', 'enabled');
-            } else {
-                document.documentElement.classList.remove('dark-mode');
-                localStorage.setItem('darkMode', 'disabled');
-            }
+            document.documentElement.classList.toggle('dark-mode', isDark);
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
         }
 
-        if (headerThemeBtn) {
-            headerThemeBtn.addEventListener('click', () => {
-                const isCurrentlyDark = document.documentElement.classList.contains('dark-mode');
-                reflectTheme(!isCurrentlyDark);
-            });
-        }
+        headerThemeBtn?.addEventListener('click', () => {
+            reflectTheme(!document.documentElement.classList.contains('dark-mode'));
+        });
 
-        const currentSavedTheme = localStorage.getItem('darkMode');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-        if (currentSavedTheme === 'enabled') reflectTheme(true);
-        else if (currentSavedTheme === 'disabled') reflectTheme(false);
-        else reflectTheme(systemPrefersDark.matches);
+        // Inițializare
+        const savedTheme = localStorage.getItem('darkMode');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        reflectTheme(savedTheme === 'enabled' || (!savedTheme && systemDark));
     </script>
-    <script src="script.js"></script>
 </body>
 </html>
