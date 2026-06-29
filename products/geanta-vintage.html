@@ -8,39 +8,35 @@
     <link rel="stylesheet" href="../style.css">
 
     <style>
-        /* [Restul stilurilor tale rămân neschimbate] */
         body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f3e7db; color: #2a1c16; transition: background 0.3s, color 0.3s; }
-        
-        /* FIX MOBIL: pointer-events */
-        .zalmoxis-popup-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); z-index: 20000;
-            display: none; align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 0.3s ease;
-            pointer-events: none; /* Inactiv când e închis */
-        }
-        .zalmoxis-popup-overlay.active { display: flex; opacity: 1; pointer-events: auto; /* Activ când e deschis */ }
-        
-        /* Restul stilurilor tale de aici în jos... */
         .btn-main, .channel-link, .hamburger, .theme-toggle-inline, .zalmoxis-links-container a { -webkit-tap-highlight-color: transparent; cursor: pointer; }
+        
+        /* [Stilurile tale rămân identice] */
         html.dark-mode body { background: #121212; color: #e0e0e0; }
         .container { max-width: 1100px; margin: 0 auto; margin-top: 100px !important; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 40px 20px; align-items: center; }
         .image-box img { width: 100%; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); transition: 0.3s; }
+        h1 { font-size: 34px; margin: 0; }
+        .price { font-size: 22px; font-weight: 600; margin: 10px 0; }
+        .desc { color: #5a3a2e; line-height: 1.5; }
         .main-header { background: #f3e7db; position: fixed; top: 0; left: 0; width: 100%; z-index: 10000; border-bottom: 1px solid rgba(42, 28, 22, 0.08); }
+        .header-container { max-width: 1100px; margin: 0 auto; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 18px; font-weight: 700; text-decoration: none; color: #2a1c16; letter-spacing: 3px; z-index: 10003; }
         .hamburger { display: block; cursor: pointer; background: transparent; border: none; padding: 6px; z-index: 10003; position: relative; }
         .bar { display: block; width: 24px; height: 1.5px; margin: 5px auto; background-color: #2a1c16; transition: all 0.3s; }
         .hamburger.active .bar:nth-child(2) { opacity: 0; }
         .hamburger.active .bar:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
         .hamburger.active .bar:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-        .zalmoxis-menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #f3e7db; z-index: 10001; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        .zalmoxis-menu-overlay.active { display: flex !important; }
+        
+        /* FIX MENIU: Am eliminat display: none !important care bloca totul */
+        .zalmoxis-menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #f3e7db; z-index: 10001; visibility: hidden; opacity: 0; transition: 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .zalmoxis-menu-overlay.active { visibility: visible; opacity: 1; }
+        
         .zalmoxis-links-container { display: flex; flex-direction: column; align-items: center; gap: 30px; }
         .zalmoxis-links-container a { text-decoration: none; color: #2a1c16; font-size: 26px; }
-        .zalmoxis-popup-content { background: #f3e7db; padding: 35px 25px; border-radius: 16px; max-width: 420px; width: 90%; text-align: center; box-shadow: 0 15px 40px rgba(0,0,0,0.2); }
-        .channel-link { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px; text-decoration: none; color: white !important; font-weight: 600; border-radius: 8px; margin-bottom: 10px; }
-        .instagram { background: #E1306C; } .tiktok { background: #000; } .whatsapp { background: #25D366; } .telegram { background: #24A1DE; }
-        .action-buttons-group { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
-        .btn-main { padding: 14px 20px; border: 1px solid #9A6A3A; background: transparent; color: #2A211B; font-size: 15px; font-weight: 600; cursor: pointer; }
+        .zalmoxis-popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.5); z-index: 20000; display: none; align-items: center; justify-content: center; }
+        .zalmoxis-popup-overlay.active { display: flex; }
+        .zalmoxis-popup-content { background: #f3e7db; padding: 35px; border-radius: 16px; width: 90%; max-width: 400px; position: relative; }
+        .btn-main { padding: 14px 20px; border: 1px solid #9A6A3A; background: transparent; cursor: pointer; }
         .btn-buy { background: #9A6A3A; color: white; }
         @media(max-width:768px){ .container { grid-template-columns: 1fr; margin-top: 70px !important; } }
     </style>
@@ -50,17 +46,16 @@
 <header class="main-header">
     <div class="header-container">
         <a href="../index.html" class="logo">ZALMOXIS</a>
-        <button class="hamburger" id="hamburgerBtn" aria-label="Deschide meniul">
+        <button class="hamburger" id="hamb" aria-label="Meniu">
             <span class="bar"></span><span class="bar"></span><span class="bar"></span>
         </button>
     </div>
 </header>
 
-<div class="zalmoxis-menu-overlay">
+<div class="zalmoxis-menu-overlay" id="menu">
     <nav class="zalmoxis-links-container">
         <a href="../index.html">Acasă</a>
         <a href="../index.html#produse">Produse</a>
-        <button id="themeToggleBtn" class="theme-toggle-inline">Schimbă tema</button>
     </nav>
 </div>
 
@@ -69,46 +64,31 @@
     <div>
         <h1>Geanta</h1>
         <div class="action-buttons-group">
-            <button class="btn-main btn-buy" id="openOrderPopup">Comandă Rapidă</button>
-            <button class="btn-main" id="openChatPopup">Discută pe Chat</button>
+            <button class="btn-main btn-buy" id="btnOrder">Comandă Rapidă</button>
+            <button class="btn-main" id="btnChat">Discută pe Chat</button>
         </div>
     </div>
 </div>
 
-<div id="orderPopup" class="zalmoxis-popup-overlay">
-    <div class="zalmoxis-popup-content">
-        <button class="close-popup-btn" id="closeOrderPopup">&times;</button>
-        <h3>Comandă</h3>
-        </div>
-</div>
-
-<div id="socialPopup" class="zalmoxis-popup-overlay">
-    <div class="zalmoxis-popup-content">
-        <button class="close-popup-btn" id="closeChatPopup">&times;</button>
-        <div class="social-channels-grid">
-            <a href="https://www.instagram.com/zalmoxis_leather/" target="_blank" class="channel-link instagram">Instagram</a>
-            <a href="https://wa.me/37369639506" target="_blank" class="channel-link whatsapp">WhatsApp</a>
-        </div>
-    </div>
-</div>
+<div id="orderPopup" class="zalmoxis-popup-overlay"><div class="zalmoxis-popup-content"><button id="closeOrder">&times;</button><h3>Comandă</h3></div></div>
+<div id="socialPopup" class="zalmoxis-popup-overlay"><div class="zalmoxis-popup-content"><button id="closeChat">&times;</button></div></div>
 
 <script>
-    // FIX PENTRU MOBIL: Adăugăm un mic delay dacă este nevoie sau folosim eveniment de click standard
-    const hamburger = document.querySelector("#hamburgerBtn");
-    const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
+    // FIXUL CRITIC: Folosim un singur eveniment de click pentru a evita conflictele
+    const hamb = document.getElementById("hamb");
+    const menu = document.getElementById("menu");
 
-    hamburger.addEventListener("click", () => {
-        hamburger.classList.toggle("active");
-        navOverlay.classList.toggle("active");
-    });
+    hamb.onclick = () => {
+        hamb.classList.toggle("active");
+        menu.classList.toggle("active");
+    };
 
-    // Logica pop-up-urilor tale originale (asigură-te că id-urile coincid cu ce ai în HTML)
-    document.getElementById("openOrderPopup").addEventListener("click", () => document.getElementById("orderPopup").classList.add("active"));
-    document.getElementById("closeOrderPopup").addEventListener("click", () => document.getElementById("orderPopup").classList.remove("active"));
+    // Logica pop-up
+    document.getElementById("btnOrder").onclick = () => document.getElementById("orderPopup").classList.add("active");
+    document.getElementById("closeOrder").onclick = () => document.getElementById("orderPopup").classList.remove("active");
     
-    document.getElementById("openChatPopup").addEventListener("click", () => document.getElementById("socialPopup").classList.add("active"));
-    document.getElementById("closeChatPopup").addEventListener("click", () => document.getElementById("socialPopup").classList.remove("active"));
+    document.getElementById("btnChat").onclick = () => document.getElementById("socialPopup").classList.add("active");
+    document.getElementById("closeChat").onclick = () => document.getElementById("socialPopup").classList.remove("active");
 </script>
-
 </body>
 </html>
