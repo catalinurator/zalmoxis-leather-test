@@ -5,10 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geanta | Zalmoxis Leather</title>
 
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('darkMode');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'enabled' || (savedTheme === null && prefersDark)) {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
+
     <link rel="stylesheet" href="../style.css">
 
     <style>
-        /* AM ADĂUGAT DOAR ACEASTĂ LINIE PENTRU MOBIL: */
         .hamburger, .zalmoxis-links-container a, .btn-main, .close-popup-btn { touch-action: manipulation; }
 
         body {
@@ -377,22 +386,6 @@
             .zalmoxis-links-container a { font-size: 24px !important; }
             .action-buttons-group { grid-template-columns: 1fr; gap: 10px; }
         }
-        /* Asigură-te că overlay-ul și conținutul nu blochează interacțiunea */
-.zalmoxis-popup-overlay {
-    pointer-events: auto !important;
-}
-
-.zalmoxis-popup-content {
-    position: relative !important;
-    z-index: 20005 !important; /* Mai sus de orice alt element */
-}
-
-/* Forțăm linkurile din social să fie "clickabile" */
-.channel-link {
-    pointer-events: auto !important;
-    position: relative !important;
-    z-index: 20010 !important;
-}
     </style>
 </head>
 <body>
@@ -439,7 +432,7 @@
 
     <div>
         <h1>Geanta</h1>
-        <div class="price">TEST 1 MDL</div>
+        <div class="price">1899 MDL</div>
 
         <div class="desc">
             Geanta din piele naturală, lucrată manual pentru rezistență.
@@ -517,7 +510,6 @@
 </div>
 
 <script>
-    // 1. Logica meniului Hamburger
     const hamburger = document.querySelector(".hamburger");
     const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
 
@@ -582,16 +574,8 @@
     }
 
     function initTheme() {
-        const savedTheme = localStorage.getItem('darkMode');
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        if (savedTheme === 'enabled') {
-            setTheme(true);
-        } else if (savedTheme === 'disabled') {
-            setTheme(false);
-        } else {
-            setTheme(prefersDarkScheme);
-        }
+        const isDark = document.documentElement.classList.contains('dark-mode');
+        updateIcons(isDark);
     }
 
     initTheme();
@@ -647,15 +631,13 @@
         if (e.target === socialPopup) {
             closeModal(socialPopup);
         }
-        
     });
-    // Forțăm linkurile să răspundă la click pe iOS
-document.querySelectorAll('.channel-link').forEach(link => {
-    link.addEventListener('touchstart', function(e) {
-        // Opțional: poți pune e.preventDefault() dacă vrei să previi "double-tap"
-        window.location.href = this.getAttribute('href');
-    }, {passive: false});
-});
+
+    document.querySelectorAll('.channel-link').forEach(link => {
+        link.addEventListener('touchstart', function(e) {
+            window.location.href = this.getAttribute('href');
+        }, {passive: false});
+    });
 </script>
 
 </body>
