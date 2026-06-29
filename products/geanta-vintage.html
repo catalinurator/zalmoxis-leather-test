@@ -6,14 +6,21 @@
     <title>Geanta | Zalmoxis Leather</title>
 
     <script>
-        (function() {
-            const savedTheme = localStorage.getItem('darkMode');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (savedTheme === 'enabled' || (savedTheme === null && prefersDark)) {
-                document.documentElement.classList.add('dark-mode');
-            }
-        })();
-    </script>
+    (function() {
+        // Verificăm ce are utilizatorul setat în sistem
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        // Verificăm dacă există o setare manuală salvată
+        const savedTheme = localStorage.getItem('darkMode');
+
+        // Logica: Dacă există setare salvată, o folosim pe aceea. 
+        // Dacă nu, folosim setarea sistemului (prefersDark).
+        if (savedTheme === 'enabled' || (savedTheme === null && prefersDark)) {
+            document.documentElement.classList.add('dark-mode');
+        } else {
+            document.documentElement.classList.remove('dark-mode');
+        }
+    })();
+</script>
 
     <link rel="stylesheet" href="../style.css">
 
@@ -432,7 +439,7 @@
 
     <div>
         <h1>Geanta</h1>
-        <div class="price">TEST 2</div>
+        <div class="price">TEST 3</div>
 
         <div class="desc">
             Geanta din piele naturală, lucrată manual pentru rezistență.
