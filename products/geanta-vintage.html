@@ -377,6 +377,22 @@
             .zalmoxis-links-container a { font-size: 24px !important; }
             .action-buttons-group { grid-template-columns: 1fr; gap: 10px; }
         }
+        /* Asigură-te că overlay-ul și conținutul nu blochează interacțiunea */
+.zalmoxis-popup-overlay {
+    pointer-events: auto !important;
+}
+
+.zalmoxis-popup-content {
+    position: relative !important;
+    z-index: 20005 !important; /* Mai sus de orice alt element */
+}
+
+/* Forțăm linkurile din social să fie "clickabile" */
+.channel-link {
+    pointer-events: auto !important;
+    position: relative !important;
+    z-index: 20010 !important;
+}
     </style>
 </head>
 <body>
@@ -631,7 +647,15 @@
         if (e.target === socialPopup) {
             closeModal(socialPopup);
         }
+        
     });
+    // Forțăm linkurile să răspundă la click pe iOS
+document.querySelectorAll('.channel-link').forEach(link => {
+    link.addEventListener('touchstart', function(e) {
+        // Opțional: poți pune e.preventDefault() dacă vrei să previi "double-tap"
+        window.location.href = this.getAttribute('href');
+    }, {passive: false});
+});
 </script>
 
 </body>
