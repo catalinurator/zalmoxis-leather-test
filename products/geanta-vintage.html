@@ -4,41 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geanta | Zalmoxis Leather</title>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('darkMode');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'enabled' || (savedTheme === null && prefersDark)) {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="../style.css">
     <style>
-        /* CSS Integrat pentru a evita conflictele */
-        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f3e7db; color: #2a1c16; transition: background 0.3s; }
-        html.dark-mode { background: #121212; color: #e0e0e0; }
+        /* Stiluri Galerie și Zoom */
+        .image-gallery { width: 100%; display: flex; flex-direction: column; gap: 15px; }
+        .main-image-container { width: 100%; overflow: hidden; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+        .main-image-container img { width: 100%; display: block; cursor: zoom-in; }
+        .thumbnails { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
+        .thumbnails img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; }
+        .thumbnails img.active { border-color: #9A6A3A; }
         
-        /* Popup Overlay - Z-INDEX FOARTE MARE PENTRU A FI DEASUPRA TUTUROR */
-        .zalmoxis-popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 99999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 99999; cursor: zoom-out; }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; }
+
+        /* Stiluri existente (păstrate) */
+        body { margin: 0; font-family: -apple-system, sans-serif; background: #f3e7db; color: #2a1c16; transition: background 0.3s; }
+        html.dark-mode { background: #121212; color: #e0e0e0; }
+        .container { max-width: 1100px; margin: 100px auto 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 20px; }
+        
+        /* Popup Overlay Fixat */
+        .zalmoxis-popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 50000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
         .zalmoxis-popup-overlay.active { display: flex; opacity: 1; }
         .zalmoxis-popup-content { background: #f3e7db; padding: 30px; border-radius: 16px; width: 90%; max-width: 400px; position: relative; }
         html.dark-mode .zalmoxis-popup-content { background: #1a1a1a; }
         
-        /* Restul stilurilor rămân neschimbate pentru design-ul tău */
-        .main-header { position: fixed; top: 0; width: 100%; z-index: 10000; background: #f3e7db; padding: 12px 20px; }
-        .container { max-width: 1100px; margin: 100px auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 20px; }
-        .thumbnails img { width: 80px; height: 80px; cursor: pointer; border: 2px solid transparent; }
-        .thumbnails img.active { border-color: #9A6A3A; }
+        @media(max-width:768px){ .container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
 <header class="main-header">
-    <a href="../index.html" class="logo">ZALMOXIS</a>
+    <div class="header-container">
+        <a href="../index.html" class="logo">ZALMOXIS</a>
+        <button class="hamburger" aria-label="Meniu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+    </div>
 </header>
+
+<div class="zalmoxis-menu-overlay">
+    <nav class="zalmoxis-links-container">
+        <a href="../index.html">Acasă</a>
+        <button id="themeToggleBtn">Schimbă Tema</button>
+    </nav>
+</div>
 
 <div class="container">
     <div class="image-gallery">
         <div class="main-image-container">
-            <img id="mainDisplay" src="../image/geanta1.jpg" alt="Geantă" style="width:100%">
+            <img id="mainDisplay" src="../image/geanta1.jpg" alt="Geantă" class="zoomable">
         </div>
         <div class="thumbnails">
             <img src="../image/geanta1.jpg" class="active" onclick="changeImage(this)">
             <img src="../image/portmoneu1.jpg" onclick="changeImage(this)">
+            <img src="../image/portmoneu-masina-negru.jpg" onclick="changeImage(this)">
         </div>
     </div>
+
     <div>
         <h1>Geanta</h1>
         <button class="btn-main" id="openOrderPopup">Comandă Rapidă</button>
@@ -46,14 +76,16 @@
     </div>
 </div>
 
+<div id="lightbox" class="lightbox"><img id="lightboxImg" src=""></div>
+
 <div id="orderPopup" class="zalmoxis-popup-overlay">
     <div class="zalmoxis-popup-content">
-        <button onclick="togglePopup('orderPopup', false)">X</button>
+        <button class="close-popup-btn" id="closeOrderPopup">X</button>
         <h3>Comandă Rapidă</h3>
         <form action="https://api.web3forms.com/submit" method="POST">
             <input type="hidden" name="access_key" value="bd32b38b-4a9d-431e-97cd-dc32eb24b2a4">
-            <input type="text" name="Nume" required placeholder="Nume" style="width:100%">
-            <input type="tel" name="Telefon" required placeholder="Telefon" style="width:100%">
+            <input type="text" name="Nume" placeholder="Nume" required style="width:100%; margin-bottom:10px;">
+            <input type="tel" name="Telefon" placeholder="Telefon" required style="width:100%; margin-bottom:10px;">
             <button type="submit">Confirmă</button>
         </form>
     </div>
@@ -61,32 +93,49 @@
 
 <div id="socialPopup" class="zalmoxis-popup-overlay">
     <div class="zalmoxis-popup-content">
-        <button onclick="togglePopup('socialPopup', false)">X</button>
-        <h3>WhatsApp</h3>
-        <a href="https://wa.me/37369639506">Deschide WhatsApp</a>
+        <button class="close-popup-btn" id="closeChatPopup">X</button>
+        <h3>Contact</h3>
+        <a href="https://wa.me/37369639506" style="display:block; padding:10px; background:#25D366; color:white; text-align:center;">WhatsApp</a>
     </div>
 </div>
 
 <script>
-    // Logica pentru Popup-uri
-    function togglePopup(id, show) {
-        const el = document.getElementById(id);
-        if (show) {
-            el.classList.add('active');
-        } else {
-            el.classList.remove('active');
-        }
-    }
-
-    document.getElementById("openOrderPopup").addEventListener("click", () => togglePopup("orderPopup", true));
-    document.getElementById("openChatPopup").addEventListener("click", () => togglePopup("socialPopup", true));
-
     // Galerie
     function changeImage(el) {
         document.getElementById('mainDisplay').src = el.src;
         document.querySelectorAll('.thumbnails img').forEach(i => i.classList.remove('active'));
         el.classList.add('active');
     }
+    const lightbox = document.getElementById('lightbox');
+    document.getElementById('mainDisplay').onclick = () => {
+        document.getElementById('lightboxImg').src = document.getElementById('mainDisplay').src;
+        lightbox.classList.add('active');
+    };
+    lightbox.onclick = () => lightbox.classList.remove('active');
+
+    // Meniu Hamburger
+    const hb = document.querySelector(".hamburger");
+    const nav = document.querySelector(".zalmoxis-menu-overlay");
+    hb.onclick = () => {
+        hb.classList.toggle("active");
+        nav.classList.toggle("active");
+    };
+
+    // Popup-uri Corectate
+    const oP = document.getElementById("orderPopup");
+    const sP = document.getElementById("socialPopup");
+
+    document.getElementById("openOrderPopup").onclick = () => oP.classList.add("active");
+    document.getElementById("closeOrderPopup").onclick = () => oP.classList.remove("active");
+    
+    document.getElementById("openChatPopup").onclick = () => sP.classList.add("active");
+    document.getElementById("closeChatPopup").onclick = () => sP.classList.remove("active");
+
+    // Dark Mode
+    document.getElementById("themeToggleBtn").onclick = () => {
+        const isDark = document.documentElement.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+    };
 </script>
 </body>
 </html>
