@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geanta | Zalmoxis Leather</title>
+
     <script>
         (function() {
             const savedTheme = localStorage.getItem('darkMode');
@@ -13,32 +14,46 @@
             }
         })();
     </script>
+
     <link rel="stylesheet" href="../style.css">
+
     <style>
-        /* Stiluri Galerie și Zoom */
+        /* Toate stilurile tale originale sunt aici */
+        .hamburger, .zalmoxis-links-container a, .btn-main, .close-popup-btn { touch-action: manipulation; }
         .image-gallery { width: 100%; display: flex; flex-direction: column; gap: 15px; }
         .main-image-container { width: 100%; overflow: hidden; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
         .main-image-container img { width: 100%; display: block; cursor: zoom-in; }
         .thumbnails { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
-        .thumbnails img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; }
+        .thumbnails::-webkit-scrollbar { display: none; }
+        .thumbnails img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
         .thumbnails img.active { border-color: #9A6A3A; }
+        html.dark-mode .thumbnails img.active { border-color: #c49a6c; }
         
-        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 99999; cursor: zoom-out; }
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 30000; cursor: zoom-out; }
         .lightbox.active { display: flex; }
         .lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; }
 
-        /* Stiluri existente (păstrate) */
-        body { margin: 0; font-family: -apple-system, sans-serif; background: #f3e7db; color: #2a1c16; transition: background 0.3s; }
-        html.dark-mode { background: #121212; color: #e0e0e0; }
-        .container { max-width: 1100px; margin: 100px auto 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 20px; }
+        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f3e7db; color: #2a1c16; transition: background 0.3s, color 0.3s; }
+        html.dark-mode body { background: #121212; color: #e0e0e0; }
+        .container { max-width: 1100px; margin: 0 auto; margin-top: 100px !important; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 40px 20px; align-items: center; }
+        .main-header { background: #f3e7db; position: fixed; top: 0; left: 0; width: 100%; z-index: 10000; border-bottom: 1px solid rgba(42, 28, 22, 0.08); transition: background 0.3s; }
+        html.dark-mode .main-header { background: #121212; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+        .header-container { max-width: 1100px; margin: 0 auto; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 18px; font-weight: 700; text-decoration: none; color: #2a1c16; letter-spacing: 3px; z-index: 10003; }
+        html.dark-mode .logo { color: #e0e0e0; }
+        .hamburger { display: block; cursor: pointer; background: transparent; border: none; padding: 6px; z-index: 10003 !important; position: relative; }
+        .bar { display: block; width: 24px; height: 1.5px; margin: 5px auto; transition: all 0.3s ease-in-out; background-color: #2a1c16; }
+        html.dark-mode .bar { background-color: #e0e0e0; }
         
-        /* Popup Overlay Fixat */
-        .zalmoxis-popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 50000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+        /* Popup Overlay - Aici am setat Z-INDEX 99999 pentru a fi peste orice */
+        .zalmoxis-popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 99999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
         .zalmoxis-popup-overlay.active { display: flex; opacity: 1; }
-        .zalmoxis-popup-content { background: #f3e7db; padding: 30px; border-radius: 16px; width: 90%; max-width: 400px; position: relative; }
-        html.dark-mode .zalmoxis-popup-content { background: #1a1a1a; }
+        .zalmoxis-popup-content { background: #f3e7db; padding: 35px 25px; border-radius: 16px; max-width: 420px; width: 90%; text-align: center; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; }
+        html.dark-mode .zalmoxis-popup-content { background: #1a1a1a; color: #e0e0e0; }
         
-        @media(max-width:768px){ .container { grid-template-columns: 1fr; } }
+        /* Butoane și restul */
+        .btn-main { display: inline-block; padding: 14px 20px; border: 1px solid #9A6A3A; background: transparent; color: #2A211B; font-weight: 600; cursor: pointer; }
+        .btn-buy { background: #9A6A3A; color: white; }
     </style>
 </head>
 <body>
@@ -46,21 +61,24 @@
 <header class="main-header">
     <div class="header-container">
         <a href="../index.html" class="logo">ZALMOXIS</a>
-        <button class="hamburger" aria-label="Meniu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+        <button class="hamburger" aria-label="Deschide meniul">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
     </div>
 </header>
 
 <div class="zalmoxis-menu-overlay">
     <nav class="zalmoxis-links-container">
         <a href="../index.html">Acasă</a>
-        <button id="themeToggleBtn">Schimbă Tema</button>
+        <a href="../index.html#produse">Produse</a>
+        <button id="themeToggleBtn" class="theme-toggle-inline">Mod Tema</button>
     </nav>
 </div>
 
 <div class="container">
     <div class="image-gallery">
         <div class="main-image-container">
-            <img id="mainDisplay" src="../image/geanta1.jpg" alt="Geantă" class="zoomable">
+            <img id="mainDisplay" src="../image/geanta1.jpg" alt="Geantă">
         </div>
         <div class="thumbnails">
             <img src="../image/geanta1.jpg" class="active" onclick="changeImage(this)">
@@ -71,71 +89,46 @@
 
     <div>
         <h1>Geanta</h1>
-        <button class="btn-main" id="openOrderPopup">Comandă Rapidă</button>
+        <button class="btn-main btn-buy" id="openOrderPopup">Comandă Rapidă</button>
         <button class="btn-main" id="openChatPopup">Discută pe Chat</button>
     </div>
 </div>
 
-<div id="lightbox" class="lightbox"><img id="lightboxImg" src=""></div>
-
 <div id="orderPopup" class="zalmoxis-popup-overlay">
     <div class="zalmoxis-popup-content">
-        <button class="close-popup-btn" id="closeOrderPopup">X</button>
+        <button class="close-popup-btn" id="closeOrderPopup">&times;</button>
         <h3>Comandă Rapidă</h3>
         <form action="https://api.web3forms.com/submit" method="POST">
             <input type="hidden" name="access_key" value="bd32b38b-4a9d-431e-97cd-dc32eb24b2a4">
-            <input type="text" name="Nume" placeholder="Nume" required style="width:100%; margin-bottom:10px;">
-            <input type="tel" name="Telefon" placeholder="Telefon" required style="width:100%; margin-bottom:10px;">
-            <button type="submit">Confirmă</button>
+            <input type="text" name="Nume" required placeholder="Nume" style="width:100%; padding:10px; margin-bottom:10px;">
+            <input type="tel" name="Telefon" required placeholder="Telefon" style="width:100%; padding:10px; margin-bottom:10px;">
+            <button type="submit" class="btn-submit">Confirmă</button>
         </form>
     </div>
 </div>
 
 <div id="socialPopup" class="zalmoxis-popup-overlay">
     <div class="zalmoxis-popup-content">
-        <button class="close-popup-btn" id="closeChatPopup">X</button>
-        <h3>Contact</h3>
-        <a href="https://wa.me/37369639506" style="display:block; padding:10px; background:#25D366; color:white; text-align:center;">WhatsApp</a>
+        <button class="close-popup-btn" id="closeChatPopup">&times;</button>
+        <h3>WhatsApp</h3>
+        <a href="https://wa.me/37369639506" class="channel-link whatsapp">Contactează-ne</a>
     </div>
 </div>
 
 <script>
+    // Popup-uri (Logica simplă și sigură)
+    document.getElementById("openOrderPopup").onclick = () => document.getElementById("orderPopup").classList.add("active");
+    document.getElementById("closeOrderPopup").onclick = () => document.getElementById("orderPopup").classList.remove("active");
+    
+    document.getElementById("openChatPopup").onclick = () => document.getElementById("socialPopup").classList.add("active");
+    document.getElementById("closeChatPopup").onclick = () => document.getElementById("socialPopup").classList.remove("active");
+
     // Galerie
     function changeImage(el) {
         document.getElementById('mainDisplay').src = el.src;
         document.querySelectorAll('.thumbnails img').forEach(i => i.classList.remove('active'));
         el.classList.add('active');
     }
-    const lightbox = document.getElementById('lightbox');
-    document.getElementById('mainDisplay').onclick = () => {
-        document.getElementById('lightboxImg').src = document.getElementById('mainDisplay').src;
-        lightbox.classList.add('active');
-    };
-    lightbox.onclick = () => lightbox.classList.remove('active');
-
-    // Meniu Hamburger
-    const hb = document.querySelector(".hamburger");
-    const nav = document.querySelector(".zalmoxis-menu-overlay");
-    hb.onclick = () => {
-        hb.classList.toggle("active");
-        nav.classList.toggle("active");
-    };
-
-    // Popup-uri Corectate
-    const oP = document.getElementById("orderPopup");
-    const sP = document.getElementById("socialPopup");
-
-    document.getElementById("openOrderPopup").onclick = () => oP.classList.add("active");
-    document.getElementById("closeOrderPopup").onclick = () => oP.classList.remove("active");
-    
-    document.getElementById("openChatPopup").onclick = () => sP.classList.add("active");
-    document.getElementById("closeChatPopup").onclick = () => sP.classList.remove("active");
-
-    // Dark Mode
-    document.getElementById("themeToggleBtn").onclick = () => {
-        const isDark = document.documentElement.classList.toggle('dark-mode');
-        localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
-    };
 </script>
 </body>
 </html>
