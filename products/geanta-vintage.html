@@ -404,15 +404,15 @@
 
 <div class="zalmoxis-menu-overlay">
     <nav class="zalmoxis-links-container">
-        <a href="../index.html">Acasă</a>
+        <a href="../index.html">AcasÄ</a>
         <a href="../index.html#produse">Produse</a>
         <a href="../index.html#despre">Despre Noi</a>
         <a href="../index.html#contact">Contact</a>
         
         <div class="menu-spacer"></div>
 
-        <button id="themeToggleBtn" class="theme-toggle-inline" aria-label="Schimbă tema">
-            <span class="theme-text">Mod Întunecat</span>
+        <button id="themeToggleBtn" class="theme-toggle-inline" aria-label="SchimbÄ tema">
+            <span class="theme-text">Mod Ãntunecat</span>
             <span class="theme-icons">
                 <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none; width:18px; height:18px;">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.344l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
@@ -427,7 +427,7 @@
 
 <div class="container">
     <div class="image-box">
-        <img id="productImg" src="../image/geanta1.jpg" alt="Geanta din piele naturală">
+        <img id="productImg" src="../image/geanta1.jpg" alt="Geanta din piele naturalÄ">
     </div>
 
     <div>
@@ -435,15 +435,15 @@
         <div class="price">TEST 2</div>
 
         <div class="desc">
-            Geanta din piele naturală, lucrată manual pentru rezistență.
+            Geanta din piele naturalÄ, lucratÄ manual pentru rezistenÈÄ.
         </div>
 
         <div class="action-buttons-group">
             <button class="btn-main btn-buy" id="openOrderPopup">
-                Comandă Rapidă
+                ComandÄ RapidÄ
             </button>
             <button class="btn-main btn-chat" id="openChatPopup">
-                Discută pe Chat
+                DiscutÄ pe Chat
             </button>
         </div>
     </div>
@@ -451,42 +451,42 @@
 
 <div id="orderPopup" class="zalmoxis-popup-overlay">
     <div class="zalmoxis-popup-content">
-        <button class="close-popup-btn" id="closeOrderPopup" aria-label="Închide">&times;</button>
+        <button class="close-popup-btn" id="closeOrderPopup" aria-label="Ãnchide">&times;</button>
         
-        <h3>Comandă Rapidă</h3>
-        <p>Lasă-ne datele tale și te sunăm noi în cel mai scurt timp pentru confirmare și detalii de livrare.</p>
+        <h3>ComandÄ RapidÄ</h3>
+        <p>LasÄ-ne datele tale Èi te sunÄm noi Ã®n cel mai scurt timp pentru confirmare Èi detalii de livrare.</p>
         
         <form action="https://api.web3forms.com/submit" method="POST">
             <input type="hidden" name="access_key" value="bd32b38b-4a9d-431e-97cd-dc32eb24b2a4">
-            <input type="hidden" name="subject" value="Comandă Nouă - Geantă Piele">
+            <input type="hidden" name="subject" value="ComandÄ NouÄ - GeantÄ Piele">
             <input type="hidden" name="from_name" value="Zalmoxis Leather Site">
 
             <div class="form-group">
-                <label for="clientName">Nume și Prenume:</label>
+                <label for="clientName">Nume Èi Prenume:</label>
                 <input type="text" id="clientName" name="Nume Client" class="form-input" placeholder="Ex: Ion Popescu" required>
             </div>
 
             <div class="form-group">
-                <label for="clientPhone">Număr de Telefon:</label>
+                <label for="clientPhone">NumÄr de Telefon:</label>
                 <input type="tel" id="clientPhone" name="Telefon" class="form-input" placeholder="Ex: 068XXXXXX" required>
             </div>
 
             <div class="form-group">
-                <label for="clientNote">Doriți personalizare sau detalii? (Opțional):</label>
-                <textarea id="clientNote" name="Note/Personalizare" class="form-input" rows="2" placeholder="Ex: Culoarea aței, personalizare..."></textarea>
+                <label for="clientNote">DoriÈi personalizare sau detalii? (OpÈional):</label>
+                <textarea id="clientNote" name="Note/Personalizare" class="form-input" rows="2" placeholder="Ex: Culoarea aÈei, personalizare..."></textarea>
             </div>
 
-            <button type="submit" class="btn-submit">Confirmă Comanda</button>
+            <button type="submit" class="btn-submit">ConfirmÄ Comanda</button>
         </form>
     </div>
 </div>
 
 <div id="socialPopup" class="zalmoxis-popup-overlay">
     <div class="zalmoxis-popup-content">
-        <button class="close-popup-btn" id="closeChatPopup" aria-label="Închide">&times;</button>
+        <button class="close-popup-btn" id="closeChatPopup" aria-label="Ãnchide">&times;</button>
         
-        <h3>Unde doriți să discutăm?</h3>
-        <p>Alege platforma preferată pentru a lua legătura direct cu noi.</p>
+        <h3>Unde doriÈi sÄ discutÄm?</h3>
+        <p>Alege platforma preferatÄ pentru a lua legÄtura direct cu noi.</p>
         
         <div class="social-channels-grid">
             <a href="https://www.instagram.com/zalmoxis_leather/" target="_blank" class="channel-link instagram"> 
@@ -560,7 +560,7 @@
         } else {
             sunIcon.style.display = 'none';
             moonIcon.style.display = 'block';
-            themeText.textContent = 'Mod Întunecat';
+            themeText.textContent = 'Mod Ãntunecat';
         }
     }
 
@@ -631,6 +631,12 @@
         if (e.target === socialPopup) {
             closeModal(socialPopup);
         }
+    });
+
+    document.querySelectorAll('.channel-link').forEach(link => {
+        link.addEventListener('touchstart', function(e) {
+            window.location.href = this.getAttribute('href');
+        }, {passive: false});
     });
 </script>
 
