@@ -6,11 +6,9 @@
     <title>Geanta | Zalmoxis Leather</title>
 
     <script>
-        // Funcție imediată pentru a preveni "flicker-ul" de temă
         (function() {
             const savedTheme = localStorage.getItem('darkMode');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            
             if (savedTheme === 'enabled' || (savedTheme === null && prefersDark)) {
                 document.documentElement.classList.add('dark-mode');
             }
@@ -20,43 +18,374 @@
     <link rel="stylesheet" href="../style.css">
 
     <style>
-        /* CSS-ul rămâne optimizat, dar cu structură lizibilă */
-        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f3e7db; color: #2a1c16; transition: background 0.3s, color 0.3s; }
-        html.dark-mode body { background: #121212; color: #e0e0e0; }
-        
-        /* Header și Navigație */
-        .main-header { background: #f3e7db; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; border-bottom: 1px solid rgba(42, 28, 22, 0.08); transition: 0.3s; }
-        html.dark-mode .main-header { background: #121212; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
-        
-        .header-container { max-width: 1100px; margin: 0 auto; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
-        
-        .logo { font-size: 18px; font-weight: 700; text-decoration: none; color: #2a1c16; letter-spacing: 3px; z-index: 10003; }
+        .hamburger, .zalmoxis-links-container a, .btn-main, .close-popup-btn { touch-action: manipulation; }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f3e7db;
+            color: #2a1c16;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .btn-main, .channel-link, .hamburger, .theme-toggle-inline, .zalmoxis-links-container a {
+            -webkit-tap-highlight-color: transparent;
+            cursor: pointer;
+        }
+
+        html.dark-mode body {
+            background: #121212;
+            color: #e0e0e0;
+        }
+
+        html.dark-mode .price {
+            color: #c49a6c;
+        }
+
+        html.dark-mode .desc {
+            color: #b0a095;
+        }
+
+        html.dark-mode .btn {
+            border-color: #c49a6c;
+            color: #e0e0e0;
+        }
+
+        html.dark-mode .btn:hover {
+            background: #c49a6c;
+            color: #121212;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            margin-top: 100px !important;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 40px 20px;
+            align-items: center;
+        }
+
+        .image-box img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: 0.3s;
+        }
+
+        .image-box img:hover {
+            transform: scale(1.02);
+        }
+
+        h1 {
+            font-size: 34px;
+            margin: 0;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .desc {
+            color: #5a3a2e;
+            line-height: 1.5;
+        }
+
+        .main-header {
+            background: #f3e7db; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10000;
+            border-bottom: 1px solid rgba(42, 28, 22, 0.08); 
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        html.dark-mode .main-header {
+            background: #121212; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .header-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 12px 20px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            color: #2a1c16; 
+            letter-spacing: 3px;
+            transition: color 0.3s;
+            position: relative;
+            z-index: 10003;
+        }
         html.dark-mode .logo { color: #e0e0e0; }
 
-        /* Meniu Hamburger */
-        .hamburger { background: transparent; border: none; padding: 6px; z-index: 10003; cursor: pointer; }
-        .bar { display: block; width: 24px; height: 1.5px; margin: 5px auto; background-color: #2a1c16; transition: 0.3s; }
+        .hamburger {
+            display: block;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 6px;
+            z-index: 10003 !important;
+            position: relative;
+        }
+
+        .bar {
+            display: block;
+            width: 24px;
+            height: 1.5px;
+            margin: 5px auto;
+            transition: all 0.3s ease-in-out;
+            background-color: #2a1c16;
+        }
         html.dark-mode .bar { background-color: #e0e0e0; }
-        
+
         .hamburger.active .bar:nth-child(2) { opacity: 0; }
         .hamburger.active .bar:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
         .hamburger.active .bar:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-        /* Overlay Meniu */
-        .zalmoxis-menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #f3e7db; z-index: 10001; display: none; opacity: 0; transition: 0.3s; flex-direction: column; align-items: center; justify-content: center; }
-        html.dark-mode .zalmoxis-menu-overlay { background: #121212; }
-        .zalmoxis-menu-overlay.active { display: flex !important; opacity: 1; }
+        .zalmoxis-menu-overlay {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100vh !important;
+            background-color: #f3e7db !important;
+            z-index: 10001 !important;
+            display: none !important; 
+            opacity: 0 !important;
+            transform: translateY(-20px) !important;
+            transition: opacity 0.3s ease, transform 0.3s ease !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        html.dark-mode .zalmoxis-menu-overlay {
+            background-color: #121212 !important;
+        }
+
+        .zalmoxis-menu-overlay.active {
+            display: flex !important;
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        .zalmoxis-links-container {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 30px !important;
+            width: 100% !important;
+        }
+
+        .zalmoxis-links-container a {
+            text-decoration: none !important;
+            color: #2a1c16 !important;
+            font-size: 26px !important;
+            font-weight: 500 !important;
+            letter-spacing: 1px !important;
+            transition: color 0.3s !important;
+            display: block !important;
+            text-align: center !important;
+        }
+        html.dark-mode .zalmoxis-links-container a { color: #e0e0e0 !important; }
+        .zalmoxis-links-container a:hover { color: #9A6A3A !important; }
+
+        .menu-spacer {
+            height: 10px;
+        }
+
+        .theme-toggle-inline {
+            background: transparent !important;
+            border: 1px solid rgba(154, 106, 58, 0.4) !important;
+            padding: 12px 24px !important;
+            border-radius: 25px !important;
+            color: #5a3a2e !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            font-family: inherit !important;
+            font-size: 15px !important;
+            transition: all 0.3s !important;
+        }
+
+        html.dark-mode .theme-toggle-inline {
+            border-color: rgba(196, 154, 108, 0.4) !important;
+            color: #b0a095 !important;
+        }
+
+        .action-buttons-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-main {
+            display: inline-block;
+            padding: 14px 20px;
+            border: 1px solid #9A6A3A;
+            background: transparent;
+            color: #2A211B;
+            text-decoration: none;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: .3s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-buy { background: #9A6A3A; color: white; }
+        .btn-buy:hover { background: transparent; color: #9A6A3A; transform: translateY(-2px); }
+        .btn-chat:hover { background: #9A6A3A; color: white; transform: translateY(-2px); }
+
+        html.dark-mode .btn-main { border-color: #c49a6c; color: #e0e0e0; }
+        html.dark-mode .btn-buy { background: #c49a6c; color: #121212; }
+        html.dark-mode .btn-buy:hover { background: transparent; color: #c49a6c; }
+        html.dark-mode .btn-chat:hover { background: #c49a6c; color: #121212; }
+
+        .zalmoxis-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 20000;
+            display: none; 
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .zalmoxis-popup-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .zalmoxis-popup-content {
+            background: #f3e7db;
+            padding: 35px 25px;
+            border-radius: 16px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .zalmoxis-popup-overlay.active .zalmoxis-popup-content {
+            transform: scale(1);
+        }
+
+        html.dark-mode .zalmoxis-popup-content {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        .close-popup-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #2a1c16;
+            line-height: 1;
+        }
+        html.dark-mode .close-popup-btn { color: #e0e0e0; }
+
+        .zalmoxis-popup-content h3 { margin: 0 0 10px 0; font-size: 22px; font-weight: 700; }
+        .zalmoxis-popup-content p { font-size: 14px; margin-bottom: 25px; opacity: 0.8; line-height: 1.4; }
+
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; opacity: 0.9; }
         
-        .zalmoxis-links-container { display: flex; flex-direction: column; align-items: center; gap: 30px; }
-        .zalmoxis-links-container a { text-decoration: none; color: #2a1c16; font-size: 26px; font-weight: 500; }
-        html.dark-mode .zalmoxis-links-container a { color: #e0e0e0; }
+        .form-input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid rgba(154, 106, 58, 0.5);
+            background: transparent;
+            color: inherit;
+            font-family: inherit;
+            font-size: 14px;
+            box-sizing: border-box;
+            border-radius: 6px;
+        }
+        .form-input:focus { outline: none; border-color: #9A6A3A; }
+        html.dark-mode .form-input { border-color: rgba(196, 154, 108, 0.4); }
+        html.dark-mode .form-input:focus { border-color: #c49a6c; }
 
-        /* Restul stilurilor... */
-        .container { max-width: 1100px; margin: 100px auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 40px 20px; }
-        .btn-main { padding: 14px 20px; border: 1px solid #9A6A3A; background: transparent; color: #2A211B; font-weight: 600; cursor: pointer; }
-        html.dark-mode .btn-main { color: #e0e0e0; border-color: #c49a6c; }
+        .btn-submit {
+            width: 100%;
+            background: #9A6A3A;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            border-radius: 6px;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover { background: #7d542d; }
+        html.dark-mode .btn-submit { background: #c49a6c; color: #121212; }
+        html.dark-mode .btn-submit:hover { background: #b08759; }
 
-        @media(max-width:768px){ .container { grid-template-columns: 1fr; } }
+        .social-channels-grid { display: flex; flex-direction: column; gap: 12px; }
+        
+        .channel-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 12px;
+            text-decoration: none;
+            color: white !important;
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: 8px;
+            transition: transform 0.2s, filter 0.2s;
+        }
+        .channel-link:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .channel-link svg { width: 20px; height: 20px; fill: currentColor; }
+
+        .instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .tiktok { background: #000000; border: 1px solid rgba(37, 244, 238, 0.5); }
+        .whatsapp { background: #25D366; }
+        .telegram { background: #24A1DE; }
+
+        @media(max-width:768px){
+            .container { grid-template-columns: 1fr; text-align: center; margin-top: 70px !important; padding-top: 20px; }
+            .zalmoxis-links-container a { font-size: 24px !important; }
+            .action-buttons-group { grid-template-columns: 1fr; gap: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -64,73 +393,246 @@
 <header class="main-header">
     <div class="header-container">
         <a href="../index.html" class="logo">ZALMOXIS</a>
-        <button class="hamburger" id="hamburgerBtn" aria-label="Deschide meniul">
-            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        
+        <button class="hamburger" aria-label="Deschide meniul">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </button>
     </div>
 </header>
 
-<!-- Am adăugat ID pentru a putea targeta zona de click -->
-<div class="zalmoxis-menu-overlay" id="menuOverlay">
+<div class="zalmoxis-menu-overlay">
     <nav class="zalmoxis-links-container">
         <a href="../index.html">Acasă</a>
         <a href="../index.html#produse">Produse</a>
+        <a href="../index.html#despre">Despre Noi</a>
         <a href="../index.html#contact">Contact</a>
-        <button id="themeToggleBtn" style="background:none; border:1px solid #9A6A3A; border-radius:20px; padding:10px 20px; cursor:pointer;">
-            Schimbă Tema
+        
+        <div class="menu-spacer"></div>
+
+        <button id="themeToggleBtn" class="theme-toggle-inline" aria-label="Schimbă tema">
+            <span class="theme-text">Mod Întunecat</span>
+            <span class="theme-icons">
+                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none; width:18px; height:18px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.344l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                </svg>
+                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px; height:18px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </span>
         </button>
     </nav>
 </div>
 
-<main class="container">
-    <!-- Conținutul produsului tău -->
-    <div class="image-box"><img src="../image/geanta1.jpg" alt="Geanta"></div>
+<div class="container">
+    <div class="image-box">
+        <img id="productImg" src="../image/geanta1.jpg" alt="Geanta din piele naturală">
+    </div>
+
     <div>
         <h1>Geanta</h1>
+        <div class="price">TEST 2</div>
+
+        <div class="desc">
+            Geanta din piele naturală, lucrată manual pentru rezistență.
+        </div>
+
         <div class="action-buttons-group">
-            <button class="btn-main" id="openOrderPopup">Comandă</button>
+            <button class="btn-main btn-buy" id="openOrderPopup">
+                Comandă Rapidă
+            </button>
+            <button class="btn-main btn-chat" id="openChatPopup">
+                Discută pe Chat
+            </button>
         </div>
     </div>
-</main>
+</div>
+
+<div id="orderPopup" class="zalmoxis-popup-overlay">
+    <div class="zalmoxis-popup-content">
+        <button class="close-popup-btn" id="closeOrderPopup" aria-label="Închide">&times;</button>
+        
+        <h3>Comandă Rapidă</h3>
+        <p>Lasă-ne datele tale și te sunăm noi în cel mai scurt timp pentru confirmare și detalii de livrare.</p>
+        
+        <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="bd32b38b-4a9d-431e-97cd-dc32eb24b2a4">
+            <input type="hidden" name="subject" value="Comandă Nouă - Geantă Piele">
+            <input type="hidden" name="from_name" value="Zalmoxis Leather Site">
+
+            <div class="form-group">
+                <label for="clientName">Nume și Prenume:</label>
+                <input type="text" id="clientName" name="Nume Client" class="form-input" placeholder="Ex: Ion Popescu" required>
+            </div>
+
+            <div class="form-group">
+                <label for="clientPhone">Număr de Telefon:</label>
+                <input type="tel" id="clientPhone" name="Telefon" class="form-input" placeholder="Ex: 068XXXXXX" required>
+            </div>
+
+            <div class="form-group">
+                <label for="clientNote">Doriți personalizare sau detalii? (Opțional):</label>
+                <textarea id="clientNote" name="Note/Personalizare" class="form-input" rows="2" placeholder="Ex: Culoarea aței, personalizare..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Confirmă Comanda</button>
+        </form>
+    </div>
+</div>
+
+<div id="socialPopup" class="zalmoxis-popup-overlay">
+    <div class="zalmoxis-popup-content">
+        <button class="close-popup-btn" id="closeChatPopup" aria-label="Închide">&times;</button>
+        
+        <h3>Unde doriți să discutăm?</h3>
+        <p>Alege platforma preferată pentru a lua legătura direct cu noi.</p>
+        
+        <div class="social-channels-grid">
+            <a href="https://www.instagram.com/zalmoxis_leather/" target="_blank" class="channel-link instagram"> 
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                Instagram
+            </a>
+            <a href="https://www.tiktok.com/@zalmoxis.leather" target="_blank" class="channel-link tiktok">
+                <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.93.02 1.85.01 2.78.02v3.69c-.93 0-1.85-.02-2.78-.02-.39 0-.78-.04-1.16-.13a6.233 6.233 0 01-2.31-1.12c-.28-.23-.53-.49-.76-.78v7.55c0 1.25-.26 2.47-.79 3.6-.52 1.05-1.3 1.95-2.25 2.62a7.1 7.1 0 01-4.09 1.18c-1.31 0-2.6-.32-3.75-.95a6.83 6.83 0 01-2.67-2.58A7.472 7.472 0 010 13.55c0-1.38.35-2.73 1.01-3.92a6.972 6.972 0 012.79-2.72c1.23-.62 2.62-.92 4-.87v3.62c-.74-.03-1.48.11-2.15.44-.61.32-1.12.82-1.46 1.44-.36.69-.53 1.46-.5 2.24.03.75.26 1.48.66 2.11.41.6.98 1.07 1.64 1.35.74.3 1.55.39 2.33.25.7-.12 1.36-.45 1.89-.95.58-.58.93-1.34.98-2.15.03-1.01.01-2.03.01-3.04V0h2.52z"/></svg>
+                TikTok
+            </a>
+            <a href="https://wa.me/37369639506" target="_blank" class="channel-link whatsapp">
+                <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.623-1.023-5.086-2.885-6.948C16.53 2.0 14.083 1.01 11.477 1.01c-5.437 0-9.863 4.369-9.867 9.796-.001 1.765.474 3.486 1.377 5.041L1.879 22.03l6.401-1.677c-1.484.81-2.222.846-1.633.746zM17.486 14.34c-.314-.157-1.858-.915-2.134-1.015-.276-.101-.477-.151-.678.151-.201.302-.779.915-.955 1.116-.176.201-.352.226-.666.069-.314-.157-1.327-.489-2.528-1.559-.933-.832-1.564-1.86-1.747-2.162-.182-.302-.02-.465.131-.614.136-.134.314-.367.472-.55.157-.183.21-.314.314-.524.104-.21.052-.393-.026-.546-.078-.153-.678-1.633-.93-2.239-.244-.588-.492-.51-.678-.519-.176-.009-.377-.01-.578-.01-.201 0-.528.075-.804.377-.276.302-1.056 1.03-1.056 2.513s1.081 2.915 1.232 3.116c.151.201 2.128 3.249 5.156 4.554.72.31 1.282.496 1.721.636.724.23 1.381.197 1.902.12.58-.087 1.858-.759 2.121-1.456.265-.697.265-1.295.187-1.42-.077-.125-.276-.2-.59-.357z"/></svg>
+                WhatsApp
+            </a>
+            <a href="https://t.me/Felicia0708" target="_blank" class="channel-link telegram">
+                <svg viewBox="0 0 24 24"><path d="M9.417 15.181l-.397 5.584c.568 0 .814-.244 1.109-.537l2.663-2.545 5.518 4.041c1.012.564 1.725.267 1.998-.931L23.93 3.821c.369-1.479-.572-2.127-1.534-1.68L1.752 10.364c-1.441.564-1.43 1.37-.26 1.729l5.447 1.696 12.63-7.912c.592-.391 1.136-.177.69.219z"/></svg>
+                Telegram
+            </a>
+        </div>
+    </div>
+</div>
 
 <script>
-    // 1. Logică Hamburger și închidere la click în afara link-urilor
-    const hamburger = document.getElementById("hamburgerBtn");
-    const navOverlay = document.getElementById("menuOverlay");
-
-    const toggleMenu = () => {
-        navOverlay.classList.toggle("active");
-        hamburger.classList.toggle("active");
-    };
+    const hamburger = document.querySelector(".hamburger");
+    const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
 
     hamburger.addEventListener("click", (e) => {
-        e.stopPropagation();
-        toggleMenu();
-    });
-
-    // Închide meniul dacă se dă click oriunde în interiorul overlay-ului, 
-    // dar nu pe butoanele din interior (link-uri)
-    navOverlay.addEventListener("click", (e) => {
-        if (e.target === navOverlay) {
-            toggleMenu();
+        e.stopPropagation(); 
+        hamburger.classList.toggle("active");
+        
+        if (navOverlay.classList.contains("active")) {
+            hamburger.classList.remove("active");
+            navOverlay.classList.remove("active");
+            setTimeout(() => { navOverlay.style.display = "none"; }, 300);
+            document.body.style.overflow = "auto";
+        } else {
+            hamburger.classList.add("active");
+            navOverlay.style.display = "flex";
+            setTimeout(() => { navOverlay.classList.add("active"); }, 10);
+            document.body.style.overflow = "hidden";
         }
     });
 
-    // 2. Logică Dark Mode Automată
-    const themeBtn = document.getElementById('themeToggleBtn');
-    
-    // Detectează schimbările la nivel de sistem (telefon)
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        const newTheme = e.matches ? 'enabled' : 'disabled';
-        document.documentElement.classList.toggle('dark-mode', e.matches);
-        localStorage.setItem('darkMode', newTheme);
+    document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEventListener("click", () => {
+        hamburger.classList.remove("active");
+        navOverlay.classList.remove("active");
+        setTimeout(() => { navOverlay.style.display = "none"; }, 300);
+        document.body.style.overflow = "auto";
+    }));
+
+    navOverlay.addEventListener("click", (e) => {
+        const aFostPeLinkSauButon = e.target.closest(".zalmoxis-links-container a") || e.target.closest("#themeToggleBtn");
+        if (!aFostPeLinkSauButon) {
+            hamburger.classList.remove("active");
+            navOverlay.classList.remove("active");
+            setTimeout(() => { navOverlay.style.display = "none"; }, 300);
+            document.body.style.overflow = "auto";
+        }
     });
 
-    // Toggle manual
-    themeBtn.addEventListener('click', () => {
-        const isDark = document.documentElement.classList.toggle('dark-mode');
-        localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+    const btn = document.getElementById('themeToggleBtn');
+    const sunIcon = btn.querySelector('.sun-icon');
+    const moonIcon = btn.querySelector('.moon-icon');
+    const themeText = btn.querySelector('.theme-text');
+
+    function updateIcons(isDark) {
+        if (isDark) {
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+            themeText.textContent = 'Mod Luminos';
+        } else {
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+            themeText.textContent = 'Mod Întunecat';
+        }
+    }
+
+    function setTheme(isDark) {
+        if (isDark) {
+            document.documentElement.classList.add('dark-mode');
+        } else {
+            document.documentElement.classList.remove('dark-mode');
+        }
+        updateIcons(isDark);
+    }
+
+    function initTheme() {
+        const isDark = document.documentElement.classList.contains('dark-mode');
+        updateIcons(isDark);
+    }
+
+    initTheme();
+
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isCurrentlyDark = document.documentElement.classList.contains('dark-mode');
+        if (!isCurrentlyDark) {
+            setTheme(true);
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            setTheme(false);
+            localStorage.setItem('darkMode', 'disabled');
+        }
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('darkMode')) {
+            setTheme(e.matches);
+        }
+    });
+
+    const openOrderBtn = document.getElementById("openOrderPopup");
+    const closeOrderBtn = document.getElementById("closeOrderPopup");
+    const orderPopup = document.getElementById("orderPopup");
+
+    const openChatBtn = document.getElementById("openChatPopup");
+    const closeChatBtn = document.getElementById("closeChatPopup");
+    const socialPopup = document.getElementById("socialPopup");
+
+    function openModal(modal) {
+        modal.style.display = "flex";
+        setTimeout(() => { modal.classList.add("active"); }, 10);
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeModal(modal) {
+        modal.classList.remove("active");
+        setTimeout(() => { modal.style.display = "none"; }, 300);
+        document.body.style.overflow = "auto";
+    }
+
+    openOrderBtn.addEventListener("click", () => openModal(orderPopup));
+    closeOrderBtn.addEventListener("click", () => closeModal(orderPopup));
+
+    openChatBtn.addEventListener("click", () => openModal(socialPopup));
+    closeChatBtn.addEventListener("click", () => closeModal(socialPopup));
+
+    window.addEventListener("click", (e) => {
+        if (e.target === orderPopup) {
+            closeModal(orderPopup);
+        }
+        if (e.target === socialPopup) {
+            closeModal(socialPopup);
+        }
     });
 </script>
+
 </body>
 </html>
