@@ -1,84 +1,66 @@
 /* ==========================================================================
-   1. RESETARE ELEMENTE & VARIABLE
+   1. ROOT & RESETARI GLOBALE
    ========================================================================== */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
 :root {
     --color-dark: #1a1512;
-    --color-accent: #8c6239;
-    --color-light: #fbf9f6;
-    --color-grey: #666;
-    --color-card-bg: white;
-    --font-heading: 'Cinzel', serif;
-    --font-body: 'Montserrat', sans-serif;
+    --color-accent: #9A6A3A;
+    --color-light: #f3e7db;
+    --color-text: #2a1c16;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --transition: all 0.3s ease;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --color-dark: #fbf9f6;
-        --color-light: #120e0c;
-        --color-card-bg: #1a1512;
-        --color-grey: #aaa;
-    }
+/* Mod Dark */
+html.dark-mode {
+    --color-dark: #121212;
+    --color-light: #121212;
+    --color-text: #e0e0e0;
 }
 
-html { scroll-behavior: smooth; }
-body { font-family: var(--font-body); background-color: var(--color-light); color: var(--color-dark); line-height: 1.6; transition: background-color 0.3s ease, color 0.3s ease; }
-
-.container { width: 90%; max-width: 1100px; margin: 0 auto; padding: 60px 0; }
-.text-center { text-align: center; }
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font-body); background-color: var(--color-light); color: var(--color-text); transition: background-color 0.3s, color 0.3s; }
 
 /* ==========================================================================
-   2. BUTOANE & COMPONENTE UI
+   2. HEADER & NAVIGATIE
    ========================================================================== */
-.btn { display: inline-block; padding: 12px 28px; background-color: var(--color-accent); color: white; text-decoration: none; text-transform: uppercase; font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; border-radius: 2px; transition: all 0.3s ease; margin-top: 20px; }
-.btn:hover { background-color: var(--color-dark); color: var(--color-light); }
-.btn-dark { background-color: var(--color-dark); color: var(--color-light); }
-.btn-dark:hover { background-color: var(--color-accent); color: white; }
+.main-header { background: var(--color-light); position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 1px solid rgba(42, 28, 22, 0.08); transition: var(--transition); }
+.header-container { max-width: 1100px; margin: 0 auto; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+
+.logo { font-size: 18px; font-weight: 700; text-decoration: none; color: var(--color-text); letter-spacing: 3px; z-index: 10003; }
+
+/* Hamburger & Overlay - Păstrate pentru funcționalitate */
+.hamburger { cursor: pointer; background: transparent; border: none; padding: 6px; z-index: 10003; }
+.bar { display: block; width: 24px; height: 1.5px; margin: 5px auto; background-color: var(--color-text); transition: var(--transition); }
 
 /* ==========================================================================
-   3. HEADER & NAVIGAȚIE
+   3. ELEMENTE UI (Butoane, Formulare)
    ========================================================================== */
-header { background-color: rgba(26, 21, 18, 0.95); position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid rgba(140, 98, 57, 0.2); }
-.nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; padding: 20px 5%; }
-.logo { font-family: var(--font-heading); color: white !important; font-size: 1.5rem; letter-spacing: 3px; font-weight: 700; text-decoration: none !important; border-bottom: none !important; }
-.nav-menu a { color: #e5e5e5; text-decoration: none; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; margin-left: 25px; transition: color 0.3s; }
-.nav-menu a:hover, .nav-menu a.active { color: var(--color-accent); }
-.menu-toggle { display: none; background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; }
+.btn-main {
+    display: inline-block; padding: 14px 20px; border: 1px solid var(--color-accent);
+    background: transparent; color: var(--color-text); text-decoration: none;
+    font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+    transition: var(--transition);
+}
+.btn-buy { background: var(--color-accent); color: white; }
+.btn-buy:hover { background: transparent; color: var(--color-accent); }
 
-/* ==========================================================================
-   4. SECȚIUNI PAGINĂ
-   ========================================================================== */
-.hero { background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('image/portmoneu-masina-negru.jpg'); background-size: cover; background-position: center; min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; color: #ffffff; }
-.hero h1 { font-family: var(--font-heading); font-size: 3.5rem; letter-spacing: 4px; margin-bottom: 10px; }
-.section-title { font-family: var(--font-heading); font-size: 2.2rem; margin-bottom: 40px; text-align: center; }
-.section-title::after { content: ''; display: block; width: 50px; height: 2px; background: var(--color-accent); margin: 15px auto 0; }
-
-/* REPARAT: Grilă Produse & Swiper */
-.products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-.product-card { background-color: var(--color-card-bg); padding: 20px; text-align: center; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
-.product-img-box { margin-bottom: 20px; overflow: hidden; border-radius: 2px; }
-
-/* Stil Swiper */
-.swiper { width: 100%; border-radius: 2px; overflow: hidden; }
-.swiper-slide img { width: 100%; display: block; object-fit: cover; aspect-ratio: 1/1; }
-
-/* ==========================================================================
-   5. PROCES, CONTACT & FOOTER
-   ========================================================================== */
-.process { padding: 80px 0; background-color: #fafafa; border-top: 1px solid #c9a063; border-bottom: 1px solid #c9a063; }
-.contact-section { background-color: #1a1512; color: #fbf9f6; padding: 80px 0; text-align: center; }
-footer { background-color: #110e0c; color: #555; text-align: center; padding: 25px 0; font-size: 0.8rem; }
-
-/* ==========================================================================
-   6. RESPONSIVITATE & UTILS
-   ========================================================================== */
-@media (max-width: 768px) {
-    .grid-2 { grid-template-columns: 1fr; }
-    .menu-toggle { display: block !important; }
-    .nav-menu { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: #1a1512; padding: 20px 0; }
-    .nav-menu.active { display: flex !important; }
+.form-input {
+    width: 100%; padding: 11px; border: 1px solid rgba(154, 106, 58, 0.5);
+    background: transparent; color: inherit; border-radius: 6px;
 }
 
-.view-more { display: inline-block; margin-top: 15px; font-size: 0.85rem; color: var(--color-accent) !important; font-weight: 600; text-transform: uppercase; text-decoration: none !important; }
+/* ==========================================================================
+   4. GALERIE SWIPER (Optimizat pentru a evita deformarea)
+   ========================================================================== */
+.swiper { width: 100%; border-radius: 16px; overflow: hidden; margin-bottom: 10px; }
+.main-slider img { width: 100%; height: 400px; object-fit: cover; display: block; border-radius: 16px; }
+.thumbs { height: 80px; box-sizing: border-box; margin-top: 10px; }
+.thumbs .swiper-slide { width: 25%; height: 100%; opacity: 0.5; cursor: pointer; }
+.thumbs .swiper-slide-thumb-active { opacity: 1; border: 2px solid var(--color-accent); border-radius: 8px; }
+
+/* ==========================================================================
+   5. RESPONSIVITATE
+   ========================================================================== */
+@media(max-width:768px){
+    .container { grid-template-columns: 1fr; margin-top: 80px; }
+}
