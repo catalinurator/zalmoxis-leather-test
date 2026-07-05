@@ -22,11 +22,30 @@
         .hamburger, .zalmoxis-links-container a, .btn-main, .close-popup-btn { touch-action: manipulation; }
 
         /* Stiluri pentru Galerie (Adăugate) */
-        .mySwiper2 { height: 400px; width: 100%; margin-bottom: 10px; }
-        .mySwiper { height: 80px; box-sizing: border-box; padding: 10px 0; }
-        .mySwiper .swiper-slide { width: 20%; height: 100%; opacity: 0.4; cursor: pointer; }
-        .mySwiper .swiper-slide-thumb-active { opacity: 1; border: 2px solid #bd9b7a; }
-        .mySwiper .swiper-slide img { display: block; width: 100%; height: 100%; object-fit: cover; }
+       <style>
+    /* ... restul stilurilor ... */
+
+    /* Miniaturile trebuie să fie un rând orizontal */
+        .mySwiper { 
+        height: 80px; 
+        width: 100%; /* Se întinde pe toată lățimea */
+        box-sizing: border-box; 
+        padding: 10px 0; 
+        margin-top: 10px; /* Spațiu între poza mare și rândul de miniaturi */
+    }
+        .mySwiper .swiper-wrapper {
+        display: flex; /* Forțează așezarea orizontală */
+    }
+       .mySwiper .swiper-slide { 
+        width: 20% !important; /* Aproximativ 5 poze pe rând */
+        height: 100%; 
+        opacity: 0.4; 
+        cursor: pointer; 
+    }
+        .mySwiper .swiper-slide-thumb-active { 
+        opacity: 1; 
+        border: 2px solid #bd9b7a; 
+    }
         .product-details { width: 100%; max-width: 600px; margin: 20px auto 0 auto; padding: 10px; text-align: center; }
 
         body {
@@ -414,18 +433,15 @@
         
     </div>
 </div>
-        <!-- Swiper Miniaturi -->
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="../image/geanta1.jpg" /></div>
-            </div>
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="../image/geanta1.jpg" /></div>
-            </div>
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="../image/geanta1.jpg" /></div>
-            </div>
+       <!-- Swiper Miniaturi (Rândul orizontal) -->
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <!-- Miniaturile tale (doar <img>, fără <a>) -->
+            <div class="swiper-slide"><img src="../image/geanta1.jpg" /></div>
+            <div class="swiper-slide"><img src="../image/geanta2.jpg" /></div>
+            <div class="swiper-slide"><img src="../image/geanta1.jpg" /></div>
         </div>
+    </div>
     </div>
 
     <!-- Containerul corectat pentru text și butoane -->
