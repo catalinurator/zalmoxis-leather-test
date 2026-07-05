@@ -16,7 +16,13 @@
     </script>
 
     <link rel="stylesheet" href="../style.css">
-
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        .swiper { width: 100%; border-radius: 16px; overflow: hidden; }
+        .swiper-slide img { width: 100%; display: block; transition: transform 0.3s; cursor: zoom-in; }
+        .swiper-slide img:active { transform: scale(1.5); cursor: zoom-out; }
+    </style>
     <style>
         .hamburger, .zalmoxis-links-container a, .btn-main, .close-popup-btn { touch-action: manipulation; }
 
@@ -387,6 +393,7 @@
             .action-buttons-group { grid-template-columns: 1fr; gap: 10px; }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </head>
 <body>
 
@@ -426,10 +433,16 @@
 </div>
 
 <div class="container">
-    <div class="image-box">
-        <img id="productImg" src="../image/geanta1.jpg" alt="Geanta din piele naturală">
+   <div class="image-box">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="../image/geanta1.jpg" alt="Geanta 1"></div>
+                <div class="swiper-slide"><img src="../image/geanta2.jpg" alt="Geanta 2"></div>
+                <div class="swiper-slide"><img src="../image/geanta3.jpg" alt="Geanta 3"></div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
     </div>
-
     <div>
         <h1>Geanta</h1>
         <div class="price">TEST 2</div>
@@ -510,6 +523,11 @@
 </div>
 
 <script>
+    // Initializare galerie
+    var swiper = new Swiper(".mySwiper", {
+      pagination: { el: ".swiper-pagination", clickable: true },
+      loop: true,
+    });
     const hamburger = document.querySelector(".hamburger");
     const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
 
