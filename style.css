@@ -290,14 +290,8 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
     .grid-2 { grid-template-columns: 1fr; }
     .hero h1 { font-size: 2.3rem; }
     .slogan { font-size: 1rem; }
- @media (max-width: 768px) {
-    .swiper {
-        aspect-ratio: 1 / 1; /* Pe telefon păstrează un pătrat mai mic */
-    }
-}
-    .menu-toggle { 
-        display: block !important; 
-    }
+    
+    .menu-toggle { display: block !important; }
     
     .nav-menu {
         display: none;
@@ -311,25 +305,22 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
         border-bottom: 2px solid var(--color-accent);
     }
     
-    .nav-menu.active { 
-        display: flex !important; 
-    }
+    .nav-menu.active { display: flex !important; }
     
     .nav-menu a { 
-        margin: 12px 0; 
-        text-align: center; 
-        width: 100%; 
-        display: block; 
-        font-size: 0.9rem; 
-        color: #e5e5e5;
+        margin: 12px 0; text-align: center; width: 100%; display: block; font-size: 0.9rem; color: #e5e5e5;
     }
     
     .featured-text { order: 2; text-align: center; }
     .featured-image { order: 1; }
 }
 
+@media (max-width: 480px) {
+    .swiper { height: 280px !important; }
+}
+
 /* ==========================================================================
-   REPARARE CORECTĂ LINK-URI PRODUSE (Șterge textul albastru și sublinierile)
+   REPARARE CORECTĂ LINK-URI PRODUSE
    ========================================================================== */
 .products-section a,
 .products-grid a,
@@ -338,12 +329,11 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
 .product-card-link:hover,
 .product-card-link:active {
     text-decoration: none !important;
-    color: var(--color-dark) !important; /* Forțează culoarea setată pe site (Light/Dark mode) */
+    color: var(--color-dark) !important;
     border-bottom: none !important;
     outline: none !important;
 }
 
-/* Stil pentru textul "Vezi colecția →" ca să aibă o culoare maro/cognac frumoasă */
 .view-more {
     display: inline-block;
     margin-top: 15px;
@@ -356,29 +346,22 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
     text-decoration: none !important;
 }
 
-/* Efect de mișcare discret când pui degetul/mouse-ul pe card */
 .product-card:hover .view-more {
     transform: translateX(5px);
-/* Stil pentru galerie */
+}
+
+/* --- SWIPER GALERIE --- */
 .swiper {
     width: 100% !important;
-    max-width: 600px !important; /* Limitează lățimea pe desktop */
-    height: 350px !important;    /* Înălțime fixă care arată bine pe mobil */
+    max-width: 600px !important;
+    height: 350px !important;
     margin: 0 auto 20px auto;
 }
 
-/* Imaginea forțată să încapă în cele 350px înălțime */
 .swiper-slide img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important; /* Arată întreaga poză, fără să o taie */
-    background-color: #fbf9f6 !important; /* Culoarea de fundal a paginii tale */
+    object-fit: contain !important;
+    background-color: #fbf9f6 !important;
     display: block;
-}
-
-/* Ajustare suplimentară pentru ecrane foarte mici */
-@media (max-width: 480px) {
-    .swiper {
-        height: 280px !important; /* Mai mică pe telefoane mici */
-    }
 }
