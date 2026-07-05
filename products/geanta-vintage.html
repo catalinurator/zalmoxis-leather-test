@@ -511,8 +511,23 @@
 </div>
 
 <script>
-    var swiper = new Swiper(".mySwiper", { spaceBetween: 10, slidesPerView: 4, freeMode: true, watchSlidesProgress: true });
-    var swiper2 = new Swiper(".mySwiper2", { spaceBetween: 10, thumbs: { swiper: swiper }, loop: true });
+    // Miniaturile (se pot vedea 4 pe rând)
+var swiper = new Swiper(".mySwiper", { 
+    spaceBetween: 10, 
+    slidesPerView: 4, 
+    freeMode: true, 
+    watchSlidesProgress: true 
+});
+
+// Imaginea mare (afișează doar 1, legată de miniaturi)
+var swiper2 = new Swiper(".mySwiper2", { 
+    spaceBetween: 10, 
+    slidesPerView: 1, // Aici era problema: trebuie să fie 1
+    loop: true, 
+    thumbs: { 
+        swiper: swiper 
+    } 
+});
 
     // Restul logicii tale JS rămâne la fel
     const hamburger = document.querySelector(".hamburger");
