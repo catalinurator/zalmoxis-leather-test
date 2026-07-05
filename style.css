@@ -359,16 +359,19 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
 /* Efect de mișcare discret când pui degetul/mouse-ul pe card */
 .product-card:hover .view-more {
     transform: translateX(5px);
-}
+/* Containerul galeriei - limităm înălțimea pe mobil */
 .swiper {
     width: 100% !important;
-    height: 350px !important; /* Înălțime mai mică pentru mobil */
-    margin: 0 auto;
+    max-width: 500px !important; /* Limitează lățimea totală a galeriei */
+    height: auto !important;     /* Înălțimea se va ajusta automat la conținut */
+    aspect-ratio: 4 / 5;        /* Menține forma estetică pentru geantă */
+    margin: 0 auto 20px auto;    /* Centrare și spațiu sub galerie */
 }
 
+/* Imaginea din interior - o forțăm să stea înăuntru */
 .swiper-slide img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important; /* Asta va arăta toată geanta, fără tăiere */
+    object-fit: contain !important; /* Arată toată poza, fără să o taie */
     background-color: transparent !important;
 }
