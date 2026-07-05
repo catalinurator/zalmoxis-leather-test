@@ -360,39 +360,15 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
 .product-card:hover .view-more {
     transform: translateX(5px);
 }
-/* --- REPARARE SWIPER GALERIE --- */
 .swiper {
-    width: 100%;
-    /* Nu mai folosim înălțime fixă (px), ci un raport */
-    aspect-ratio: 4 / 5; /* Asta face galeria înaltă dar proporțională */
-    max-height: 500px;  /* Limitează înălțimea pe desktop */
-    border-radius: 4px;
-    overflow: hidden;
-    background-color: transparent !important;
+    width: 100% !important;
+    height: 350px !important; /* Înălțime mai mică pentru mobil */
+    margin: 0 auto;
 }
 
-/* Dacă ai nevoie de miniaturi (thumbnails) */
-.thumbs {
-    margin-top: 10px;
-    height: 80px;
-}
-.thumbs .swiper-slide {
-    cursor: pointer;
-    opacity: 0.5;
-}
-.thumbs .swiper-slide-thumb-active {
-    opacity: 1;
-    border: 2px solid var(--color-accent);
-}
-
-/* Reparație finală pentru a vedea toată geanta */
 .swiper-slide img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important; /* Arată toată imaginea, nu o mai taie */
-    background-color: #fbf9f6 !important; /* Culoarea de fundal a paginii */
-}
-
-.swiper {
-    height: 400px !important; /* Setează o înălțime fixă care să funcționeze și pe mobil */
+    object-fit: contain !important; /* Asta va arăta toată geanta, fără tăiere */
+    background-color: transparent !important;
 }
