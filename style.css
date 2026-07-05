@@ -378,3 +378,7 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
         margin-bottom: 30px !important;
     }
 }
+.swiper-slide a {
+    display: block;
+    cursor: zoom-in;
+}
