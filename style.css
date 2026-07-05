@@ -359,19 +359,26 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
 /* Efect de mișcare discret când pui degetul/mouse-ul pe card */
 .product-card:hover .view-more {
     transform: translateX(5px);
-/* Containerul galeriei - limităm înălțimea pe mobil */
+/* Stil pentru galerie */
 .swiper {
     width: 100% !important;
-    max-width: 500px !important; /* Limitează lățimea totală a galeriei */
-    height: auto !important;     /* Înălțimea se va ajusta automat la conținut */
-    aspect-ratio: 4 / 5;        /* Menține forma estetică pentru geantă */
-    margin: 0 auto 20px auto;    /* Centrare și spațiu sub galerie */
+    max-width: 600px !important; /* Limitează lățimea pe desktop */
+    height: 350px !important;    /* Înălțime fixă care arată bine pe mobil */
+    margin: 0 auto 20px auto;
 }
 
-/* Imaginea din interior - o forțăm să stea înăuntru */
+/* Imaginea forțată să încapă în cele 350px înălțime */
 .swiper-slide img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important; /* Arată toată poza, fără să o taie */
-    background-color: transparent !important;
+    object-fit: contain !important; /* Arată întreaga poză, fără să o taie */
+    background-color: #fbf9f6 !important; /* Culoarea de fundal a paginii tale */
+    display: block;
+}
+
+/* Ajustare suplimentară pentru ecrane foarte mici */
+@media (max-width: 480px) {
+    .swiper {
+        height: 280px !important; /* Mai mică pe telefoane mici */
+    }
 }
