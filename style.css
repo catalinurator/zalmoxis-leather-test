@@ -290,7 +290,10 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
     .grid-2 { grid-template-columns: 1fr; }
     .hero h1 { font-size: 2.3rem; }
     .slogan { font-size: 1rem; }
-    .swiper { aspect-ratio: 1 / 1; /* Pe telefon păstrează un pătrat mai mic */  }
+ @media (max-width: 768px) {
+    .swiper {
+        aspect-ratio: 1 / 1; /* Pe telefon păstrează un pătrat mai mic */
+    }
 }
     .menu-toggle { 
         display: block !important; 
