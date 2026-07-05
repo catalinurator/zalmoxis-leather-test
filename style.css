@@ -350,18 +350,21 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
     transform: translateX(5px);
 }
 
-/* --- SWIPER GALERIE --- */
+/* --- REPARARE GALERIE SWIPER --- */
 .swiper {
     width: 100% !important;
     max-width: 600px !important;
-    height: 350px !important;
+    /* Eliminăm height fix și folosim aspect-ratio pentru a păstra proporția */
+    height: auto !important; 
+    aspect-ratio: 3 / 4;    /* Ajustează aici (ex: 3/4 sau 4/5) pentru a dicta forma */
     margin: 0 auto 20px auto;
+    background-color: #fbf9f6 !important; /* Culoarea de fundal a site-ului */
 }
 
 .swiper-slide img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important;
-    background-color: #fbf9f6 !important;
+    /* 'contain' arată toată poza, 'cover' o taie */
+    object-fit: contain !important; 
     display: block;
 }
