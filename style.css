@@ -290,7 +290,8 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
     .grid-2 { grid-template-columns: 1fr; }
     .hero h1 { font-size: 2.3rem; }
     .slogan { font-size: 1rem; }
-    
+    .swiper { aspect-ratio: 1 / 1; /* Pe telefon păstrează un pătrat mai mic */  }
+}
     .menu-toggle { 
         display: block !important; 
     }
@@ -359,18 +360,22 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
 /* --- REPARARE SWIPER GALERIE --- */
 .swiper {
     width: 100%;
+    /* Nu mai folosim înălțime fixă (px), ci un raport */
+    aspect-ratio: 4 / 5; /* Asta face galeria înaltă dar proporțională */
+    max-height: 500px;  /* Limitează înălțimea pe desktop */
     border-radius: 4px;
     overflow: hidden;
-    background-color: transparent !important; /* Elimină fundalul ciudat */
+    background-color: transparent !important;
 }
 
 .swiper-slide img {
     width: 100%;
+    height: 100%;
+    /* 'contain' arată imaginea întreagă, 'cover' o taie pentru a umple spațiul */
+    object-fit: contain; 
+    background-color: #f3e7db; /* Culoare de fundal dacă poza nu ocupă tot */
     display: block;
-    object-fit: cover;
-    aspect-ratio: 1 / 1; /* Păstrează pătratul dacă vrei, sau schimbă în 4/3 */
 }
-
 /* Dacă ai nevoie de miniaturi (thumbnails) */
 .thumbs {
     margin-top: 10px;
