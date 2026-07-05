@@ -349,22 +349,35 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
 .product-card:hover .view-more {
     transform: translateX(5px);
 }
-/* Fix pentru dimensiunea galeriei */
+/* Fix specific pentru Swiper */
 .swiper {
     width: 100% !important;
-    height: 500px !important; /* Înălțime fixă pentru a preveni tăierea */
+    height: 450px !important; /* Înălțime fixă pentru mobil */
     border-radius: 16px;
-    background-color: #f3e7db;
+    background: #f3e7db;
 }
 
 .swiper-slide {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .swiper-slide img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important; /* Asta asigură că poza se vede întreagă */
+    object-fit: contain !important; /* Asigură că întreaga poză e vizibilă */
+}
+
+/* Ajustare container pentru pagina de produs */
+@media(max-width: 768px) {
+    .container {
+        display: block !important; /* Scoatem grid-ul pe mobil */
+        margin-top: 80px !important;
+        padding: 10px !important;
+    }
+    .image-box {
+        margin-bottom: 30px !important;
+    }
 }
