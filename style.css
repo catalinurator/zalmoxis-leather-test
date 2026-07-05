@@ -392,3 +392,15 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
     opacity: 1;
     border: 2px solid var(--color-accent);
 }
+
+/* Reparație finală pentru a vedea toată geanta */
+.swiper-slide img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important; /* Arată toată imaginea, nu o mai taie */
+    background-color: #fbf9f6 !important; /* Culoarea de fundal a paginii */
+}
+
+.swiper {
+    height: 400px !important; /* Setează o înălțime fixă care să funcționeze și pe mobil */
+}
