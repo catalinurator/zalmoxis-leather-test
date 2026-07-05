@@ -349,22 +349,22 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
 .product-card:hover .view-more {
     transform: translateX(5px);
 }
-
-/* --- REPARARE GALERIE SWIPER --- */
+/* Fix pentru dimensiunea galeriei */
 .swiper {
     width: 100% !important;
-    max-width: 600px !important;
-    /* Eliminăm height fix și folosim aspect-ratio pentru a păstra proporția */
-    height: auto !important; 
-    aspect-ratio: 3 / 4;    /* Ajustează aici (ex: 3/4 sau 4/5) pentru a dicta forma */
-    margin: 0 auto 20px auto;
-    background-color: #fbf9f6 !important; /* Culoarea de fundal a site-ului */
+    height: 500px !important; /* Înălțime fixă pentru a preveni tăierea */
+    border-radius: 16px;
+    background-color: #f3e7db;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .swiper-slide img {
     width: 100% !important;
     height: 100% !important;
-    /* 'contain' arată toată poza, 'cover' o taie */
-    object-fit: contain !important; 
-    display: block;
+    object-fit: contain !important; /* Asta asigură că poza se vede întreagă */
 }
