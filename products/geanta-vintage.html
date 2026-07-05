@@ -428,17 +428,20 @@
     </nav>
 </div>
 
-<div class="container">
-   <div class="image-box">
+<div class="container" style="display: block !important;">
+    <div class="image-box" style="width: 100%; max-width: 600px; margin: 0 auto;">
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="../image/geanta1.jpg" alt="Geanta 1"></div>
-                <div class="swiper-slide"><img src="../image/geanta2.jpg" alt="Geanta 2"></div>
-                <div class="swiper-slide"><img src="../image/geanta3.jpg" alt="Geanta 3"></div>
+                <!-- Verifică neapărat ca aceste căi să fie corecte față de locația fișierului -->
+                <div class="swiper-slide"><img src="../image/geanta1.jpg" style="width:100%; display:block;" alt="Geanta"></div>
+                <div class="swiper-slide"><img src="../image/geanta2.jpg" style="width:100%; display:block;" alt="Geanta"></div>
+                <div class="swiper-slide"><img src="../image/geanta3.jpg" style="width:100%; display:block;" alt="Geanta"></div>
             </div>
             <div class="swiper-pagination"></div>
         </div>
     </div>
+    <!-- Restul conținutului (Titlu, Descriere, etc) -->
+</div>
     <div>
         <h1>Geanta</h1>
         <div class="price">TEST 3</div>
