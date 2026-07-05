@@ -382,3 +382,8 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
     display: block;
     cursor: zoom-in;
 }
+.mySwiper2 { height: 400px; width: 100%; margin-bottom: 10px; }
+.mySwiper { height: 80px; box-sizing: border-box; padding: 10px 0; }
+.mySwiper .swiper-slide { width: 20%; height: 100%; opacity: 0.4; cursor: pointer; }
+.mySwiper .swiper-slide-thumb-active { opacity: 1; border: 2px solid #bd9b7a; } /* Culoarea bordurii active */
+.mySwiper .swiper-slide img { display: block; width: 100%; height: 100%; object-fit: cover; }
