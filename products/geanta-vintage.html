@@ -57,13 +57,11 @@
         flex-direction: column !important;
         align-items: center !important;
         width: 100% !important;
-        max-width: 1100px !important;
-        margin: 100px auto 0 auto !important;
+        margin-top: 100px !important;
         padding: 20px !important;
-        position: relative !important;
-        z-index: 0 !important; /* Aici am setat z-index 0 ca să funcționeze meniul */
+        /* Am eliminat position: relative și z-index: 0 */
     }
-        ..product-details {
+        .product-details {
         width: 100% !important;
         max-width: 600px !important;
         margin: 20px auto !important;
@@ -72,7 +70,8 @@
     }
 
       .image-box {
-        position: relative !important;
+        width: 100% !important;
+        max-width: 600px !important;
         margin: 0 auto 20px auto !important;
     }
 
@@ -403,17 +402,42 @@
 <div class="container">
     <div class="image-box" style="width: 100%; max-width: 600px; margin: 0 auto;">
         <!-- Swiper Principal -->
-        <div class="swiper mySwiper2">
-            <div class="swiper-wrapper" id="my-gallery">
-                <div class="swiper-slide"><img src="../image/geanta1.jpg" /></div>
-                <!-- ... restul pozelor -->
-            </div>
+<div class="swiper mySwiper2">
+    <div class="swiper-wrapper" id="my-gallery">
+        
+        <!-- Slide 1 -->
+        <div class="swiper-slide">
+            <a href="../image/geanta1.jpg" data-pswp-width="800" data-pswp-height="800">
+                <img src="../image/geanta1.jpg" />
+            </a>
         </div>
+        
+        <!-- Slide 2 -->
+        <div class="swiper-slide">
+            <a href="../image/geanta1.jpg" data-pswp-width="800" data-pswp-height="800">
+                <img src="../image/geanta1.jpg" />
+            </a>
+        </div>
+        
+        <!-- Slide 3 -->
+        <div class="swiper-slide">
+            <a href="../image/geanta1.jpg" data-pswp-width="800" data-pswp-height="800">
+                <img src="../image/geanta1.jpg" />
+            </a>
+        </div>
+        
+    </div>
+</div>
         <!-- Swiper Miniaturi -->
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
                 <div class="swiper-slide"><img src="../image/geanta1.jpg" /></div>
-                <!-- ... restul miniaturilor -->
+            </div>
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="../image/geanta1.jpg" /></div>
+            </div>
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="../image/geanta1.jpg" /></div>
             </div>
         </div>
     </div>
@@ -498,6 +522,13 @@
     const openChatBtn = document.getElementById("openChatPopup");
     const closeChatBtn = document.getElementById("closeChatPopup");
     const socialPopup = document.getElementById("socialPopup");
+    [orderPopup, socialPopup].forEach(popup => {
+        popup.addEventListener("click", (e) => {
+            if (e.target === popup) {
+                closeModal(popup);
+            }
+        });
+    });
     function openModal(modal) { modal.style.display = "flex"; setTimeout(() => { modal.classList.add("active"); }, 10); document.body.style.overflow = "hidden"; }
     function closeModal(modal) { modal.classList.remove("active"); setTimeout(() => { modal.style.display = "none"; }, 300); document.body.style.overflow = "auto"; }
     openOrderBtn.addEventListener("click", () => openModal(orderPopup));
