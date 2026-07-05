@@ -14,10 +14,9 @@
             }
         })();
     </script>
-
+    <!-- PhotoSwipe CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.css">  
     <link rel="stylesheet" href="style.css?v=20260705">
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
  
     <style>
         .hamburger, .zalmoxis-links-container a, .btn-main, .close-popup-btn { touch-action: manipulation; }
@@ -431,17 +430,31 @@
 <div class="container" style="display: block !important;">
     <div class="image-box" style="width: 100%; max-width: 600px; margin: 0 auto;">
         <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <!-- Verifică neapărat ca aceste căi să fie corecte față de locația fișierului -->
-                <div class="swiper-slide"><img src="../image/geanta1.jpg" style="width:100%; display:block;" alt="Geanta"></div>
-                <div class="swiper-slide"><img src="../image/geanta2.jpg" style="width:100%; display:block;" alt="Geanta"></div>
-                <div class="swiper-slide"><img src="../image/geanta3.jpg" style="width:100%; display:block;" alt="Geanta"></div>
+            <!-- AICI este locul unde pui codul nou -->
+            <div class="swiper-wrapper" id="my-gallery">
+                <div class="swiper-slide">
+                    <a href="../image/geanta1.jpg" data-pswp-width="1200" data-pswp-height="1600">
+                        <img src="../image/geanta1.jpg" alt="Geanta 1" />
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="../image/geanta2.jpg" data-pswp-width="1200" data-pswp-height="1600">
+                        <img src="../image/geanta2.jpg" alt="Geanta 2" />
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="../image/geanta3.jpg" data-pswp-width="1200" data-pswp-height="1600">
+                        <img src="../image/geanta3.jpg" alt="Geanta 3" />
+                    </a>
+                </div>
             </div>
+            <!-- Sfârșitul codului nou -->
+            
             <div class="swiper-pagination"></div>
         </div>
     </div>
-    <!-- Restul conținutului (Titlu, Descriere, etc) -->
 </div>
+    
     <div>
         <h1>Geanta</h1>
         <div class="price">TEST 3</div>
@@ -660,6 +673,15 @@ var swiper = new Swiper(".mySwiper", {
         }, {passive: false});
     });
 </script>
-
+<!-- PhotoSwipe JS -->
+<script type="module">
+  import PhotoSwipeLightbox from 'https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe-lightbox.esm.js';
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#my-gallery',
+    children: 'a',
+    pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.esm.js')
+  });
+  lightbox.init();
+</script>
 </body>
 </html>
