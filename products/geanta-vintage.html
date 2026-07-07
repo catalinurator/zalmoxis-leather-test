@@ -17,34 +17,30 @@
     <!-- PhotoSwipe CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.css">  
     <link rel="stylesheet" href="../style.css?v=20260705">
- 
+
     <style>
         .hamburger, .zalmoxis-links-container a, .btn-main, .close-popup-btn { touch-action: manipulation; }
 
-        /* Stiluri pentru Galerie (Adăugate) */
-       <style>
-    /* ... restul stilurilor ... */
-
-    /* Miniaturile trebuie să fie un rând orizontal */
-        .mySwiper { 
-        height: 80px; 
+        /* Miniaturile trebuie să fie un rând orizontal */
+        .mySwiper {
+        height: 80px;
         width: 100%; /* Se întinde pe toată lățimea */
-        box-sizing: border-box; 
-        padding: 10px 0; 
+        box-sizing: border-box;
+        padding: 10px 0;
         margin-top: 10px; /* Spațiu între poza mare și rândul de miniaturi */
     }
         .mySwiper .swiper-wrapper {
         display: flex; /* Forțează așezarea orizontală */
     }
-       .mySwiper .swiper-slide { 
+       .mySwiper .swiper-slide {
         width: 20% !important; /* Aproximativ 5 poze pe rând */
-        height: 100%; 
-        opacity: 0.4; 
-        cursor: pointer; 
+        height: 100%;
+        opacity: 0.4;
+        cursor: pointer;
     }
-        .mySwiper .swiper-slide-thumb-active { 
-        opacity: 1; 
-        border: 2px solid #bd9b7a; 
+        .mySwiper .swiper-slide-thumb-active {
+        opacity: 1;
+        border: 2px solid #bd9b7a;
     }
         .product-details { width: 100%; max-width: 600px; margin: 20px auto 0 auto; padding: 10px; text-align: center; }
 
@@ -78,7 +74,6 @@
         width: 100% !important;
         margin-top: 100px !important;
         padding: 20px !important;
-        /* Am eliminat position: relative și z-index: 0 */
     }
         .product-details {
         width: 100% !important;
@@ -98,25 +93,25 @@
         .desc { color: #5a3a2e; line-height: 1.5; }
 
         .main-header {
-            background: #f3e7db; 
+            background: #f3e7db;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 10000;
-            border-bottom: 1px solid rgba(42, 28, 22, 0.08); 
+            border-bottom: 1px solid rgba(42, 28, 22, 0.08);
             transition: background 0.3s, border-color 0.3s;
         }
 
         html.dark-mode .main-header {
-            background: #121212; 
+            background: #121212;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .header-container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 12px 20px; 
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -126,7 +121,7 @@
             font-size: 18px;
             font-weight: 700;
             text-decoration: none;
-            color: #2a1c16; 
+            color: #2a1c16;
             letter-spacing: 3px;
             transition: color 0.3s;
             position: relative;
@@ -166,7 +161,7 @@
             height: 100vh !important;
             background-color: #f3e7db !important;
             z-index: 10001 !important;
-            display: none !important; 
+            display: none !important;
             opacity: 0 !important;
             transform: translateY(-20px) !important;
             transition: opacity 0.3s ease, transform 0.3s ease !important;
@@ -271,7 +266,7 @@
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
             z-index: 20000;
-            display: none; 
+            display: none;
             align-items: center;
             justify-content: center;
             opacity: 0;
@@ -317,7 +312,7 @@
 
         .form-group { margin-bottom: 15px; text-align: left; }
         .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; opacity: 0.9; }
-        
+
         .form-input {
             width: 100%;
             padding: 11px;
@@ -352,7 +347,7 @@
         html.dark-mode .btn-submit:hover { background: #b08759; }
 
         .social-channels-grid { display: flex; flex-direction: column; gap: 12px; }
-        
+
         .channel-link {
             display: flex;
             align-items: center;
@@ -422,23 +417,37 @@
         <!-- Swiper Principal -->
 <div class="swiper mySwiper2">
     <div class="swiper-wrapper" id="my-gallery">
-        
+
         <!-- Slide 1 -->
         <div class="swiper-slide">
             <a href="../image/geanta1.jpg" data-pswp-width="800" data-pswp-height="800">
-                <img src="../image/geanta1.jpg" />
+                <img src="../image/geanta1.jpg" alt="Geantă din piele naturală Zalmoxis Leather - vedere principală" />
             </a>
         </div>
-        
+
+        <!-- Slide 2 -->
+        <div class="swiper-slide">
+            <a href="../image/geanta2.jpg" data-pswp-width="800" data-pswp-height="800">
+                <img src="../image/geanta2.jpg" alt="Geantă din piele naturală Zalmoxis Leather - vedere detaliu" />
+            </a>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="swiper-slide">
+            <a href="../image/geanta1.jpg" data-pswp-width="800" data-pswp-height="800">
+                <img src="../image/geanta1.jpg" alt="Geantă din piele naturală Zalmoxis Leather - vedere laterală" />
+            </a>
+        </div>
+
     </div>
 </div>
        <!-- Swiper Miniaturi (Rândul orizontal) -->
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
             <!-- Miniaturile tale (doar <img>, fără <a>) -->
-            <div class="swiper-slide"><img src="../image/geanta1.jpg" /></div>
-            <div class="swiper-slide"><img src="../image/geanta2.jpg" /></div>
-            <div class="swiper-slide"><img src="../image/geanta1.jpg" /></div>
+            <div class="swiper-slide"><img src="../image/geanta1.jpg" alt="Miniatură geantă piele naturală - vedere principală" /></div>
+            <div class="swiper-slide"><img src="../image/geanta2.jpg" alt="Miniatură geantă piele naturală - vedere detaliu" /></div>
+            <div class="swiper-slide"><img src="../image/geanta1.jpg" alt="Miniatură geantă piele naturală - vedere laterală" /></div>
         </div>
     </div>
     </div>
@@ -500,21 +509,21 @@
 
 <script>
     // Miniaturile (se pot vedea 4 pe rând)
-var swiper = new Swiper(".mySwiper", { 
-    spaceBetween: 10, 
-    slidesPerView: 4, 
-    freeMode: true, 
-    watchSlidesProgress: true 
+var swiper = new Swiper(".mySwiper", {
+    spaceBetween: 10,
+    slidesPerView: 4,
+    freeMode: true,
+    watchSlidesProgress: true
 });
 
 // Imaginea mare (afișează doar 1, legată de miniaturi)
-var swiper2 = new Swiper(".mySwiper2", { 
-    spaceBetween: 10, 
-    slidesPerView: 1, // Aici era problema: trebuie să fie 1
-    loop: true, 
-    thumbs: { 
-        swiper: swiper 
-    } 
+var swiper2 = new Swiper(".mySwiper2", {
+    spaceBetween: 10,
+    slidesPerView: 1,
+    loop: true,
+    thumbs: {
+        swiper: swiper
+    }
 });
 
     // Restul logicii tale JS rămâne la fel
