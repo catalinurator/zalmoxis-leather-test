@@ -1,0 +1,50 @@
+<svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad33" x1="7.5%" y1="0%" x2="92.5%" y2="100%">
+      <stop offset="0%" stop-color="#c98f52"/>
+      <stop offset="45%" stop-color="#96602f"/>
+      <stop offset="100%" stop-color="#5c3a1e"/>
+    </linearGradient>
+    <pattern id="grain33" width="7" height="7" patternTransform="rotate(38)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#5c3a1e" stroke-width="0.5" opacity="0.12"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="420" fill="#f3e7db"/>
+  <ellipse cx="200" cy="352" rx="97.8" ry="13" fill="#5c3a1e" opacity="0.16"/>
+
+  <path d="M 112.0 272.0
+           C 69.0 392.0 305.0 392.0 288.0 272.0"
+        fill="none" stroke="#5c3a1e" stroke-width="7" stroke-linecap="round" opacity="0.85"/>
+
+  <path d="M 153.0 142.0 C 153.0 104.0 247.0 104.0 247.0 142.0"
+        fill="none" stroke="#5c3a1e" stroke-width="8" stroke-linecap="round"/>
+
+  
+  <path d="M 106.0 134.0 L 294.0 134.0 L 278.9 302.0 L 121.1 302.0 Z"
+        fill="url(#grad33)" stroke="#5c3a1e" stroke-width="1.5"/>
+  <path d="M 106.0 134.0 L 294.0 134.0 L 278.9 302.0 L 121.1 302.0 Z"
+        fill="url(#grain33)"/>
+  <path d="M 113.0 141.0 L 287.0 141.0 L 272.9 295.0 L 127.1 295.0 Z"
+        fill="none" stroke="#f1e7d6" stroke-width="1.1" stroke-dasharray="5 4" opacity="0.45"/>
+  
+    <line x1="113.6" y1="138.0" x2="113.6" y2="298.0"
+          stroke="#c98f52" stroke-width="3" opacity="0.25" stroke-linecap="round"/>
+        
+  
+    <circle cx="113.0" cy="143.0" r="3.2" fill="#b08d57" stroke="#7a6338" stroke-width="0.6"/>
+    <circle cx="287.0" cy="143.0" r="3.2" fill="#b08d57" stroke="#7a6338" stroke-width="0.6"/>
+    
+  
+    <path d="M 113.5 190.0 Q 200 116.0 286.5 190.0
+             Q 200 200.0 113.5 190.0 Z"
+          fill="url(#grad33)" stroke="#5c3a1e" stroke-width="1.4" opacity="1.00"/>
+    <rect x="151.6" y="182.0" width="9" height="34" rx="2"
+          fill="#5c3a1e" opacity="1.00"/>
+    <rect x="239.4" y="182.0" width="9" height="34" rx="2"
+          fill="#5c3a1e" opacity="1.00"/>
+    <rect x="149.6" y="196.0" width="13" height="10" rx="2"
+          fill="#b08d57" stroke="#7a6338" stroke-width="0.8" opacity="1.00"/>
+    <rect x="237.4" y="196.0" width="13" height="10" rx="2"
+          fill="#b08d57" stroke="#7a6338" stroke-width="0.8" opacity="1.00"/>
+        
+</svg>
