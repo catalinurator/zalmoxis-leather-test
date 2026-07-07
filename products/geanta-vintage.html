@@ -1,1 +1,771 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geanta | Zalmoxis Leather</title>
 
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('darkMode');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'enabled' || (savedTheme === null && prefersDark)) {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
+    <!-- PhotoSwipe CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.css">  
+    <!-- Swiper CSS (lipsea - fără ea, slide-urile nu se ascund/derulează corect) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../style.css?v=20260705">
+
+    <style>
+        .hamburger, .zalmoxis-links-container a, .btn-main, .close-popup-btn { touch-action: manipulation; }
+
+        /* Miniaturile trebuie să fie un rând orizontal */
+        .mySwiper {
+        height: 80px;
+        width: 100%; /* Se întinde pe toată lățimea */
+        box-sizing: border-box;
+        padding: 10px 0;
+        margin-top: 10px; /* Spațiu între poza mare și rândul de miniaturi */
+    }
+        .mySwiper .swiper-wrapper {
+        display: flex; /* Forțează așezarea orizontală */
+    }
+       .mySwiper .swiper-slide {
+        width: 20% !important; /* Aproximativ 5 poze pe rând */
+        height: 100%;
+        opacity: 0.4;
+        cursor: pointer;
+    }
+        .mySwiper .swiper-slide-thumb-active {
+        opacity: 1;
+        border: 2px solid #bd9b7a;
+    }
+        .product-details { width: 100%; max-width: 600px; margin: 20px auto 0 auto; padding: 10px; text-align: center; }
+
+        /* --- Reveal la scroll --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* --- Zoom fin pe imaginea principală --- */
+        @media (hover: hover) {
+            .mySwiper2 .swiper-slide img { transition: transform 0.5s ease; }
+            .mySwiper2 .swiper-slide:hover img { transform: scale(1.035); }
+        }
+        .mySwiper2 .swiper-slide { overflow: hidden; border-radius: 10px; }
+
+        /* --- Buton comutare 360 --- */
+        .view-toggle-row { display: flex; justify-content: center; margin-top: 12px; }
+        .view-toggle-btn {
+            background: transparent;
+            border: 1px solid rgba(154, 106, 58, 0.5);
+            color: #7d542d;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 9px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+        }
+        .view-toggle-btn:hover { background: #9A6A3A; color: #fff; transform: translateY(-1px); }
+        html.dark-mode .view-toggle-btn { border-color: rgba(196, 154, 108, 0.5); color: #c49a6c; }
+        html.dark-mode .view-toggle-btn:hover { background: #c49a6c; color: #121212; }
+
+        /* --- Vizualizator 360 --- */
+        .view-360 {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: none;
+        }
+        .view-360.active { display: block; }
+        .view360-stage {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(154, 106, 58, 0.08);
+            cursor: grab;
+            touch-action: pan-y;
+            user-select: none;
+        }
+        .view360-stage.dragging { cursor: grabbing; }
+        .view360-frame {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .view360-frame.active { opacity: 1; }
+        .view360-hint {
+            text-align: center;
+            font-size: 12px;
+            color: #8c7c64;
+            margin: 8px 0 0;
+            transition: opacity 0.4s ease;
+        }
+        .view360-hint.hidden { opacity: 0; }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f3e7db;
+            color: #2a1c16;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .btn-main, .channel-link, .hamburger, .theme-toggle-inline, .zalmoxis-links-container a {
+            -webkit-tap-highlight-color: transparent;
+            cursor: pointer;
+        }
+
+        html.dark-mode body {
+            background: #121212;
+            color: #e0e0e0;
+        }
+
+        html.dark-mode .price { color: #c49a6c; }
+        html.dark-mode .desc { color: #b0a095; }
+        html.dark-mode .btn { border-color: #c49a6c; color: #e0e0e0; }
+        html.dark-mode .btn:hover { background: #c49a6c; color: #121212; }
+
+        .container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        margin-top: 100px !important;
+        padding: 20px !important;
+    }
+        .product-details {
+        width: 100% !important;
+        max-width: 600px !important;
+        margin: 20px auto !important;
+        text-align: center !important;
+        position: relative !important;
+    }
+    .image-box {
+    width: 100% !important;
+    max-width: 600px !important;
+    margin: 0 auto !important;
+}
+
+        h1 { font-size: 34px; margin: 0; }
+        .price { font-size: 22px; font-weight: 600; margin: 10px 0; }
+        .desc { color: #5a3a2e; line-height: 1.5; }
+
+        .main-header {
+            background: #f3e7db;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10000;
+            border-bottom: 1px solid rgba(42, 28, 22, 0.08);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        html.dark-mode .main-header {
+            background: #121212;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .header-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            color: #2a1c16;
+            letter-spacing: 3px;
+            transition: color 0.3s;
+            position: relative;
+            z-index: 10003;
+        }
+        html.dark-mode .logo { color: #e0e0e0; }
+
+        .hamburger {
+            display: block;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 6px;
+            z-index: 10003 !important;
+            position: relative;
+        }
+
+        .bar {
+            display: block;
+            width: 24px;
+            height: 1.5px;
+            margin: 5px auto;
+            transition: all 0.3s ease-in-out;
+            background-color: #2a1c16;
+        }
+        html.dark-mode .bar { background-color: #e0e0e0; }
+
+        .hamburger.active .bar:nth-child(2) { opacity: 0; }
+        .hamburger.active .bar:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .hamburger.active .bar:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        .zalmoxis-menu-overlay {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100vh !important;
+            background-color: #f3e7db !important;
+            z-index: 10001 !important;
+            display: none !important;
+            opacity: 0 !important;
+            transform: translateY(-20px) !important;
+            transition: opacity 0.3s ease, transform 0.3s ease !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        html.dark-mode .zalmoxis-menu-overlay {
+            background-color: #121212 !important;
+        }
+
+        .zalmoxis-menu-overlay.active {
+            display: flex !important;
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        .zalmoxis-links-container {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 30px !important;
+            width: 100% !important;
+        }
+
+        .zalmoxis-links-container a {
+            text-decoration: none !important;
+            color: #2a1c16 !important;
+            font-size: 26px !important;
+            font-weight: 500 !important;
+            letter-spacing: 1px !important;
+            transition: color 0.3s !important;
+            display: block !important;
+            text-align: center !important;
+        }
+        html.dark-mode .zalmoxis-links-container a { color: #e0e0e0 !important; }
+        .zalmoxis-links-container a:hover { color: #9A6A3A !important; }
+
+        .menu-spacer { height: 10px; }
+
+        .theme-toggle-inline {
+            background: transparent !important;
+            border: 1px solid rgba(154, 106, 58, 0.4) !important;
+            padding: 12px 24px !important;
+            border-radius: 25px !important;
+            color: #5a3a2e !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            font-family: inherit !important;
+            font-size: 15px !important;
+            transition: all 0.3s !important;
+        }
+
+        html.dark-mode .theme-toggle-inline {
+            border-color: rgba(196, 154, 108, 0.4) !important;
+            color: #b0a095 !important;
+        }
+
+        .action-buttons-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-main {
+            display: inline-block;
+            padding: 14px 20px;
+            border: 1px solid #9A6A3A;
+            background: transparent;
+            color: #2A211B;
+            text-decoration: none;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: .3s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-buy { background: #9A6A3A; color: white; }
+        .btn-buy:hover { background: transparent; color: #9A6A3A; transform: translateY(-2px); }
+        .btn-chat:hover { background: #9A6A3A; color: white; transform: translateY(-2px); }
+
+        html.dark-mode .btn-main { border-color: #c49a6c; color: #e0e0e0; }
+        html.dark-mode .btn-buy { background: #c49a6c; color: #121212; }
+        html.dark-mode .btn-buy:hover { background: transparent; color: #c49a6c; }
+        html.dark-mode .btn-chat:hover { background: #c49a6c; color: #121212; }
+
+        .zalmoxis-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 20000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .zalmoxis-popup-overlay.active { display: flex; opacity: 1; }
+
+        .zalmoxis-popup-content {
+            background: #f3e7db;
+            padding: 35px 25px;
+            border-radius: 16px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .zalmoxis-popup-overlay.active .zalmoxis-popup-content { transform: scale(1); }
+
+        html.dark-mode .zalmoxis-popup-content { background: #1a1a1a; color: #e0e0e0; }
+
+        .close-popup-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #2a1c16;
+            line-height: 1;
+        }
+        html.dark-mode .close-popup-btn { color: #e0e0e0; }
+
+        .zalmoxis-popup-content h3 { margin: 0 0 10px 0; font-size: 22px; font-weight: 700; }
+        .zalmoxis-popup-content p { font-size: 14px; margin-bottom: 25px; opacity: 0.8; line-height: 1.4; }
+
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; opacity: 0.9; }
+
+        .form-input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid rgba(154, 106, 58, 0.5);
+            background: transparent;
+            color: inherit;
+            font-family: inherit;
+            font-size: 14px;
+            box-sizing: border-box;
+            border-radius: 6px;
+        }
+        .form-input:focus { outline: none; border-color: #9A6A3A; }
+        html.dark-mode .form-input { border-color: rgba(196, 154, 108, 0.4); }
+        html.dark-mode .form-input:focus { border-color: #c49a6c; }
+
+        .btn-submit {
+            width: 100%;
+            background: #9A6A3A;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            border-radius: 6px;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover { background: #7d542d; }
+        html.dark-mode .btn-submit { background: #c49a6c; color: #121212; }
+        html.dark-mode .btn-submit:hover { background: #b08759; }
+
+        .social-channels-grid { display: flex; flex-direction: column; gap: 12px; }
+
+        .channel-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 12px;
+            text-decoration: none;
+            color: white !important;
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: 8px;
+            transition: transform 0.2s, filter 0.2s;
+        }
+        .channel-link:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .channel-link svg { width: 20px; height: 20px; fill: currentColor; }
+
+        .instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .tiktok { background: #000000; border: 1px solid rgba(37, 244, 238, 0.5); }
+        .whatsapp { background: #25D366; }
+        .telegram { background: #24A1DE; }
+
+        @media(max-width:768px){
+            .container { padding-top: 20px; }
+            .zalmoxis-links-container a { font-size: 24px !important; }
+            .action-buttons-group { grid-template-columns: 1fr; gap: 10px; }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+</head>
+<body>
+
+<header class="main-header">
+    <div class="header-container">
+        <a href="../index.html" class="logo">ZALMOXIS</a>
+        <button class="hamburger" aria-label="Deschide meniul">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </div>
+</header>
+
+<div class="zalmoxis-menu-overlay">
+    <nav class="zalmoxis-links-container">
+        <a href="../index.html">Acasă</a>
+        <a href="../index.html#produse">Produse</a>
+        <a href="../index.html#despre">Despre Noi</a>
+        <a href="../index.html#contact">Contact</a>
+        <div class="menu-spacer"></div>
+        <button id="themeToggleBtn" class="theme-toggle-inline" aria-label="Schimbă tema">
+            <span class="theme-text">Mod Întunecat</span>
+            <span class="theme-icons">
+                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none; width:18px; height:18px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.344l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                </svg>
+                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:18px; height:18px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </span>
+        </button>
+    </nav>
+</div>
+
+<!-- Container principal care separă pozele de detalii -->
+<div class="container">
+    <div class="image-box" style="width: 100%; max-width: 600px; margin: 0 auto;">
+        <!-- Swiper Principal -->
+<div class="swiper mySwiper2">
+    <div class="swiper-wrapper" id="my-gallery">
+
+        <!-- Slide 1 -->
+        <div class="swiper-slide">
+            <a href="../image/geanta1.jpg" data-pswp-width="800" data-pswp-height="800">
+                <img src="../image/geanta1.jpg" alt="Geantă din piele naturală Zalmoxis Leather - vedere principală" />
+            </a>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="swiper-slide">
+            <a href="../image/geanta2.jpg" data-pswp-width="800" data-pswp-height="800">
+                <img src="../image/geanta2.jpg" alt="Geantă din piele naturală Zalmoxis Leather - vedere detaliu" />
+            </a>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="swiper-slide">
+            <a href="../image/geanta1.jpg" data-pswp-width="800" data-pswp-height="800">
+                <img src="../image/geanta1.jpg" alt="Geantă din piele naturală Zalmoxis Leather - vedere laterală" />
+            </a>
+        </div>
+
+    </div>
+</div>
+       <!-- Swiper Miniaturi (Rândul orizontal) -->
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <!-- Miniaturile tale (doar <img>, fără <a>) -->
+            <div class="swiper-slide"><img src="../image/geanta1.jpg" alt="Miniatură geantă piele naturală - vedere principală" /></div>
+            <div class="swiper-slide"><img src="../image/geanta2.jpg" alt="Miniatură geantă piele naturală - vedere detaliu" /></div>
+            <div class="swiper-slide"><img src="../image/geanta1.jpg" alt="Miniatură geantă piele naturală - vedere laterală" /></div>
+        </div>
+    </div>
+
+    <div class="view-toggle-row">
+        <button id="toggle360" class="view-toggle-btn" aria-pressed="false">
+            <span id="toggle360Text">Vezi în 360°</span>
+        </button>
+    </div>
+
+    <!-- Vizualizator 360 grade: trage orizontal peste imagine pentru a roti produsul -->
+    <!-- Cadrele de mai jos sunt ilustrații de test generate pentru demonstrație (din folderul image/).
+         Înlocuiește-le cu poze reale făcute pe platou rotativ când sunt gata, păstrate tot în image/. -->
+    <div id="view360" class="view-360">
+        <div class="view360-stage" id="view360Stage">
+            <img class="view360-frame active" data-index="0" src="../image/geanta-360-test-01.svg" alt="Geantă piele naturală - rotație 360, cadru 1">
+            <img class="view360-frame" data-index="1" src="../image/geanta-360-test-02.svg" alt="Geantă piele naturală - rotație 360, cadru 2">
+            <img class="view360-frame" data-index="2" src="../image/geanta-360-test-03.svg" alt="Geantă piele naturală - rotație 360, cadru 3">
+            <img class="view360-frame" data-index="3" src="../image/geanta-360-test-04.svg" alt="Geantă piele naturală - rotație 360, cadru 4">
+            <img class="view360-frame" data-index="4" src="../image/geanta-360-test-05.svg" alt="Geantă piele naturală - rotație 360, cadru 5">
+            <img class="view360-frame" data-index="5" src="../image/geanta-360-test-06.svg" alt="Geantă piele naturală - rotație 360, cadru 6">
+            <img class="view360-frame" data-index="6" src="../image/geanta-360-test-07.svg" alt="Geantă piele naturală - rotație 360, cadru 7">
+            <img class="view360-frame" data-index="7" src="../image/geanta-360-test-08.svg" alt="Geantă piele naturală - rotație 360, cadru 8">
+            <img class="view360-frame" data-index="8" src="../image/geanta-360-test-09.svg" alt="Geantă piele naturală - rotație 360, cadru 9">
+            <img class="view360-frame" data-index="9" src="../image/geanta-360-test-10.svg" alt="Geantă piele naturală - rotație 360, cadru 10">
+            <img class="view360-frame" data-index="10" src="../image/geanta-360-test-11.svg" alt="Geantă piele naturală - rotație 360, cadru 11">
+            <img class="view360-frame" data-index="11" src="../image/geanta-360-test-12.svg" alt="Geantă piele naturală - rotație 360, cadru 12">
+        </div>
+        <p class="view360-hint" id="view360Hint">← trage pentru a roti produsul →</p>
+    </div>
+    </div>
+
+    <!-- Containerul corectat pentru text și butoane -->
+    <div class="product-details reveal">
+        <h1>Geanta</h1>
+        <div class="price">TEST 2</div>
+        <div class="desc">
+            Geanta din piele naturală, lucrată manual pentru rezistență.
+        </div>
+        <div class="action-buttons-group reveal">
+            <button class="btn-main btn-buy" id="openOrderPopup">Comandă Rapidă</button>
+            <button class="btn-main btn-chat" id="openChatPopup">Discută pe Chat</button>
+        </div>
+    </div>
+</div>
+
+<!-- Restul codului (popups) rămâne neschimbat -->
+<div id="orderPopup" class="zalmoxis-popup-overlay">
+    <div class="zalmoxis-popup-content">
+        <button class="close-popup-btn" id="closeOrderPopup" aria-label="Închide">&times;</button>
+        <h3>Comandă Rapidă</h3>
+        <p>Lasă-ne datele tale și te sunăm noi în cel mai scurt timp pentru confirmare și detalii de livrare.</p>
+        <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="bd32b38b-4a9d-431e-97cd-dc32eb24b2a4">
+            <input type="hidden" name="subject" value="Comandă Nouă - Geantă Piele">
+            <input type="hidden" name="from_name" value="Zalmoxis Leather Site">
+            <div class="form-group">
+                <label for="clientName">Nume și Prenume:</label>
+                <input type="text" id="clientName" name="Nume Client" class="form-input" placeholder="Ex: Ion Popescu" required>
+            </div>
+            <div class="form-group">
+                <label for="clientPhone">Număr de Telefon:</label>
+                <input type="tel" id="clientPhone" name="Telefon" class="form-input" placeholder="Ex: 068XXXXXX" required>
+            </div>
+            <div class="form-group">
+                <label for="clientNote">Doriți personalizare sau detalii? (Opțional):</label>
+                <textarea id="clientNote" name="Note/Personalizare" class="form-input" rows="2" placeholder="Ex: Culoarea aței, personalizare..."></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Confirmă Comanda</button>
+        </form>
+    </div>
+</div>
+
+<div id="socialPopup" class="zalmoxis-popup-overlay">
+    <div class="zalmoxis-popup-content">
+        <button class="close-popup-btn" id="closeChatPopup" aria-label="Închide">&times;</button>
+        <h3>Unde doriți să discutăm?</h3>
+        <p>Alege platforma preferată pentru a lua legătura direct cu noi.</p>
+        <div class="social-channels-grid">
+            <a href="https://www.instagram.com/zalmoxis_leather/" target="_blank" class="channel-link instagram">Instagram</a>
+            <a href="https://www.tiktok.com/@zalmoxis.leather" target="_blank" class="channel-link tiktok">TikTok</a>
+            <a href="https://wa.me/37369639506" target="_blank" class="channel-link whatsapp">WhatsApp</a>
+            <a href="https://t.me/Felicia0708" target="_blank" class="channel-link telegram">Telegram</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Miniaturile (se pot vedea 4 pe rând)
+var swiper = new Swiper(".mySwiper", {
+    spaceBetween: 10,
+    slidesPerView: 4,
+    freeMode: true,
+    watchSlidesProgress: true
+});
+
+// Imaginea mare (afișează doar 1, legată de miniaturi)
+var swiper2 = new Swiper(".mySwiper2", {
+    spaceBetween: 10,
+    slidesPerView: 1,
+    loop: true,
+    mousewheel: {
+        forceToAxis: true,
+        releaseOnEdges: true
+    },
+    thumbs: {
+        swiper: swiper
+    }
+});
+
+    // Restul logicii tale JS rămâne la fel
+    const hamburger = document.querySelector(".hamburger");
+    const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
+    hamburger.addEventListener("click", (e) => { e.stopPropagation(); hamburger.classList.toggle("active"); if (navOverlay.classList.contains("active")) { hamburger.classList.remove("active"); navOverlay.classList.remove("active"); setTimeout(() => { navOverlay.style.display = "none"; }, 300); document.body.style.overflow = "auto"; } else { hamburger.classList.add("active"); navOverlay.style.display = "flex"; setTimeout(() => { navOverlay.classList.add("active"); }, 10); document.body.style.overflow = "hidden"; } });
+    document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEventListener("click", () => { hamburger.classList.remove("active"); navOverlay.classList.remove("active"); setTimeout(() => { navOverlay.style.display = "none"; }, 300); document.body.style.overflow = "auto"; }));
+    navOverlay.addEventListener("click", (e) => { const aFostPeLinkSauButon = e.target.closest(".zalmoxis-links-container a") || e.target.closest("#themeToggleBtn"); if (!aFostPeLinkSauButon) { hamburger.classList.remove("active"); navOverlay.classList.remove("active"); setTimeout(() => { navOverlay.style.display = "none"; }, 300); document.body.style.overflow = "auto"; } });
+    const btn = document.getElementById('themeToggleBtn');
+    const sunIcon = btn.querySelector('.sun-icon');
+    const moonIcon = btn.querySelector('.moon-icon');
+    const themeText = btn.querySelector('.theme-text');
+    function updateIcons(isDark) { if (isDark) { sunIcon.style.display = 'block'; moonIcon.style.display = 'none'; themeText.textContent = 'Mod Luminos'; } else { sunIcon.style.display = 'none'; moonIcon.style.display = 'block'; themeText.textContent = 'Mod Întunecat'; } }
+    function setTheme(isDark) { if (isDark) { document.documentElement.classList.add('dark-mode'); } else { document.documentElement.classList.remove('dark-mode'); } updateIcons(isDark); }
+    function initTheme() { const isDark = document.documentElement.classList.contains('dark-mode'); updateIcons(isDark); }
+    initTheme();
+    btn.addEventListener('click', (e) => { e.stopPropagation(); const isCurrentlyDark = document.documentElement.classList.contains('dark-mode'); if (!isCurrentlyDark) { setTheme(true); localStorage.setItem('darkMode', 'enabled'); } else { setTheme(false); localStorage.setItem('darkMode', 'disabled'); } });
+    const openOrderBtn = document.getElementById("openOrderPopup");
+    const closeOrderBtn = document.getElementById("closeOrderPopup");
+    const orderPopup = document.getElementById("orderPopup");
+    const openChatBtn = document.getElementById("openChatPopup");
+    const closeChatBtn = document.getElementById("closeChatPopup");
+    const socialPopup = document.getElementById("socialPopup");
+    [orderPopup, socialPopup].forEach(popup => {
+        popup.addEventListener("click", (e) => {
+            if (e.target === popup) {
+                closeModal(popup);
+            }
+        });
+    });
+    function openModal(modal) { modal.style.display = "flex"; setTimeout(() => { modal.classList.add("active"); }, 10); document.body.style.overflow = "hidden"; }
+    function closeModal(modal) { modal.classList.remove("active"); setTimeout(() => { modal.style.display = "none"; }, 300); document.body.style.overflow = "auto"; }
+    openOrderBtn.addEventListener("click", () => openModal(orderPopup));
+    closeOrderBtn.addEventListener("click", () => closeModal(orderPopup));
+    openChatBtn.addEventListener("click", () => openModal(socialPopup));
+    closeChatBtn.addEventListener("click", () => closeModal(socialPopup));
+
+    // --- Reveal la scroll pentru secțiunile produsului ---
+    const revealEls = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        revealEls.forEach((el) => revealObserver.observe(el));
+    } else {
+        revealEls.forEach((el) => el.classList.add("is-visible"));
+    }
+
+    // --- Vizualizator 360°: trage orizontal pentru a schimba cadrul ---
+    // Momentan sunt 12 cadre de test (ilustrații generate, nu poze reale) - doar ca demonstrație
+    // a modului în care va funcționa rotația. Pentru rezultat realist, înlocuiește pozele din
+    // folderul image/ (geanta-360-test-XX.svg) cu poze reale făcute din platou rotativ
+    // (ideal 24-36 cadre), salvate tot în image/.
+    (function initView360() {
+        const stage = document.getElementById("view360Stage");
+        const frames = Array.from(stage.querySelectorAll(".view360-frame"));
+        const hint = document.getElementById("view360Hint");
+        const toggleBtn = document.getElementById("toggle360");
+        const toggleText = document.getElementById("toggle360Text");
+        const view360 = document.getElementById("view360");
+        const staticGallery = document.querySelector(".image-box .swiper.mySwiper2");
+        const thumbGallery = document.querySelector(".image-box .swiper.mySwiper");
+
+        let currentFrame = 0;
+        let dragging = false;
+        let startX = 0;
+        let hasInteracted = false;
+
+        function setFrame(index) {
+            const total = frames.length;
+            const wrapped = ((index % total) + total) % total;
+            if (wrapped === currentFrame) return;
+            frames[currentFrame].classList.remove("active");
+            frames[wrapped].classList.add("active");
+            currentFrame = wrapped;
+        }
+
+        function onDragStart(clientX) {
+            dragging = true;
+            startX = clientX;
+            stage.classList.add("dragging");
+        }
+        function onDragMove(clientX) {
+            if (!dragging) return;
+            const deltaX = clientX - startX;
+            const step = 22; // px per cadru (redus pentru rotație fluidă cu mai multe cadre)
+            if (Math.abs(deltaX) >= step) {
+                const framesToMove = Math.trunc(deltaX / step);
+                setFrame(currentFrame - framesToMove);
+                startX = clientX;
+                if (!hasInteracted) {
+                    hasInteracted = true;
+                    hint.classList.add("hidden");
+                }
+            }
+        }
+        function onDragEnd() {
+            dragging = false;
+            stage.classList.remove("dragging");
+        }
+
+        stage.addEventListener("mousedown", (e) => onDragStart(e.clientX));
+        window.addEventListener("mousemove", (e) => onDragMove(e.clientX));
+        window.addEventListener("mouseup", onDragEnd);
+
+        stage.addEventListener("touchstart", (e) => onDragStart(e.touches[0].clientX), { passive: true });
+        stage.addEventListener("touchmove", (e) => onDragMove(e.touches[0].clientX), { passive: true });
+        stage.addEventListener("touchend", onDragEnd);
+
+        toggleBtn.addEventListener("click", () => {
+            const isActive = view360.classList.toggle("active");
+            toggleBtn.setAttribute("aria-pressed", String(isActive));
+            if (isActive) {
+                toggleText.textContent = "Vezi pozele";
+                if (staticGallery) staticGallery.style.display = "none";
+                if (thumbGallery) thumbGallery.style.display = "none";
+            } else {
+                toggleText.textContent = "Vezi în 360°";
+                if (staticGallery) staticGallery.style.display = "";
+                if (thumbGallery) thumbGallery.style.display = "";
+            }
+        });
+    })();
+</script>
+
+<script type="module">
+  import PhotoSwipeLightbox from 'https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe-lightbox.esm.js';
+  const lightbox = new PhotoSwipeLightbox({ gallery: '#my-gallery', children: 'a', pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.esm.js') });
+  lightbox.init();
+</script>
+</body>
+</html>
