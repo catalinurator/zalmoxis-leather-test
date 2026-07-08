@@ -20,6 +20,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="../style.css?v=20260705">
 
+    <!-- Three.js pentru modelul 3D realist al produsului -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
     <style>
         .hamburger, .zalmoxis-links-container a, .btn-main, .close-popup-btn { touch-action: manipulation; }
 
@@ -82,7 +92,7 @@
         html.dark-mode .view-toggle-btn { border-color: rgba(196, 154, 108, 0.5); color: #c49a6c; }
         html.dark-mode .view-toggle-btn:hover { background: #c49a6c; color: #121212; }
 
-        /* --- Vizualizator 360 --- */
+        /* --- Model 3D realist (WebGL / Three.js) --- */
         .view-360 {
             width: 100%;
             max-width: 600px;
@@ -90,28 +100,24 @@
             display: none;
         }
         .view-360.active { display: block; }
-        .view360-stage {
+        .bag3d-stage {
             position: relative;
             width: 100%;
             aspect-ratio: 1 / 1;
-            border-radius: 10px;
+            border-radius: 14px;
             overflow: hidden;
-            background: rgba(154, 106, 58, 0.08);
             cursor: grab;
             touch-action: pan-y;
             user-select: none;
+            background: radial-gradient(ellipse at 50% 40%, rgba(201,143,82,0.10), rgba(201,143,82,0) 70%);
         }
-        .view360-stage.dragging { cursor: grabbing; }
-        .view360-frame {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            pointer-events: none;
+        .bag3d-stage.dragging { cursor: grabbing; }
+        .bag3d-stage canvas { display: block; width: 100% !important; height: 100% !important; }
+        .bag3d-loading {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; color: #8c7c64; letter-spacing: .04em;
         }
-        .view360-frame.active { opacity: 1; }
         .view360-hint {
             text-align: center;
             font-size: 12px;
@@ -308,6 +314,112 @@
             margin-top: 25px;
         }
 
+        /* --- Comutator limbă RO / EN --- */
+        .lang-toggle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            background: rgba(154, 106, 58, 0.12);
+            border: 1px solid rgba(154, 106, 58, 0.35);
+            border-radius: 20px;
+            padding: 3px;
+            cursor: pointer;
+            font-family: inherit;
+            width: 76px;
+            height: 30px;
+            flex-shrink: 0;
+        }
+        .lang-toggle-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 34px;
+            height: 24px;
+            background: #9A6A3A;
+            border-radius: 16px;
+            transition: transform 0.28s cubic-bezier(.4,0,.2,1);
+            z-index: 1;
+        }
+        .lang-toggle.is-en .lang-toggle-thumb { transform: translateX(36px); }
+        .lang-toggle-label {
+            position: relative;
+            z-index: 2;
+            width: 34px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .03em;
+            color: #5a3a2e;
+            transition: color 0.28s ease;
+        }
+        .lang-toggle.is-en .lang-toggle-label.ro { color: rgba(90,58,46,0.45); }
+        .lang-toggle:not(.is-en) .lang-toggle-label.en { color: rgba(90,58,46,0.45); }
+        html.dark-mode .lang-toggle { background: rgba(196,154,108,0.12); border-color: rgba(196,154,108,0.35); }
+        html.dark-mode .lang-toggle-thumb { background: #c49a6c; }
+        html.dark-mode .lang-toggle-label { color: #1a1208; }
+        html.dark-mode .lang-toggle.is-en .lang-toggle-label.ro,
+        html.dark-mode .lang-toggle:not(.is-en) .lang-toggle-label.en { color: rgba(224,224,224,0.55); }
+
+        /* --- Culori disponibile pentru produs --- */
+        .color-picker { margin-top: 22px; }
+        .color-picker-label {
+            font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+            color: #8c7c64; margin: 0 0 10px;
+        }
+        .color-swatches { display: flex; justify-content: center; gap: 12px; }
+        .color-swatch {
+            width: 30px; height: 30px; border-radius: 50%;
+            border: 2px solid transparent; cursor: pointer;
+            padding: 0; position: relative;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .color-swatch:hover { transform: translateY(-2px); }
+        .color-swatch.active { border-color: #9A6A3A; }
+        html.dark-mode .color-swatch.active { border-color: #c49a6c; }
+        .color-swatch-name {
+            font-size: 13px; font-weight: 600; margin-top: 10px; color: #5a3a2e;
+        }
+        html.dark-mode .color-swatch-name { color: #e0e0e0; }
+
+        /* --- Insigne de incredere --- */
+        .trust-badges {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+            margin-top: 26px; padding-top: 22px; border-top: 1px solid rgba(154,106,58,0.15);
+        }
+        html.dark-mode .trust-badges { border-top-color: rgba(196,154,108,0.15); }
+        .trust-badge { text-align: center; font-size: 11.5px; color: #5a3a2e; line-height: 1.35; }
+        html.dark-mode .trust-badge { color: #b0a095; }
+        .trust-badge svg { width: 22px; height: 22px; margin-bottom: 6px; stroke: #9A6A3A; }
+        html.dark-mode .trust-badge svg { stroke: #c49a6c; }
+
+        /* --- Sectiune informatii produs (piele, dimensiuni) --- */
+        .product-info-section {
+            width: 100%; max-width: 600px; margin: 40px auto 0; padding: 0 10px;
+        }
+        .info-block {
+            background: rgba(154, 106, 58, 0.06);
+            border: 1px solid rgba(154, 106, 58, 0.15);
+            border-radius: 12px;
+            padding: 22px 20px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        html.dark-mode .info-block { background: rgba(196,154,108,0.06); border-color: rgba(196,154,108,0.15); }
+        .info-block h3 {
+            margin: 0 0 10px; font-size: 16px; font-weight: 700;
+        }
+        .info-block p { margin: 0; font-size: 14px; line-height: 1.65; color: #5a3a2e; }
+        html.dark-mode .info-block p { color: #b0a095; }
+        .spec-list { list-style: none; margin: 12px 0 0; padding: 0; }
+        .spec-list li {
+            display: flex; justify-content: space-between; gap: 10px;
+            font-size: 13.5px; padding: 8px 0; border-bottom: 1px dashed rgba(154,106,58,0.18);
+        }
+        html.dark-mode .spec-list li { border-bottom-color: rgba(196,154,108,0.18); }
+        .spec-list li:last-child { border-bottom: none; }
+        .spec-list li span:first-child { color: #8c7c64; }
+        .spec-list li span:last-child { font-weight: 600; }
+
         .btn-main {
             display: inline-block;
             padding: 14px 20px;
@@ -459,20 +571,27 @@
 <header class="main-header">
     <div class="header-container">
         <a href="../index.html" class="logo">ZALMOXIS</a>
-        <button class="hamburger" aria-label="Deschide meniul">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
+        <div style="display:flex; align-items:center; gap:10px;">
+            <button id="langToggle" class="lang-toggle" aria-label="Schimbă limba site-ului">
+                <span class="lang-toggle-thumb"></span>
+                <span class="lang-toggle-label ro">RO</span>
+                <span class="lang-toggle-label en">EN</span>
+            </button>
+            <button class="hamburger" aria-label="Deschide meniul">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
     </div>
 </header>
 
 <div class="zalmoxis-menu-overlay">
     <nav class="zalmoxis-links-container">
-        <a href="../index.html">Acasă</a>
-        <a href="../index.html#produse">Produse</a>
-        <a href="../index.html#despre">Despre Noi</a>
-        <a href="../index.html#contact">Contact</a>
+        <a href="../index.html" data-i18n="nav_home">Acasă</a>
+        <a href="../index.html#produse" data-i18n="nav_products">Produse</a>
+        <a href="../index.html#despre" data-i18n="nav_about">Despre Noi</a>
+        <a href="../index.html#contact" data-i18n="nav_contact">Contact</a>
         <div class="menu-spacer"></div>
         <button id="themeToggleBtn" class="theme-toggle-inline" aria-label="Schimbă tema">
             <span class="theme-text">Mod Întunecat</span>
@@ -489,7 +608,7 @@
 </div>
 
 <!-- Container principal care separă pozele de detalii -->
-<div class="container">
+<div class="container product-container">
     <div class="image-box" style="width: 100%; max-width: 600px; margin: 0 auto;">
         <!-- Swiper Principal -->
 <div class="swiper mySwiper2">
@@ -504,7 +623,7 @@
 
         <!-- Slide 2 -->
         <div class="swiper-slide">
-            <a href="../image/geanta1.jpg" data-pswp-width="800" data-pswp-height="800">
+            <a href="../image/geanta2.jpg" data-pswp-width="800" data-pswp-height="800">
                 <img src="../image/geanta2.jpg" alt="Geantă din piele naturală Zalmoxis Leather - vedere detaliu" />
             </a>
         </div>
@@ -523,7 +642,7 @@
         <div class="swiper-wrapper">
             <!-- Miniaturile tale (doar <img>, fără <a>) -->
             <div class="swiper-slide"><img src="../image/geanta1.jpg" alt="Miniatură geantă piele naturală - vedere principală" /></div>
-            <div class="swiper-slide"><img src="../image/geanta1.jpg" alt="Miniatură geantă piele naturală - vedere detaliu" /></div>
+            <div class="swiper-slide"><img src="../image/geanta2.jpg" alt="Miniatură geantă piele naturală - vedere detaliu" /></div>
             <div class="swiper-slide"><img src="../image/geanta1.jpg" alt="Miniatură geantă piele naturală - vedere laterală" /></div>
         </div>
     </div>
@@ -534,20 +653,10 @@
         </button>
     </div>
 
-    <!-- Vizualizator 360 grade: trage orizontal peste imagine pentru a roti produsul -->
-    <!-- Cadrele de mai jos sunt 36 de ilustrații de test (din image/) ale unui model de geantă
-         satchel, cu clapetă cu curele și catarame, mâner, curea de umăr care se leagănă la
-         rotație, nituri și textură fină a pielii. Înlocuiește-le cu poze reale făcute pe platou
-         rotativ când sunt gata, păstrate tot în image/, cu același format de nume. -->
+    <!-- Model 3D realist (WebGL / Three.js): trage pentru a roti rucsacul, lumini si umbre reale. -->
     <div id="view360" class="view-360">
-        <div class="view360-stage" id="view360Stage">
-            <img class="view360-frame active" data-index="0" src="../image/IMG_9939.jpeg" alt="Geantă vintage piele naturală - rotație 360, cadru 1">
-            <img class="view360-frame" data-index="1" src="../image/IMG_9945.jpeg" alt="Geantă vintage piele naturală - rotație 360, cadru 2">
-            <img class="view360-frame" data-index="2" src="../image/IMG_9946.jpeg" alt="Geantă vintage piele naturală - rotație 360, cadru 3">
-            <img class="view360-frame" data-index="3" src="../image/IMG_9947.jpeg" alt="Geantă vintage piele naturală - rotație 360, cadru 4">
-            <img class="view360-frame" data-index="4" src="../image/IMG_9948.jpeg" alt="Geantă vintage piele naturală - rotație 360, cadru 5">
-            <img class="view360-frame" data-index="5" src="../image/IMG_9949.jpeg" alt="Geantă vintage piele naturală - rotație 360, cadru 6">
-            
+        <div class="bag3d-stage" id="bag3dStage">
+            <div class="bag3d-loading" id="bag3dLoading">se încarcă modelul 3D…</div>
         </div>
         <p class="view360-hint" id="view360Hint">← trage pentru a roti produsul →</p>
     </div>
@@ -555,15 +664,61 @@
 
     <!-- Containerul corectat pentru text și butoane -->
     <div class="product-details reveal">
-        <h1>Geanta</h1>
-        <div class="price">TEST 2</div>
-        <div class="desc">
-            Geanta din piele naturală, lucrată manual pentru rezistență.
+        <h1 data-i18n="product_title">Geantă Vintage</h1>
+        <div class="price"><span data-i18n="price_label">Preț:</span> <span id="priceValue">1450 MDL</span></div>
+        <div class="desc" data-i18n="product_desc">
+            Geantă tip rucsac din piele naturală, lucrată integral manual, cu buzunar frontal, buzunar lateral deschis și bretele ajustabile căptușite.
         </div>
+
+        <div class="color-picker">
+            <p class="color-picker-label" data-i18n="color_label">Alege culoarea</p>
+            <div class="color-swatches" id="colorSwatches">
+                <button class="color-swatch active" style="background:#b17540;" data-color="cognac" data-main="#b17540" data-dark="#6e4526" data-pocket="#b87d47" data-pocket-open="#5c3a1e" aria-label="Coniac"></button>
+                <button class="color-swatch" style="background:#7a4a28;" data-color="chocolate" data-main="#7a4a28" data-dark="#4a2c16" data-pocket="#8a5527" data-pocket-open="#3a2213" aria-label="Ciocolatiu"></button>
+                <button class="color-swatch" style="background:#c9915a;" data-color="whiskey" data-main="#c9915a" data-dark="#8a5527" data-pocket="#d1a06c" data-pocket-open="#6e4526" aria-label="Whiskey"></button>
+            </div>
+            <p class="color-swatch-name" id="colorSwatchName" data-i18n="color_cognac">Coniac</p>
+        </div>
+
         <div class="action-buttons-group reveal">
-            <button class="btn-main btn-buy" id="openOrderPopup">Comandă Rapidă</button>
-            <button class="btn-main btn-chat" id="openChatPopup">Discută pe Chat</button>
+            <button class="btn-main btn-buy" id="openOrderPopup" data-i18n="btn_order">Comandă Rapidă</button>
+            <button class="btn-main btn-chat" id="openChatPopup" data-i18n="btn_chat">Discută pe Chat</button>
         </div>
+
+        <div class="trust-badges">
+            <div class="trust-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6l-8-4Z"/></svg>
+                <div data-i18n="badge_natural">100% piele naturală</div>
+            </div>
+            <div class="trust-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h6l2 3h10v11H3z"/><path d="M9 12h6"/></svg>
+                <div data-i18n="badge_handmade">Cusut manual, integral</div>
+            </div>
+            <div class="trust-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
+                <div data-i18n="badge_delivery">Livrare în toată Moldova</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="product-info-section">
+    <div class="info-block reveal">
+        <h3 data-i18n="leather_title">Despre piele</h3>
+        <p data-i18n="leather_text">
+            Folosim piele naturală de bovină, tăbăcită vegetal, într-o singură bucată acolo unde forma permite — fără materiale sintetice. Este o piele "vie": în primele săptămâni de purtare capătă o patină ușor mai închisă la culoare pe zonele de contact, iar micile urme, cute sau nuanțe naturale din piele fac fiecare geantă unică. Recomandăm ferirea de umezeală prelungită și, ocazional, o cremă naturală de întreținere pentru piele.
+        </p>
+    </div>
+    <div class="info-block reveal">
+        <h3 data-i18n="specs_title">Dimensiuni &amp; detalii</h3>
+        <ul class="spec-list">
+            <li><span data-i18n="spec_dims">Dimensiuni</span><span>30 × 24 × 13 cm</span></li>
+            <li><span data-i18n="spec_weight">Greutate</span><span>~950 g</span></li>
+            <li><span data-i18n="spec_capacity">Capacitate</span><span>~14 L</span></li>
+            <li><span data-i18n="spec_pockets">Buzunare</span><span data-i18n="spec_pockets_val">1 frontal, 1 lateral</span></li>
+            <li><span data-i18n="spec_hardware">Accesorii</span><span data-i18n="spec_hardware_val">Fermoar &amp; catarame metalice</span></li>
+            <li><span data-i18n="spec_origin">Origine</span><span data-i18n="spec_origin_val">Lucrată manual în atelier, Moldova</span></li>
+        </ul>
     </div>
 </div>
 
@@ -571,25 +726,26 @@
 <div id="orderPopup" class="zalmoxis-popup-overlay">
     <div class="zalmoxis-popup-content">
         <button class="close-popup-btn" id="closeOrderPopup" aria-label="Închide">&times;</button>
-        <h3>Comandă Rapidă</h3>
-        <p>Lasă-ne datele tale și te sunăm noi în cel mai scurt timp pentru confirmare și detalii de livrare.</p>
+        <h3 data-i18n="order_title">Comandă Rapidă</h3>
+        <p data-i18n="order_text">Lasă-ne datele tale și te sunăm noi în cel mai scurt timp pentru confirmare și detalii de livrare.</p>
         <form action="https://api.web3forms.com/submit" method="POST">
             <input type="hidden" name="access_key" value="bd32b38b-4a9d-431e-97cd-dc32eb24b2a4">
-            <input type="hidden" name="subject" value="Comandă Nouă - Geantă Piele">
+            <input type="hidden" name="subject" value="Comandă Nouă - Geantă Vintage">
             <input type="hidden" name="from_name" value="Zalmoxis Leather Site">
+            <input type="hidden" id="orderColorField" name="Culoare Aleasă" value="Coniac">
             <div class="form-group">
-                <label for="clientName">Nume și Prenume:</label>
+                <label for="clientName" data-i18n="form_name">Nume și Prenume:</label>
                 <input type="text" id="clientName" name="Nume Client" class="form-input" placeholder="Ex: Ion Popescu" required>
             </div>
             <div class="form-group">
-                <label for="clientPhone">Număr de Telefon:</label>
+                <label for="clientPhone" data-i18n="form_phone">Număr de Telefon:</label>
                 <input type="tel" id="clientPhone" name="Telefon" class="form-input" placeholder="Ex: 068XXXXXX" required>
             </div>
             <div class="form-group">
-                <label for="clientNote">Doriți personalizare sau detalii? (Opțional):</label>
-                <textarea id="clientNote" name="Note/Personalizare" class="form-input" rows="2" placeholder="Ex: Culoarea aței, personalizare..."></textarea>
+                <label for="clientNote" data-i18n="form_note">Doriți personalizare sau detalii? (Opțional):</label>
+                <textarea id="clientNote" name="Note/Personalizare" class="form-input" rows="2" placeholder="Ex: gravură inițiale..."></textarea>
             </div>
-            <button type="submit" class="btn-submit">Confirmă Comanda</button>
+            <button type="submit" class="btn-submit" data-i18n="form_submit">Confirmă Comanda</button>
         </form>
     </div>
 </div>
@@ -597,8 +753,8 @@
 <div id="socialPopup" class="zalmoxis-popup-overlay">
     <div class="zalmoxis-popup-content">
         <button class="close-popup-btn" id="closeChatPopup" aria-label="Închide">&times;</button>
-        <h3>Unde doriți să discutăm?</h3>
-        <p>Alege platforma preferată pentru a lua legătura direct cu noi.</p>
+        <h3 data-i18n="chat_title">Unde doriți să discutăm?</h3>
+        <p data-i18n="chat_text">Alege platforma preferată pentru a lua legătura direct cu noi.</p>
         <div class="social-channels-grid">
             <a href="https://www.instagram.com/zalmoxis_leather/" target="_blank" class="channel-link instagram">Instagram</a>
             <a href="https://www.tiktok.com/@zalmoxis.leather" target="_blank" class="channel-link tiktok">TikTok</a>
@@ -634,6 +790,106 @@ var swiper2 = new Swiper(".mySwiper2", {
     // Restul logicii tale JS rămâne la fel
     const hamburger = document.querySelector(".hamburger");
     const navOverlay = document.querySelector(".zalmoxis-menu-overlay");
+
+    // --- Sistem de limbă RO / EN, cu memorie (localStorage) valabilă pe tot site-ul ---
+    const translations = {
+        ro: {
+            nav_home: "Acasă", nav_products: "Produse", nav_about: "Despre Noi", nav_contact: "Contact",
+            theme_dark: "Mod Întunecat", theme_light: "Mod Luminos",
+            product_title: "Geantă Vintage",
+            price_label: "Preț:",
+            product_desc: "Geantă tip rucsac din piele naturală, lucrată integral manual, cu buzunar frontal, buzunar lateral deschis și bretele ajustabile căptușite.",
+            color_label: "Alege culoarea",
+            color_cognac: "Coniac", color_chocolate: "Ciocolatiu", color_whiskey: "Whiskey",
+            btn_order: "Comandă Rapidă", btn_chat: "Discută pe Chat",
+            badge_natural: "100% piele naturală", badge_handmade: "Cusut manual, integral", badge_delivery: "Livrare în toată Moldova",
+            leather_title: "Despre piele",
+            leather_text: "Folosim piele naturală de bovină, tăbăcită vegetal, într-o singură bucată acolo unde forma permite — fără materiale sintetice. Este o piele \"vie\": în primele săptămâni de purtare capătă o patină ușor mai închisă la culoare pe zonele de contact, iar micile urme, cute sau nuanțe naturale din piele fac fiecare geantă unică. Recomandăm ferirea de umezeală prelungită și, ocazional, o cremă naturală de întreținere pentru piele.",
+            specs_title: "Dimensiuni & detalii",
+            spec_dims: "Dimensiuni", spec_weight: "Greutate", spec_capacity: "Capacitate",
+            spec_pockets: "Buzunare", spec_pockets_val: "1 frontal, 1 lateral",
+            spec_hardware: "Accesorii", spec_hardware_val: "Fermoar & catarame metalice",
+            spec_origin: "Origine", spec_origin_val: "Lucrată manual în atelier, Moldova",
+            order_title: "Comandă Rapidă",
+            order_text: "Lasă-ne datele tale și te sunăm noi în cel mai scurt timp pentru confirmare și detalii de livrare.",
+            form_name: "Nume și Prenume:", form_phone: "Număr de Telefon:",
+            form_note: "Doriți personalizare sau detalii? (Opțional):", form_submit: "Confirmă Comanda",
+            chat_title: "Unde doriți să discutăm?", chat_text: "Alege platforma preferată pentru a lua legătura direct cu noi.",
+            view360_show: "Vezi în 360°", view360_hide: "Vezi pozele", view360_hint: "← trage pentru a roti produsul →"
+        },
+        en: {
+            nav_home: "Home", nav_products: "Products", nav_about: "About Us", nav_contact: "Contact",
+            theme_dark: "Dark Mode", theme_light: "Light Mode",
+            product_title: "Vintage Bag",
+            price_label: "Price:",
+            product_desc: "Backpack-style bag in natural leather, fully handmade, with a front pocket, an open side pocket and adjustable padded straps.",
+            color_label: "Choose a colour",
+            color_cognac: "Cognac", color_chocolate: "Chocolate", color_whiskey: "Whiskey",
+            btn_order: "Quick Order", btn_chat: "Chat With Us",
+            badge_natural: "100% natural leather", badge_handmade: "Fully handstitched", badge_delivery: "Delivery across Moldova",
+            leather_title: "About the leather",
+            leather_text: "We use natural, vegetable-tanned cowhide, cut from a single piece wherever the shape allows — no synthetic materials. It's a \"living\" leather: within the first weeks of use it develops a slightly darker patina on contact areas, and small natural marks or creases make every bag unique. Avoid prolonged exposure to moisture and, occasionally, use a natural leather conditioner.",
+            specs_title: "Dimensions & details",
+            spec_dims: "Dimensions", spec_weight: "Weight", spec_capacity: "Capacity",
+            spec_pockets: "Pockets", spec_pockets_val: "1 front, 1 side",
+            spec_hardware: "Hardware", spec_hardware_val: "Metal zipper & buckles",
+            spec_origin: "Origin", spec_origin_val: "Handmade in our workshop, Moldova",
+            order_title: "Quick Order",
+            order_text: "Leave your details and we'll call you back shortly to confirm delivery.",
+            form_name: "Full Name:", form_phone: "Phone Number:",
+            form_note: "Want any personalisation or details? (Optional):", form_submit: "Confirm Order",
+            chat_title: "Where would you like to chat?", chat_text: "Pick your preferred platform to reach us directly.",
+            view360_show: "View in 360°", view360_hide: "View photos", view360_hint: "← drag to rotate the product →"
+        }
+    };
+    let currentLang = localStorage.getItem("zalmoxisLang") || "ro";
+
+    function applyLanguage(lang) {
+        currentLang = lang;
+        document.documentElement.setAttribute("lang", lang);
+        const t = translations[lang];
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+            const key = el.getAttribute("data-i18n");
+            if (t[key] !== undefined) el.innerHTML = t[key];
+        });
+        const langToggle = document.getElementById("langToggle");
+        if (langToggle) langToggle.classList.toggle("is-en", lang === "en");
+        const isDark = document.documentElement.classList.contains("dark-mode");
+        if (typeof updateIcons === "function") updateIcons(isDark);
+        const toggle360Text = document.getElementById("toggle360Text");
+        const view360 = document.getElementById("view360");
+        if (toggle360Text) toggle360Text.textContent = (view360 && view360.classList.contains("active")) ? t.view360_hide : t.view360_show;
+        const hint = document.getElementById("view360Hint");
+        if (hint) hint.textContent = t.view360_hint;
+        localStorage.setItem("zalmoxisLang", lang);
+    }
+
+    const langToggleBtn = document.getElementById("langToggle");
+    if (langToggleBtn) {
+        langToggleBtn.addEventListener("click", () => applyLanguage(currentLang === "ro" ? "en" : "ro"));
+    }
+    applyLanguage(currentLang);
+
+    // --- Selector de culoare produs (leagă și modelul 3D dacă e activ) ---
+    const colorSwatches = document.querySelectorAll(".color-swatch");
+    const colorSwatchName = document.getElementById("colorSwatchName");
+    const orderColorField = document.getElementById("orderColorField");
+    colorSwatches.forEach((sw) => {
+        sw.addEventListener("click", () => {
+            colorSwatches.forEach((s) => s.classList.remove("active"));
+            sw.classList.add("active");
+            const key = "color_" + sw.dataset.color;
+            if (colorSwatchName) {
+                colorSwatchName.setAttribute("data-i18n", key);
+                colorSwatchName.textContent = translations[currentLang][key] || sw.dataset.color;
+            }
+            if (orderColorField) orderColorField.value = translations[currentLang][key] || sw.dataset.color;
+            window.dispatchEvent(new CustomEvent("zalmoxis:setLeatherColor", {
+                detail: { main: sw.dataset.main, dark: sw.dataset.dark, pocket: sw.dataset.pocket, pocketOpen: sw.dataset.pocketOpen }
+            }));
+        });
+    });
+
     hamburger.addEventListener("click", (e) => { e.stopPropagation(); hamburger.classList.toggle("active"); if (navOverlay.classList.contains("active")) { hamburger.classList.remove("active"); navOverlay.classList.remove("active"); setTimeout(() => { navOverlay.style.display = "none"; }, 300); document.body.style.overflow = "auto"; } else { hamburger.classList.add("active"); navOverlay.style.display = "flex"; setTimeout(() => { navOverlay.classList.add("active"); }, 10); document.body.style.overflow = "hidden"; } });
     document.querySelectorAll(".zalmoxis-links-container a").forEach(n => n.addEventListener("click", () => { hamburger.classList.remove("active"); navOverlay.classList.remove("active"); setTimeout(() => { navOverlay.style.display = "none"; }, 300); document.body.style.overflow = "auto"; }));
     navOverlay.addEventListener("click", (e) => { const aFostPeLinkSauButon = e.target.closest(".zalmoxis-links-container a") || e.target.closest("#themeToggleBtn"); if (!aFostPeLinkSauButon) { hamburger.classList.remove("active"); navOverlay.classList.remove("active"); setTimeout(() => { navOverlay.style.display = "none"; }, 300); document.body.style.overflow = "auto"; } });
@@ -641,7 +897,7 @@ var swiper2 = new Swiper(".mySwiper2", {
     const sunIcon = btn.querySelector('.sun-icon');
     const moonIcon = btn.querySelector('.moon-icon');
     const themeText = btn.querySelector('.theme-text');
-    function updateIcons(isDark) { if (isDark) { sunIcon.style.display = 'block'; moonIcon.style.display = 'none'; themeText.textContent = 'Mod Luminos'; } else { sunIcon.style.display = 'none'; moonIcon.style.display = 'block'; themeText.textContent = 'Mod Întunecat'; } }
+    function updateIcons(isDark) { const t = translations[currentLang]; if (isDark) { sunIcon.style.display = 'block'; moonIcon.style.display = 'none'; themeText.textContent = t.theme_light; } else { sunIcon.style.display = 'none'; moonIcon.style.display = 'block'; themeText.textContent = t.theme_dark; } }
     function setTheme(isDark) { if (isDark) { document.documentElement.classList.add('dark-mode'); } else { document.documentElement.classList.remove('dark-mode'); } updateIcons(isDark); }
     function initTheme() { const isDark = document.documentElement.classList.contains('dark-mode'); updateIcons(isDark); }
     initTheme();
@@ -682,81 +938,369 @@ var swiper2 = new Swiper(".mySwiper2", {
         revealEls.forEach((el) => el.classList.add("is-visible"));
     }
 
-    // --- Vizualizator 360°: trage orizontal pentru a schimba cadrul ---
-    // Momentan sunt 36 de cadre de test (ilustrații generate, nu poze reale) - o demonstrație
-    // mai realistă a modului în care va funcționa rotația (umbrire progresivă, muchie laterală).
-    // Pentru rezultat real, înlocuiește pozele din image/ (geanta-vintage-360-01.svg ... 36.svg)
-    // cu poze reale făcute din platou rotativ, păstrate tot în image/ cu același format de nume.
-    (function initView360() {
-        const stage = document.getElementById("view360Stage");
-        const frames = Array.from(stage.querySelectorAll(".view360-frame"));
-        const hint = document.getElementById("view360Hint");
-        const toggleBtn = document.getElementById("toggle360");
-        const toggleText = document.getElementById("toggle360Text");
-        const view360 = document.getElementById("view360");
-        const staticGallery = document.querySelector(".image-box .swiper.mySwiper2");
-        const thumbGallery = document.querySelector(".image-box .swiper.mySwiper");
+    // Logica modelului 3D (Three.js) e în modulul separat de mai jos.
+</script>
 
-        let currentFrame = 0;
-        let dragging = false;
-        let startX = 0;
-        let hasInteracted = false;
+<script type="module">
+  import * as THREE from 'three';
+  import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-        function setFrame(index) {
-            const total = frames.length;
-            const wrapped = ((index % total) + total) % total;
-            if (wrapped === currentFrame) return;
-            frames[currentFrame].classList.remove("active");
-            frames[wrapped].classList.add("active");
-            currentFrame = wrapped;
-        }
+  const toggleBtn = document.getElementById("toggle360");
+  const toggleText = document.getElementById("toggle360Text");
+  const view360 = document.getElementById("view360");
+  const hint = document.getElementById("view360Hint");
+  const stageEl = document.getElementById("bag3dStage");
+  const loadingEl = document.getElementById("bag3dLoading");
+  const staticGallery = document.querySelector(".image-box .swiper.mySwiper2");
+  const thumbGallery = document.querySelector(".image-box .swiper.mySwiper");
 
-        function onDragStart(clientX) {
-            dragging = true;
-            startX = clientX;
-            stage.classList.add("dragging");
-        }
-        function onDragMove(clientX) {
-            if (!dragging) return;
-            const deltaX = clientX - startX;
-            const step = 14; // px per cadru (fin, potrivit pentru 36 de cadre)
-            if (Math.abs(deltaX) >= step) {
-                const framesToMove = Math.trunc(deltaX / step);
-                setFrame(currentFrame - framesToMove);
-                startX = clientX;
-                if (!hasInteracted) {
-                    hasInteracted = true;
-                    hint.classList.add("hidden");
-                }
-            }
-        }
-        function onDragEnd() {
-            dragging = false;
-            stage.classList.remove("dragging");
-        }
+  let scene, camera, renderer, group, clock;
+  let currentMaterials = null, pendingColor = null;
 
-        stage.addEventListener("mousedown", (e) => onDragStart(e.clientX));
-        window.addEventListener("mousemove", (e) => onDragMove(e.clientX));
-        window.addEventListener("mouseup", onDragEnd);
+  window.addEventListener("zalmoxis:setLeatherColor", (e) => {
+    const c = e.detail;
+    if (currentMaterials) {
+      currentMaterials.leather.color.set(c.main);
+      currentMaterials.leatherDark.color.set(c.dark);
+      currentMaterials.leatherPocket.color.set(c.pocket);
+      currentMaterials.leatherPocketOpen.color.set(c.pocketOpen);
+    } else {
+      pendingColor = c;
+    }
+  });
+  let dragging = false, hasInteracted = false;
+  let lastX = 0, lastY = 0;
+  let rotY = -0.5, rotX = 0.12;
+  let rafId = null;
+  let initialized = false;
 
-        stage.addEventListener("touchstart", (e) => onDragStart(e.touches[0].clientX), { passive: true });
-        stage.addEventListener("touchmove", (e) => onDragMove(e.touches[0].clientX), { passive: true });
-        stage.addEventListener("touchend", onDragEnd);
+  // textură de grăunte pentru piele (bump map), generată pe canvas - fără poze externe
+  function makeGrainTexture() {
+    const size = 256;
+    const c = document.createElement("canvas");
+    c.width = c.height = size;
+    const ctx = c.getContext("2d");
+    ctx.fillStyle = "#808080";
+    ctx.fillRect(0, 0, size, size);
+    for (let i = 0; i < 9000; i++) {
+      const x = Math.random() * size, y = Math.random() * size;
+      const v = 118 + Math.random() * 20;
+      ctx.fillStyle = `rgb(${v},${v},${v})`;
+      ctx.fillRect(x, y, 1.4, 1.4);
+    }
+    const tex = new THREE.CanvasTexture(c);
+    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+    tex.repeat.set(5, 5);
+    return tex;
+  }
 
-        toggleBtn.addEventListener("click", () => {
-            const isActive = view360.classList.toggle("active");
-            toggleBtn.setAttribute("aria-pressed", String(isActive));
-            if (isActive) {
-                toggleText.textContent = "Vezi pozele";
-                if (staticGallery) staticGallery.style.display = "none";
-                if (thumbGallery) thumbGallery.style.display = "none";
-            } else {
-                toggleText.textContent = "Vezi în 360°";
-                if (staticGallery) staticGallery.style.display = "";
-                if (thumbGallery) thumbGallery.style.display = "";
-            }
-        });
-    })();
+  function roundedRectShape(w, h, rTL, rTR, rBR, rBL) {
+    const s = new THREE.Shape();
+    const x = -w / 2, y = -h / 2;
+    s.moveTo(x, y + rBL);
+    s.lineTo(x, y + h - rTL);
+    s.quadraticCurveTo(x, y + h, x + rTL, y + h);
+    s.lineTo(x + w - rTR, y + h);
+    s.quadraticCurveTo(x + w, y + h, x + w, y + h - rTR);
+    s.lineTo(x + w, y + rBR);
+    s.quadraticCurveTo(x + w, y, x + w - rBR, y);
+    s.lineTo(x + rBL, y);
+    s.quadraticCurveTo(x, y, x, y + rBL);
+    return s;
+  }
+
+  // textura pentru stampila gravata "ZALMOXIS" de pe clapeta buzunarului
+  function makeStampTexture() {
+    const w = 320, h = 120;
+    const c = document.createElement("canvas");
+    c.width = w; c.height = h;
+    const ctx = c.getContext("2d");
+    ctx.clearRect(0, 0, w, h);
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = "600 34px Georgia, 'Times New Roman', serif";
+    ctx.fillStyle = "rgba(60, 36, 18, 0.55)";
+    ctx.fillText("ZALMOXIS", w / 2 + 1, h / 2 - 9);
+    ctx.font = "400 12px Georgia, 'Times New Roman', serif";
+    ctx.fillStyle = "rgba(60, 36, 18, 0.4)";
+    ctx.fillText("L E A T H E R", w / 2 + 1, h / 2 + 20);
+    const tex = new THREE.CanvasTexture(c);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    return tex;
+  }
+
+  function buildBackpack(grain) {
+    const g = new THREE.Group();
+
+    const leather = new THREE.MeshPhysicalMaterial({
+      color: 0xb17540, roughness: 0.5, metalness: 0.02,
+      clearcoat: 0.32, clearcoatRoughness: 0.4,
+      bumpMap: grain, bumpScale: 0.008
+    });
+    const leatherDark = leather.clone();
+    leatherDark.color.set(0x6e4526);
+    const leatherPocket = leather.clone();
+    leatherPocket.color.set(0xb87d47);
+    const leatherPocketOpen = leather.clone();
+    leatherPocketOpen.color.set(0x5c3a1e);
+    const seamMat = new THREE.MeshStandardMaterial({ color: 0x4a2e17, roughness: 0.7, metalness: 0 });
+    const hardware = new THREE.MeshStandardMaterial({ color: 0xbfa15a, roughness: 0.28, metalness: 0.88 });
+    const zipTrack = new THREE.MeshStandardMaterial({ color: 0x2f2013, roughness: 0.5, metalness: 0.2 });
+    const stampMat = new THREE.MeshStandardMaterial({ map: makeStampTexture(), transparent: true, roughness: 0.6, metalness: 0 });
+
+    currentMaterials = { leather, leatherDark, leatherPocket, leatherPocketOpen };
+    if (pendingColor) {
+      leather.color.set(pendingColor.main);
+      leatherDark.color.set(pendingColor.dark);
+      leatherPocket.color.set(pendingColor.pocket);
+      leatherPocketOpen.color.set(pendingColor.pocketOpen);
+    }
+
+    // corp principal - forma rotunjita sus, mai dreapta jos
+    const bodyShape = roundedRectShape(1.05, 1.25, 0.42, 0.42, 0.1, 0.1);
+    const bodyGeo = new THREE.ExtrudeGeometry(bodyShape, { depth: 0.55, bevelEnabled: true, bevelThickness: 0.035, bevelSize: 0.035, bevelSegments: 6, curveSegments: 24 });
+    bodyGeo.translate(0, 0, -0.275);
+    const body = new THREE.Mesh(bodyGeo, leather);
+    body.castShadow = body.receiveShadow = true;
+    g.add(body);
+
+    // banda orizontala din piele mai inchisa care traverseaza fata pe la mijloc
+    const bandGeo = new THREE.BoxGeometry(0.98, 0.16, 0.045);
+    const band = new THREE.Mesh(bandGeo, leatherDark);
+    band.position.set(0, -0.03, 0.315);
+    band.castShadow = band.receiveShadow = true;
+    g.add(band);
+    [0.055, -0.055].forEach((oy) => {
+      const stitch = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.008, 0.01), seamMat);
+      stitch.position.set(0, -0.03 + oy, 0.34);
+      g.add(stitch);
+    });
+
+    // buzunar principal cu clapeta - stanga jos, cu stampila si capsa laterala
+    const pocketShape = roundedRectShape(0.5, 0.6, 0.05, 0.05, 0.04, 0.16);
+    const pocketGeo = new THREE.ExtrudeGeometry(pocketShape, { depth: 0.1, bevelEnabled: true, bevelThickness: 0.014, bevelSize: 0.014, bevelSegments: 4, curveSegments: 16 });
+    pocketGeo.translate(0, 0, -0.05);
+    const pocket = new THREE.Mesh(pocketGeo, leatherPocket);
+    pocket.position.set(-0.27, -0.36, 0.325);
+    pocket.castShadow = pocket.receiveShadow = true;
+    g.add(pocket);
+
+    const stamp = new THREE.Mesh(new THREE.PlaneGeometry(0.34, 0.13), stampMat);
+    stamp.position.set(-0.27, -0.5, 0.383);
+    g.add(stamp);
+
+    const clasp = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.045, 0.02), hardware);
+    clasp.position.set(-0.5, -0.2, 0.34);
+    g.add(clasp);
+
+    // buzunar secundar deschis, mai inchis la culoare, langa cel principal
+    const openPocketShape = roundedRectShape(0.4, 0.46, 0.05, 0.05, 0.05, 0.05);
+    const openPocketGeo = new THREE.ExtrudeGeometry(openPocketShape, { depth: 0.08, bevelEnabled: true, bevelThickness: 0.012, bevelSize: 0.012, bevelSegments: 4, curveSegments: 14 });
+    openPocketGeo.translate(0, 0, -0.04);
+    const openPocket = new THREE.Mesh(openPocketGeo, leatherPocketOpen);
+    openPocket.position.set(0.24, -0.4, 0.31);
+    openPocket.castShadow = openPocket.receiveShadow = true;
+    g.add(openPocket);
+    const openPocketTop = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.02, 0.06), seamMat);
+    openPocketTop.position.set(0.24, -0.175, 0.32);
+    g.add(openPocketTop);
+
+    // fermoar principal, usor deplasat spre dreapta de centru, oprindu-se la banda orizontala
+    const zipGeo = new THREE.BoxGeometry(0.02, 0.62, 0.012);
+    const zip = new THREE.Mesh(zipGeo, zipTrack);
+    zip.position.set(0.06, 0.32, 0.3);
+    zip.rotation.z = THREE.MathUtils.degToRad(-3);
+    g.add(zip);
+    const pullGeo = new THREE.BoxGeometry(0.045, 0.06, 0.02);
+    const pull = new THREE.Mesh(pullGeo, hardware);
+    pull.position.set(0.09, 0.04, 0.305);
+    g.add(pull);
+
+    // catarama de reglare pe bareta dreapta (vizibila din fata, ca in referinta)
+    const buckleFrame = new THREE.Mesh(new THREE.TorusGeometry(0.055, 0.012, 8, 16), hardware);
+    buckleFrame.position.set(0.44, -0.02, 0.06);
+    buckleFrame.rotation.y = Math.PI / 2;
+    g.add(buckleFrame);
+
+    // bretele care se arcuiesc vizibil peste umeri, din fata pana in spate
+    [-1, 1].forEach((side) => {
+      const curve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(side * 0.12, 0.42, 0.2),
+        new THREE.Vector3(side * 0.17, 0.7, 0.02),
+        new THREE.Vector3(side * 0.19, 0.78, -0.14),
+        new THREE.Vector3(side * 0.20, 0.5, -0.26),
+        new THREE.Vector3(side * 0.17, 0.05, -0.29),
+        new THREE.Vector3(side * 0.15, -0.62, -0.22)
+      ]);
+      const strapGeo = new THREE.TubeGeometry(curve, 32, 0.05, 8, false);
+      const strap = new THREE.Mesh(strapGeo, leatherDark);
+      strap.castShadow = strap.receiveShadow = true;
+      g.add(strap);
+      const stitchCurve = new THREE.TubeGeometry(curve, 32, 0.052, 6, false);
+      const stitchWire = new THREE.Mesh(stitchCurve, new THREE.MeshBasicMaterial({ color: 0xf1e7d6, wireframe: true, transparent: true, opacity: 0.12 }));
+      g.add(stitchWire);
+    });
+
+    // maner sus, langa radacina baretelor
+    const handleCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(-0.13, 0.74, 0.0),
+      new THREE.Vector3(-0.13, 0.95, 0.0),
+      new THREE.Vector3(0.13, 0.95, 0.0),
+      new THREE.Vector3(0.13, 0.74, 0.0)
+    ]);
+    const handleGeo = new THREE.TubeGeometry(handleCurve, 20, 0.035, 8, false);
+    const handle = new THREE.Mesh(handleGeo, leatherDark);
+    handle.castShadow = handle.receiveShadow = true;
+    g.add(handle);
+
+    return g;
+  }
+
+  function initScene() {
+    scene = new THREE.Scene();
+
+    camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+    camera.position.set(0, 0.15, 3.1);
+
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
+    stageEl.appendChild(renderer.domElement);
+
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+    const grain = makeGrainTexture();
+    group = new THREE.Group();
+    group.add(buildBackpack(grain));
+    group.position.y = -0.05;
+    scene.add(group);
+
+    // lumini: key, fill, rim + ambient discreta
+    const key = new THREE.DirectionalLight(0xfff2df, 2.8);
+    key.position.set(2.2, 3, 2.4);
+    key.castShadow = true;
+    key.shadow.mapSize.set(1024, 1024);
+    key.shadow.radius = 6;
+    key.shadow.camera.near = 0.5;
+    key.shadow.camera.far = 8;
+    key.shadow.camera.left = -1.5; key.shadow.camera.right = 1.5;
+    key.shadow.camera.top = 1.5; key.shadow.camera.bottom = -1.5;
+    scene.add(key);
+
+    const fill = new THREE.DirectionalLight(0xdfe9ff, 0.55);
+    fill.position.set(-2.4, 1.2, 1.4);
+    scene.add(fill);
+
+    const rim = new THREE.DirectionalLight(0xffe6c2, 0.9);
+    rim.position.set(-1, 2.2, -2.6);
+    scene.add(rim);
+
+    const hemi = new THREE.HemisphereLight(0xfff3e0, 0x2a1c12, 0.5);
+    scene.add(hemi);
+
+    // podea - prinde umbra, se contopeste cu fundalul paginii
+    const floorGeo = new THREE.PlaneGeometry(6, 6);
+    const floorMat = new THREE.ShadowMaterial({ opacity: 0.28 });
+    const floor = new THREE.Mesh(floorGeo, floorMat);
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.y = -0.72;
+    floor.receiveShadow = true;
+    scene.add(floor);
+
+    clock = new THREE.Clock();
+    resize();
+    window.addEventListener("resize", resize);
+    initialized = true;
+    if (loadingEl) loadingEl.style.display = "none";
+  }
+
+  function resize() {
+    if (!renderer) return;
+    const w = stageEl.clientWidth, h = stageEl.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+
+  function animate() {
+    rafId = requestAnimationFrame(animate);
+    if (!dragging) rotY += 0.0035;
+    group.rotation.y = rotY;
+    group.rotation.x = rotX;
+    renderer.render(scene, camera);
+  }
+
+  function startLoop() {
+    if (!initialized) initScene();
+    resize();
+    if (!rafId) animate();
+  }
+  function stopLoop() {
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+  }
+
+  function onDragStart(x, y) {
+    dragging = true;
+    lastX = x; lastY = y;
+    stageEl.classList.add("dragging");
+    if (!hasInteracted) { hasInteracted = true; hint.classList.add("hidden"); }
+  }
+  function onDragMove(x, y) {
+    if (!dragging) return;
+    rotY += (x - lastX) * 0.008;
+    rotX += (y - lastY) * 0.006;
+    rotX = Math.max(-0.5, Math.min(0.5, rotX));
+    lastX = x; lastY = y;
+  }
+  function onDragEnd() {
+    dragging = false;
+    stageEl.classList.remove("dragging");
+  }
+
+  stageEl.addEventListener("mousedown", (e) => onDragStart(e.clientX, e.clientY));
+  window.addEventListener("mousemove", (e) => onDragMove(e.clientX, e.clientY));
+  window.addEventListener("mouseup", onDragEnd);
+  stageEl.addEventListener("touchstart", (e) => { const t = e.touches[0]; onDragStart(t.clientX, t.clientY); }, { passive: true });
+  stageEl.addEventListener("touchmove", (e) => { const t = e.touches[0]; onDragMove(t.clientX, t.clientY); }, { passive: true });
+  stageEl.addEventListener("touchend", onDragEnd);
+
+  function t360(key, fallback) {
+    try { return translations[currentLang][key] || fallback; } catch (e) { return fallback; }
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    const isActive = view360.classList.toggle("active");
+    toggleBtn.setAttribute("aria-pressed", String(isActive));
+    if (isActive) {
+      toggleText.textContent = t360("view360_hide", "Vezi pozele");
+      if (staticGallery) staticGallery.style.display = "none";
+      if (thumbGallery) thumbGallery.style.display = "none";
+      try {
+        startLoop();
+      } catch (err) {
+        console.error("Nu s-a putut încărca modelul 3D:", err);
+        if (loadingEl) loadingEl.textContent = "Modelul 3D nu a putut fi încărcat. Revenim la poze.";
+        setTimeout(() => {
+          view360.classList.remove("active");
+          toggleBtn.setAttribute("aria-pressed", "false");
+          toggleText.textContent = t360("view360_show", "Vezi în 360°");
+          if (staticGallery) staticGallery.style.display = "";
+          if (thumbGallery) thumbGallery.style.display = "";
+        }, 1800);
+      }
+    } else {
+      toggleText.textContent = t360("view360_show", "Vezi în 360°");
+      if (staticGallery) staticGallery.style.display = "";
+      if (thumbGallery) thumbGallery.style.display = "";
+      stopLoop();
+    }
+  });
 </script>
 
 <script type="module">
@@ -764,5 +1308,6 @@ var swiper2 = new Swiper(".mySwiper2", {
   const lightbox = new PhotoSwipeLightbox({ gallery: '#my-gallery', children: 'a', pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5.4.3/dist/photoswipe.esm.js') });
   lightbox.init();
 </script>
+
 </body>
 </html>
