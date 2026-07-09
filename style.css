@@ -138,47 +138,34 @@ header {
     gap: 22px;
 }
 
-/* --- Comutator limbă RO / EN --- */
-.lang-toggle {
-    position: relative;
+/* --- Comutator limbă RO / EN (segmented control, clar vizibil) --- */
+.lang-seg {
     display: inline-flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.08);
+    vertical-align: middle;
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 20px;
     padding: 3px;
-    cursor: pointer;
-    width: 66px;
-    height: 28px;
-    flex-shrink: 0;
-    z-index: 1001;
+    gap: 3px;
+    margin-left: 22px;
 }
-.lang-toggle-thumb {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 29px;
-    height: 20px;
-    background: var(--color-accent);
-    border-radius: 14px;
-    transition: transform 0.28s cubic-bezier(.4,0,.2,1);
-    z-index: 1;
-}
-.lang-toggle.is-en .lang-toggle-thumb { transform: translateX(31px); }
-.lang-toggle-label {
-    position: relative;
-    z-index: 2;
-    width: 29px;
-    text-align: center;
+.lang-seg-btn {
+    border: none;
+    background: transparent;
     font-family: var(--font-body);
-    font-size: 10.5px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: .03em;
     color: #e5e5e5;
-    transition: color 0.28s ease;
+    padding: 5px 14px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
 }
-.lang-toggle.is-en .lang-toggle-label.ro { color: rgba(229, 229, 229, 0.4); }
-.lang-toggle:not(.is-en) .lang-toggle-label.en { color: rgba(229, 229, 229, 0.4); }
+.lang-seg-btn.is-active {
+    background: var(--color-accent);
+    color: #fff;
+}
 
 /* ==========================================================================
    5. SECȚIUNI PAGINĂ (Hero, Featured, Produse, Atelier, Proces)
@@ -344,6 +331,8 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
     .menu-toggle { display: block !important; }
 
     .nav-right { gap: 12px; }
+
+    .lang-seg { margin: 16px 0 0; }
     
     .nav-menu {
         display: none;
