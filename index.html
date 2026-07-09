@@ -21,12 +21,11 @@
                     <a href="#atelier" data-i18n="nav_atelier">Atelier</a>
                     <a href="#proces" data-i18n="nav_process">Cum lucrăm</a>
                     <a href="#contact" data-i18n="nav_contact">Contact</a>
+                    <div class="lang-seg" id="langSeg" role="group" aria-label="Alege limba">
+                        <button type="button" class="lang-seg-btn" data-lang="ro">RO</button>
+                        <button type="button" class="lang-seg-btn" data-lang="en">EN</button>
+                    </div>
                 </nav>
-                <button id="langToggle" class="lang-toggle" aria-label="Schimbă limba site-ului">
-                    <span class="lang-toggle-thumb"></span>
-                    <span class="lang-toggle-label ro">RO</span>
-                    <span class="lang-toggle-label en">EN</span>
-                </button>
                 <button class="menu-toggle" aria-label="Deschide meniul">☰</button>
             </div>
         </div>
@@ -228,21 +227,21 @@
                 const key = el.getAttribute("data-i18n");
                 if (t[key] !== undefined) el.innerHTML = t[key];
             });
-            const toggle = document.getElementById("langToggle");
-            if (toggle) toggle.classList.toggle("is-en", lang === "en");
+            document.querySelectorAll(".lang-seg-btn").forEach((b) => {
+                b.classList.toggle("is-active", b.dataset.lang === lang);
+            });
             localStorage.setItem("zalmoxisLang", lang);
         }
 
         let currentLang = localStorage.getItem("zalmoxisLang") || "ro";
         applyLanguage(currentLang);
 
-        const langToggleBtn = document.getElementById("langToggle");
-        if (langToggleBtn) {
-            langToggleBtn.addEventListener("click", () => {
-                currentLang = currentLang === "ro" ? "en" : "ro";
+        document.querySelectorAll(".lang-seg-btn").forEach((b) => {
+            b.addEventListener("click", () => {
+                currentLang = b.dataset.lang;
                 applyLanguage(currentLang);
             });
-        }
+        });
     })();
     </script>
 </body>
