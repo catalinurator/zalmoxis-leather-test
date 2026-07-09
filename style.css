@@ -332,7 +332,12 @@ footer { background-color: #110e0c; color: #555; text-align: center; padding: 25
 
     .nav-right { gap: 12px; }
 
-    .lang-seg { margin: 16px 0 0; }
+    .lang-seg {
+        margin: 16px 0 0;
+        align-self: center;
+        width: fit-content;
+        flex-shrink: 0;
+    }
     
     .nav-menu {
         display: none;
