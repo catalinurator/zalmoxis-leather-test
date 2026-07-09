@@ -8,6 +8,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- Comutator limbă RO / EN (stil propriu, ca să funcționeze indiferent de restul CSS-ului paginii) --- */
+        .lang-seg-row { display: flex; align-items: center; gap: 10px; margin: 18px 0; }
+        .lang-seg-row-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; opacity: 0.6; }
+        .lang-seg { display: inline-flex; border: 1px solid rgba(140, 98, 57, 0.4); border-radius: 20px; padding: 3px; gap: 3px; }
+        .lang-seg-btn { border: none; background: transparent; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: .03em; color: inherit; padding: 6px 15px; border-radius: 16px; cursor: pointer; transition: background 0.2s ease, color 0.2s ease; }
+        .lang-seg-btn.is-active { background: #8c6239; color: #fff; }
+    </style>
 </head>
 <body>
     <!-- TOP BAR -->
@@ -25,11 +33,19 @@
     <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
         <h2>ZALMOXIS</h2>
-        <a href="index.html" onclick="toggleMenu()">Acasă</a>
-        <a href="collections.html" onclick="toggleMenu()">Colecții</a>
-        <a href="index.html#produse" onclick="toggleMenu()">Produse</a>
-        <a href="index.html#atelier" onclick="toggleMenu()">Atelier</a>
-        <a href="index.html#contact" onclick="toggleMenu()">Contact</a>
+        <a href="index.html" onclick="toggleMenu()" data-i18n="nav_home">Acasă</a>
+        <a href="collections.html" onclick="toggleMenu()" data-i18n="nav_collections">Colecții</a>
+        <a href="index.html#produse" onclick="toggleMenu()" data-i18n="nav_products">Produse</a>
+        <a href="index.html#atelier" onclick="toggleMenu()" data-i18n="nav_atelier">Atelier</a>
+        <a href="index.html#contact" onclick="toggleMenu()" data-i18n="nav_contact">Contact</a>
+
+        <div class="lang-seg-row">
+            <span class="lang-seg-row-label">Limbă / Language</span>
+        </div>
+        <div class="lang-seg" id="langSeg" role="group" aria-label="Alege limba">
+            <button type="button" class="lang-seg-btn" data-lang="ro">RO</button>
+            <button type="button" class="lang-seg-btn" data-lang="en">EN</button>
+        </div>
     </div>
 
     <!-- OVERLAY -->
@@ -38,22 +54,22 @@
     <!-- HERO COLECȚII -->
     <section class="hero fade-in" style="height: 55vh; min-height: 420px;">
         <div class="hero-content">
-            <h1>Colecțiile Zalmoxis</h1>
-            <p>Piele naturală • Lucrată manual • Calitate premium</p>
+            <h1 data-i18n="hero_title">Colecțiile Zalmoxis</h1>
+            <p data-i18n="hero_subtitle">Piele naturală • Lucrată manual • Calitate premium</p>
         </div>
     </section>
 
     <!-- GRID COLECȚII -->
     <section class="fade-in" style="padding: 60px 20px;">
-        <h2 style="text-align: center; margin-bottom: 50px; font-size: 42px;">Toate Colecțiile</h2>
+        <h2 style="text-align: center; margin-bottom: 50px; font-size: 42px;" data-i18n="section_title">Toate Colecțiile</h2>
         
         <div class="grid">
             <!-- PORTOFELE -->
             <a class="card" href="index.html#produse">
                 <img src="image/portmoneu1.jpg" alt="Portofele">
                 <div class="info">
-                    <h3>Portofele</h3>
-                    <p>Minimaliste & elegante</p>
+                    <h3 data-i18n="card_wallets_title">Portofele</h3>
+                    <p data-i18n="card_wallets_desc">Minimaliste & elegante</p>
                 </div>
             </a>
 
@@ -61,8 +77,8 @@
             <a class="card" href="products/curea-classic.html">
                 <img src="image/curea1.png" alt="Curele">
                 <div class="info">
-                    <h3>Curele</h3>
-                    <p>Handmade din piele naturală</p>
+                    <h3 data-i18n="card_belts_title">Curele</h3>
+                    <p data-i18n="card_belts_desc">Handmade din piele naturală</p>
                 </div>
             </a>
 
@@ -70,8 +86,8 @@
             <a class="card" href="products/geanta-vintage.html">
                 <img src="image/geanta1.jpg" alt="Genți">
                 <div class="info">
-                    <h3>Genți</h3>
-                    <p>Design vintage premium</p>
+                    <h3 data-i18n="card_bags_title">Genți</h3>
+                    <p data-i18n="card_bags_desc">Design vintage premium</p>
                 </div>
             </a>
         </div>
@@ -122,6 +138,57 @@
                 setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
             }
         });
+    </script>
+
+    <script>
+    // --- Sistem de limbă RO / EN, cu memorie (localStorage) comună pe tot site-ul ---
+    (function () {
+        const translations = {
+            ro: {
+                nav_home: "Acasă", nav_collections: "Colecții", nav_products: "Produse",
+                nav_atelier: "Atelier", nav_contact: "Contact",
+                hero_title: "Colecțiile Zalmoxis",
+                hero_subtitle: "Piele naturală • Lucrată manual • Calitate premium",
+                section_title: "Toate Colecțiile",
+                card_wallets_title: "Portofele", card_wallets_desc: "Minimaliste & elegante",
+                card_belts_title: "Curele", card_belts_desc: "Handmade din piele naturală",
+                card_bags_title: "Genți", card_bags_desc: "Design vintage premium"
+            },
+            en: {
+                nav_home: "Home", nav_collections: "Collections", nav_products: "Products",
+                nav_atelier: "Workshop", nav_contact: "Contact",
+                hero_title: "The Zalmoxis Collections",
+                hero_subtitle: "Natural leather • Handmade • Premium quality",
+                section_title: "All Collections",
+                card_wallets_title: "Wallets", card_wallets_desc: "Minimalist & elegant",
+                card_belts_title: "Belts", card_belts_desc: "Handmade from natural leather",
+                card_bags_title: "Bags", card_bags_desc: "Premium vintage design"
+            }
+        };
+
+        function applyLanguage(lang) {
+            document.documentElement.setAttribute("lang", lang);
+            const t = translations[lang];
+            document.querySelectorAll("[data-i18n]").forEach((el) => {
+                const key = el.getAttribute("data-i18n");
+                if (t[key] !== undefined) el.textContent = t[key];
+            });
+            document.querySelectorAll(".lang-seg-btn").forEach((b) => {
+                b.classList.toggle("is-active", b.dataset.lang === lang);
+            });
+            localStorage.setItem("zalmoxisLang", lang);
+        }
+
+        let currentLang = localStorage.getItem("zalmoxisLang") || "ro";
+        applyLanguage(currentLang);
+
+        document.querySelectorAll(".lang-seg-btn").forEach((b) => {
+            b.addEventListener("click", () => {
+                currentLang = b.dataset.lang;
+                applyLanguage(currentLang);
+            });
+        });
+    })();
     </script>
 </body>
 </html>
