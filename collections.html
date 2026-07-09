@@ -3,166 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colecții - Zalmoxis Leather</title>
+    <title>Colecții | Zalmoxis Leather</title>
+
+    <!-- Open Graph (previzualizare pe WhatsApp / Instagram / Facebook) -->
+    <!-- ⚠️ Înlocuiește domeniul de mai jos cu adresa reală a site-ului -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Zalmoxis Leather">
+    <meta property="og:title" content="Colecții | Zalmoxis Leather">
+    <meta property="og:description" content="Portofele, curele și genți din piele naturală, lucrate integral manual în atelier.">
+    <meta property="og:image" content="https://example.com/zalmoxis-leather/hero.jpg">
+    <meta property="og:url" content="https://example.com/zalmoxis-leather/collections.html">
+    <meta property="og:locale" content="ro_RO">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Colecții | Zalmoxis Leather">
+    <meta name="twitter:description" content="Portofele, curele și genți din piele naturală, lucrate integral manual.">
+    <meta name="twitter:image" content="https://example.com/zalmoxis-leather/hero.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* --- Comutator limbă RO / EN (stil propriu, ca să funcționeze indiferent de restul CSS-ului paginii) --- */
-        .lang-seg-row { display: flex; align-items: center; gap: 10px; margin: 18px 0; }
-        .lang-seg-row-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; opacity: 0.6; }
-        .lang-seg { display: inline-flex; border: 1px solid rgba(140, 98, 57, 0.4); border-radius: 20px; padding: 3px; gap: 3px; }
-        .lang-seg-btn { border: none; background: transparent; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: .03em; color: inherit; padding: 6px 15px; border-radius: 16px; cursor: pointer; transition: background 0.2s ease, color 0.2s ease; }
-        .lang-seg-btn.is-active { background: #8c6239; color: #fff; }
+        .collections-hero {
+            padding: 150px 20px 50px;
+            text-align: center;
+            background-color: var(--color-card-bg);
+        }
+        .collections-hero h1 { font-family: var(--font-heading); font-size: 2.6rem; margin-bottom: 12px; }
+        .collections-hero p { color: var(--color-grey); max-width: 520px; margin: 0 auto; }
+
+        .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal.is-visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
-    <!-- TOP BAR -->
-    <div class="topbar">
-        <div class="menu-btn" onclick="toggleMenu()">☰</div>
-        <div class="logo">ZALMOXIS</div>
-        
-        <!-- Buton Dark Mode Modern -->
-        <div id="theme-toggle" class="theme-toggle">
-            <span class="sun">☀️</span>
-            <span class="moon">☽</span>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo" style="text-decoration: none !important; border: none !important;">ZALMOXIS</a>
+            <div class="nav-right">
+                <nav class="nav-menu">
+                    <a href="index.html" data-i18n="nav_home">Acasă</a>
+                    <a href="collections.html" class="active" data-i18n="nav_collections">Colecții</a>
+                    <a href="index.html#atelier" data-i18n="nav_atelier">Atelier</a>
+                    <a href="faq.html" data-i18n="nav_faq">Întrebări Frecvente</a>
+                    <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
+                    <div class="lang-seg" id="langSeg" role="group" aria-label="Alege limba">
+                        <button type="button" class="lang-seg-btn" data-lang="ro">RO</button>
+                        <button type="button" class="lang-seg-btn" data-lang="en">EN</button>
+                    </div>
+                </nav>
+                <button class="menu-toggle" aria-label="Deschide meniul">☰</button>
+            </div>
         </div>
-    </div>
+    </header>
 
-    <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar">
-        <h2>ZALMOXIS</h2>
-        <a href="index.html" onclick="toggleMenu()" data-i18n="nav_home">Acasă</a>
-        <a href="collections.html" onclick="toggleMenu()" data-i18n="nav_collections">Colecții</a>
-        <a href="index.html#produse" onclick="toggleMenu()" data-i18n="nav_products">Produse</a>
-        <a href="index.html#atelier" onclick="toggleMenu()" data-i18n="nav_atelier">Atelier</a>
-        <a href="index.html#contact" onclick="toggleMenu()" data-i18n="nav_contact">Contact</a>
+    <section class="collections-hero">
+        <h1 data-i18n="hero_title">Colecțiile Zalmoxis</h1>
+        <p data-i18n="hero_subtitle">Piele naturală • Lucrată manual • Calitate premium</p>
+    </section>
 
-        <div class="lang-seg-row">
-            <span class="lang-seg-row-label">Limbă / Language</span>
-        </div>
-        <div class="lang-seg" id="langSeg" role="group" aria-label="Alege limba">
-            <button type="button" class="lang-seg-btn" data-lang="ro">RO</button>
-            <button type="button" class="lang-seg-btn" data-lang="en">EN</button>
-        </div>
-    </div>
+    <section class="products-section">
+        <div class="container">
+            <h2 class="section-title reveal" data-i18n="section_title">Toate Colecțiile</h2>
+            <div class="products-grid">
+                <a href="portofele.html" class="product-card-link">
+                    <div class="product-card reveal">
+                        <div class="product-img-box">
+                            <img src="image/portmoneu1.jpg" alt="Portofele">
+                        </div>
+                        <h3 data-i18n="card_wallets_title">Portofele</h3>
+                        <p data-i18n="card_wallets_desc">Minimaliste &amp; elegante</p>
+                        <span class="view-more" data-i18n="view_more">Vezi colecția →</span>
+                    </div>
+                </a>
 
-    <!-- OVERLAY -->
-    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+                <a href="products/curea-classic.html" class="product-card-link">
+                    <div class="product-card reveal">
+                        <div class="product-img-box">
+                            <img src="image/curea1.png" alt="Curele">
+                        </div>
+                        <h3 data-i18n="card_belts_title">Curele</h3>
+                        <p data-i18n="card_belts_desc">Handmade din piele naturală</p>
+                        <span class="view-more" data-i18n="view_more">Vezi colecția →</span>
+                    </div>
+                </a>
 
-    <!-- HERO COLECȚII -->
-    <section class="hero fade-in" style="height: 55vh; min-height: 420px;">
-        <div class="hero-content">
-            <h1 data-i18n="hero_title">Colecțiile Zalmoxis</h1>
-            <p data-i18n="hero_subtitle">Piele naturală • Lucrată manual • Calitate premium</p>
+                <a href="products/geanta-vintage.html" class="product-card-link">
+                    <div class="product-card reveal">
+                        <div class="product-img-box">
+                            <img src="image/geanta1.jpg" alt="Genți">
+                        </div>
+                        <h3 data-i18n="card_bags_title">Genți</h3>
+                        <p data-i18n="card_bags_desc">Design vintage premium</p>
+                        <span class="view-more" data-i18n="view_more">Vezi colecția →</span>
+                    </div>
+                </a>
+            </div>
         </div>
     </section>
 
-    <!-- GRID COLECȚII -->
-    <section class="fade-in" style="padding: 60px 20px;">
-        <h2 style="text-align: center; margin-bottom: 50px; font-size: 42px;" data-i18n="section_title">Toate Colecțiile</h2>
-        
-        <div class="grid">
-            <!-- PORTOFELE -->
-            <a class="card" href="index.html#produse">
-                <img src="image/portmoneu1.jpg" alt="Portofele">
-                <div class="info">
-                    <h3 data-i18n="card_wallets_title">Portofele</h3>
-                    <p data-i18n="card_wallets_desc">Minimaliste & elegante</p>
-                </div>
-            </a>
+    <footer>
+        <p data-i18n="footer_text">&copy; 2026 Zalmoxis Leather. 100% Lucrat Manual în România.</p>
+    </footer>
 
-            <!-- CURELE -->
-            <a class="card" href="products/curea-classic.html">
-                <img src="image/curea1.png" alt="Curele">
-                <div class="info">
-                    <h3 data-i18n="card_belts_title">Curele</h3>
-                    <p data-i18n="card_belts_desc">Handmade din piele naturală</p>
-                </div>
-            </a>
-
-            <!-- GENȚI -->
-            <a class="card" href="products/geanta-vintage.html">
-                <img src="image/geanta1.jpg" alt="Genți">
-                <div class="info">
-                    <h3 data-i18n="card_bags_title">Genți</h3>
-                    <p data-i18n="card_bags_desc">Design vintage premium</p>
-                </div>
-            </a>
-        </div>
-    </section>
-
-    <script>
-        // Toggle Sidebar
-        function toggleMenu() {
-            document.getElementById("sidebar").classList.toggle("open");
-            document.getElementById("overlay").classList.toggle("active");
-        }
-
-        // Dark Mode Modern
-        const themeToggle = document.getElementById('theme-toggle');
-        const html = document.documentElement;
-
-        function setTheme(isDark) {
-            if (isDark) {
-                html.classList.add('dark');
-            } else {
-                html.classList.remove('dark');
-            }
-            localStorage.setItem('darkMode', isDark);
-        }
-
-        // Click handler
-        themeToggle.addEventListener('click', () => {
-            const isDark = !html.classList.contains('dark');
-            setTheme(isDark);
-        });
-
-        // Scroll Reveal + Theme Load
-        function reveal() {
-            document.querySelectorAll(".fade-in").forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight - 80) {
-                    el.classList.add("show");
-                }
-            });
-        }
-
-        window.addEventListener("scroll", reveal);
-        window.addEventListener("load", () => {
-            reveal();
-            const saved = localStorage.getItem('darkMode');
-            if (saved !== null) {
-                setTheme(saved === 'true');
-            } else {
-                setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 
     <script>
     // --- Sistem de limbă RO / EN, cu memorie (localStorage) comună pe tot site-ul ---
     (function () {
         const translations = {
             ro: {
-                nav_home: "Acasă", nav_collections: "Colecții", nav_products: "Produse",
-                nav_atelier: "Atelier", nav_contact: "Contact",
+                nav_home: "Acasă", nav_collections: "Colecții", nav_atelier: "Atelier",
+                nav_faq: "Întrebări Frecvente", nav_contact: "Contact",
                 hero_title: "Colecțiile Zalmoxis",
                 hero_subtitle: "Piele naturală • Lucrată manual • Calitate premium",
                 section_title: "Toate Colecțiile",
-                card_wallets_title: "Portofele", card_wallets_desc: "Minimaliste & elegante",
+                card_wallets_title: "Portofele", card_wallets_desc: "Minimaliste &amp; elegante",
                 card_belts_title: "Curele", card_belts_desc: "Handmade din piele naturală",
-                card_bags_title: "Genți", card_bags_desc: "Design vintage premium"
+                card_bags_title: "Genți", card_bags_desc: "Design vintage premium",
+                view_more: "Vezi colecția →",
+                footer_text: "&copy; 2026 Zalmoxis Leather. 100% Lucrat Manual în România."
             },
             en: {
-                nav_home: "Home", nav_collections: "Collections", nav_products: "Products",
-                nav_atelier: "Workshop", nav_contact: "Contact",
+                nav_home: "Home", nav_collections: "Collections", nav_atelier: "Workshop",
+                nav_faq: "FAQ", nav_contact: "Contact",
                 hero_title: "The Zalmoxis Collections",
                 hero_subtitle: "Natural leather • Handmade • Premium quality",
                 section_title: "All Collections",
-                card_wallets_title: "Wallets", card_wallets_desc: "Minimalist & elegant",
+                card_wallets_title: "Wallets", card_wallets_desc: "Minimalist &amp; elegant",
                 card_belts_title: "Belts", card_belts_desc: "Handmade from natural leather",
-                card_bags_title: "Bags", card_bags_desc: "Premium vintage design"
+                card_bags_title: "Bags", card_bags_desc: "Premium vintage design",
+                view_more: "View collection →",
+                footer_text: "&copy; 2026 Zalmoxis Leather. 100% Handmade in Romania."
             }
         };
 
@@ -171,7 +143,7 @@
             const t = translations[lang];
             document.querySelectorAll("[data-i18n]").forEach((el) => {
                 const key = el.getAttribute("data-i18n");
-                if (t[key] !== undefined) el.textContent = t[key];
+                if (t[key] !== undefined) el.innerHTML = t[key];
             });
             document.querySelectorAll(".lang-seg-btn").forEach((b) => {
                 b.classList.toggle("is-active", b.dataset.lang === lang);
@@ -189,6 +161,49 @@
             });
         });
     })();
+
+    // --- Reveal la scroll (titlu + carduri) ---
+    (function () {
+        const els = document.querySelectorAll(".reveal");
+        if ("IntersectionObserver" in window) {
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            els.forEach((el) => obs.observe(el));
+        } else {
+            els.forEach((el) => el.classList.add("is-visible"));
+        }
+    })();
     </script>
+
+<!-- Buton flotant Instagram + Viber -->
+<div class="zfab-wrap" id="zfabWrap">
+    <button class="zfab-main" id="zfabMain" aria-label="Contactează-ne">
+        <svg class="zfab-icon-plus" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <a class="zfab-option zfab-viber" href="viber://chat?number=%2B37369639506" target="_blank" rel="noopener" aria-label="Scrie-ne pe Viber">
+        <span class="zfab-label">Viber</span>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="white"><path d="M12 2C6.48 2 2 6.02 2 11c0 2.8 1.44 5.3 3.7 6.94L5 22l4.3-2.02c.86.2 1.76.32 2.7.32 5.52 0 10-4.02 10-9s-4.48-9-10-9z"/></svg>
+    </a>
+    <a class="zfab-option zfab-instagram" href="https://www.instagram.com/zalmoxis_leather" target="_blank" rel="noopener" aria-label="Scrie-ne pe Instagram">
+        <span class="zfab-label">Instagram</span>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="white" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+    </a>
+</div>
+<script>
+(function(){
+    var wrap = document.getElementById('zfabWrap');
+    var main = document.getElementById('zfabMain');
+    if(!wrap || !main) return;
+    main.addEventListener('click', function(e){ e.stopPropagation(); wrap.classList.toggle('open'); });
+    document.addEventListener('click', function(e){ if(!wrap.contains(e.target)) wrap.classList.remove('open'); });
+})();
+</script>
+
 </body>
 </html>
