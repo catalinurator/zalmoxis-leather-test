@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zalmoxis Leather | Piele Naturală & Lucru Manual</title>
+
+    <!-- Open Graph (previzualizare pe WhatsApp / Instagram / Facebook) -->
+    <!-- ⚠️ Înlocuiește domeniul de mai jos cu adresa reală a site-ului -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Zalmoxis Leather">
+    <meta property="og:title" content="Zalmoxis Leather | Piele Naturală & Lucru Manual">
+    <meta property="og:description" content="Portofele, curele și genți din piele naturală, lucrate integral manual în atelier. Piele. Timp. Măiestrie.">
+    <meta property="og:image" content="https://example.com/zalmoxis-leather/hero.jpg">
+    <meta property="og:url" content="https://example.com/zalmoxis-leather/index.html">
+    <meta property="og:locale" content="ro_RO">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Zalmoxis Leather | Piele Naturală & Lucru Manual">
+    <meta name="twitter:description" content="Portofele, curele și genți din piele naturală, lucrate integral manual în atelier.">
+    <meta name="twitter:image" content="https://example.com/zalmoxis-leather/hero.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
@@ -17,6 +31,7 @@
             <div class="nav-right">
                 <nav class="nav-menu">
                     <a href="index.html" class="active" data-i18n="nav_home">Acasă</a>
+                    <a href="collections.html" data-i18n="nav_collections">Colecții</a>
                     <a href="#produse" data-i18n="nav_products">Produse</a>
                     <a href="#atelier" data-i18n="nav_atelier">Atelier</a>
                     <a href="#proces" data-i18n="nav_process">Cum lucrăm</a>
@@ -168,7 +183,7 @@
     (function () {
         const translations = {
             ro: {
-                nav_home: "Acasă", nav_products: "Produse", nav_atelier: "Atelier",
+                nav_home: "Acasă", nav_collections: "Colecții", nav_products: "Produse", nav_atelier: "Atelier",
                 nav_process: "Cum lucrăm", nav_faq: "Întrebări Frecvente", nav_contact: "Contact",
                 hero_slogan: "Piele naturală. Lucrat manual. Calitate reală.",
                 hero_cta: "Vezi Colecția",
@@ -194,7 +209,7 @@
                 footer_text: "&copy; 2026 Zalmoxis Leather. 100% Lucrat Manual în România."
             },
             en: {
-                nav_home: "Home", nav_products: "Products", nav_atelier: "Workshop",
+                nav_home: "Home", nav_collections: "Collections", nav_products: "Products", nav_atelier: "Workshop",
                 nav_process: "How We Work", nav_faq: "FAQ", nav_contact: "Contact",
                 hero_slogan: "Natural leather. Handmade. Real quality.",
                 hero_cta: "View Collection",
@@ -245,5 +260,30 @@
         });
     })();
     </script>
+
+<!-- Buton flotant Instagram + Viber -->
+<div class="zfab-wrap" id="zfabWrap">
+    <button class="zfab-main" id="zfabMain" aria-label="Contactează-ne">
+        <svg class="zfab-icon-plus" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <a class="zfab-option zfab-viber" href="viber://chat?number=%2B37369639506" target="_blank" rel="noopener" aria-label="Scrie-ne pe Viber">
+        <span class="zfab-label">Viber</span>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="white"><path d="M12 2C6.48 2 2 6.02 2 11c0 2.8 1.44 5.3 3.7 6.94L5 22l4.3-2.02c.86.2 1.76.32 2.7.32 5.52 0 10-4.02 10-9s-4.48-9-10-9z"/></svg>
+    </a>
+    <a class="zfab-option zfab-instagram" href="https://www.instagram.com/zalmoxis_leather" target="_blank" rel="noopener" aria-label="Scrie-ne pe Instagram">
+        <span class="zfab-label">Instagram</span>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="white" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+    </a>
+</div>
+<script>
+(function(){
+    var wrap = document.getElementById('zfabWrap');
+    var main = document.getElementById('zfabMain');
+    if(!wrap || !main) return;
+    main.addEventListener('click', function(e){ e.stopPropagation(); wrap.classList.toggle('open'); });
+    document.addEventListener('click', function(e){ if(!wrap.contains(e.target)) wrap.classList.remove('open'); });
+})();
+</script>
+
 </body>
 </html>
