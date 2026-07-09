@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. RESETARE ELEMENTE & VARIABLE (Dark Mode)  
+   1. RESETARE ELEMENTE & VARIABLE (Dark Mode) 
    ========================================================================== */
 * {
     margin: 0;
@@ -319,6 +319,72 @@ header {
 .instagram-handle { margin-top: 10px !important; font-size: 0.85rem; color: var(--color-accent) !important; letter-spacing: 1px; }
 
 footer { background-color: #110e0c; color: #555; text-align: center; padding: 25px 0; font-size: 0.8rem; border-top: 1px solid #221c18; }
+
+/* ==========================================================================
+   BUTON FLOTANT CONTACT (Instagram + Viber)
+   ========================================================================== */
+.zfab-wrap {
+    position: fixed;
+    right: 20px;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    z-index: 9999;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 12px;
+}
+.zfab-main {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,.28);
+    transition: transform .25s ease;
+}
+.zfab-main:hover { transform: scale(1.06); }
+.zfab-icon-plus { width: 24px; height: 24px; transition: transform .3s ease; }
+.zfab-wrap.open .zfab-icon-plus { transform: rotate(45deg); }
+.zfab-option {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 16px rgba(0,0,0,.25);
+    opacity: 0;
+    transform: translateY(10px) scale(.75);
+    pointer-events: none;
+    transition: opacity .22s ease, transform .22s ease;
+    text-decoration: none !important;
+    border: none !important;
+}
+.zfab-wrap.open .zfab-option { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+.zfab-viber { background: #7360f2; }
+.zfab-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+.zfab-label {
+    position: absolute;
+    right: 60px;
+    white-space: nowrap;
+    background: var(--color-dark);
+    color: var(--color-light);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 4px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+}
+.zfab-option:hover .zfab-label { opacity: 1; }
+@media (max-width: 768px) {
+    .zfab-label { display: none; }
+}
 
 /* ==========================================================================
    7. RESPONSIVITATE PENTRU TABLETE ȘI TELEFOANE
