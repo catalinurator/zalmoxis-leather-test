@@ -337,17 +337,17 @@
     </div>
 
     <div>
-        <h1>Portofel minimalist</h1>
-        <div class="price">389 MDL</div>
-        <div class="desc">
+        <h1 id="productTitle">Portofel minimalist</h1>
+        <div class="price" id="priceValue">389 MDL</div>
+        <div class="desc" id="productDesc">
             Portofel realizat manual din piele naturală full-grain. Design minimalist, cusut manual pentru durabilitate maximă.
         </div>
 
         <div class="colors">
             <h3>Culori</h3>
-            <button class="color-btn active" onclick="changeColor(this,'black')">Negru</button>
-            <button class="color-btn" onclick="changeColor(this,'brown')">Maro</button>
-            <button class="color-btn" onclick="changeColor(this,'cognac')">Coniac</button>
+            <button class="color-btn active" onclick="changeColor(this,0)">Negru</button>
+            <button class="color-btn" onclick="changeColor(this,1)">Maro</button>
+            <button class="color-btn" onclick="changeColor(this,2)">Coniac</button>
         </div>
 
         <a class="btn" href="https://ig.me/m/zalmoxis_leather?text=Salut!%20Vreau%20sa%20comand%20Portofel%20minimalist" target="_blank">
@@ -435,18 +435,55 @@ btn.addEventListener('click', () => {
     setTheme(!isCurrentlyDark);
 });
 
-// Schimbare culori produs (asigură-te că mapezi imaginile corecte pentru maro și coniac dacă diferă)
-function changeColor(el, color){
+// Schimbare culori produs
+window.zalmoxisColorImages = [
+    "../image/portmoneu1.jpg",
+    "../image/portmoneu1.jpg",
+    "../image/portmoneu1.jpg"
+];
+
+function changeColor(el, idx){
     document.querySelectorAll(".color-btn").forEach(b => {
         b.classList.remove("active");
     });
     el.classList.add("active");
 
     let img = document.getElementById("productImg");
-    if(color === "black") img.src = "../image/portmoneu1.jpg";
-    if(color === "brown") img.src = "../image/portmoneu1.jpg"; 
-    if(color === "cognac") img.src = "../image/portmoneu1.jpg";
+    if(window.zalmoxisColorImages && window.zalmoxisColorImages[idx]){
+        img.src = window.zalmoxisColorImages[idx];
+    }
 }
+
+// Preluare date editabile din panoul de administrare (products-data/portofel-minimalistic.json)
+fetch("../products-data/portofel-minimalistic.json")
+    .then(r => r.json())
+    .then(data => {
+        if (data.title) {
+            document.title = data.title + " - Zalmoxis Leather";
+            const h1 = document.getElementById("productTitle");
+            if (h1) h1.textContent = data.title;
+        }
+        if (data.price) {
+            const p = document.getElementById("priceValue");
+            if (p) p.textContent = data.price;
+        }
+        if (data.description) {
+            const d = document.getElementById("productDesc");
+            if (d) d.textContent = data.description;
+        }
+        if (data.mainImage) {
+            const img = document.getElementById("productImg");
+            if (img) img.src = "../" + data.mainImage;
+        }
+        if (Array.isArray(data.colors) && data.colors.length) {
+            window.zalmoxisColorImages = data.colors.map(c => "../" + c.image);
+            const buttons = document.querySelectorAll(".color-btn");
+            data.colors.forEach((c, i) => {
+                if (buttons[i]) buttons[i].textContent = c.name;
+            });
+        }
+    })
+    .catch(err => console.warn("Nu s-au putut încărca datele produsului:", err));
 </script>
 
 </body>

@@ -453,7 +453,7 @@
     <div class="product-details reveal">
         <h1 data-i18n="product_title">Geantă Vintage</h1>
         <div class="price"><span data-i18n="price_label">Preț:</span> <span id="priceValue">1450 MDL</span></div>
-        <div class="desc" data-i18n="product_desc">
+        <div class="desc" id="productDesc" data-i18n="product_desc">
             Geantă tip rucsac din piele naturală, lucrată integral manual, cu buzunar frontal, buzunar lateral deschis și bretele ajustabile căptușite.
         </div>
 
@@ -652,6 +652,22 @@ var swiper2 = new Swiper(".mySwiper2", {
         b.addEventListener("click", () => applyLanguage(b.dataset.lang));
     });
     applyLanguage(currentLang);
+
+    // Preluare date editabile din panoul de administrare (products-data/geanta-vintage.json)
+    fetch("../products-data/geanta-vintage.json")
+        .then(r => r.json())
+        .then(data => {
+            if (data.title_ro) translations.ro.product_title = data.title_ro;
+            if (data.description_ro) translations.ro.product_desc = data.description_ro;
+            if (data.title_en) translations.en.product_title = data.title_en;
+            if (data.description_en) translations.en.product_desc = data.description_en;
+            if (data.price) {
+                const p = document.getElementById("priceValue");
+                if (p) p.textContent = data.price;
+            }
+            applyLanguage(currentLang);
+        })
+        .catch(err => console.warn("Nu s-au putut încărca datele produsului:", err));
 
     // --- Selector de culoare produs (leagă și modelul 3D dacă e activ) ---
     const colorSwatches = document.querySelectorAll(".color-swatch");

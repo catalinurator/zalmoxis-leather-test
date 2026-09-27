@@ -301,10 +301,10 @@
     </div>
 
     <div>
-        <h1>Curea clasica</h1>
-        <div class="price">299 MDL</div>
+        <h1 id="productTitle">Curea clasica</h1>
+        <div class="price" id="priceValue">299 MDL</div>
 
-        <div class="desc">
+        <div class="desc" id="productDesc">
             Curea din piele naturală, lucrată manual pentru rezistență și stil minimalist.
         </div>
 
@@ -393,6 +393,30 @@ btn.addEventListener('click', () => {
     const isCurrentlyDark = document.documentElement.classList.contains('dark-mode');
     setTheme(!isCurrentlyDark);
 });
+
+// Preluare date editabile din panoul de administrare (products-data/curea-classic.json)
+fetch("../products-data/curea-classic.json")
+    .then(r => r.json())
+    .then(data => {
+        if (data.title) {
+            document.title = data.title + " - Zalmoxis Leather";
+            const h1 = document.getElementById("productTitle");
+            if (h1) h1.textContent = data.title;
+        }
+        if (data.price) {
+            const p = document.getElementById("priceValue");
+            if (p) p.textContent = data.price;
+        }
+        if (data.description) {
+            const d = document.getElementById("productDesc");
+            if (d) d.textContent = data.description;
+        }
+        if (data.mainImage) {
+            const img = document.getElementById("productImg");
+            if (img) img.src = "../" + data.mainImage;
+        }
+    })
+    .catch(err => console.warn("Nu s-au putut încărca datele produsului:", err));
 </script>
 
 </body>
