@@ -31,3 +31,24 @@ collections:
         fields:
           - { label: "Nume culoare", name: "name", widget: "string" }
           - { label: "Imagine pentru această culoare", name: "image", widget: "image" }
+
+  - name: "categories"
+    label: "Pagini de categorie"
+    folder: "category-data"
+    extension: "json"
+    format: "json"
+    create: false
+    identifier_field: "pageTitle"
+    fields:
+      - { label: "Titlu pagină", name: "pageTitle", widget: "string" }
+      - { label: "Text introductiv", name: "pageIntro", widget: "text" }
+      - { label: "Text buton (ex: Comandă un model personalizat)", name: "ctaText", widget: "string" }
+      - label: "Produse afișate pe această pagină"
+        name: "items"
+        widget: "list"
+        fields:
+          - { label: "Titlu produs", name: "title", widget: "string" }
+          - { label: "Preț", name: "price", widget: "string" }
+          - { label: "Descriere scurtă", name: "description", widget: "text" }
+          - { label: "Imagine", name: "image", widget: "image" }
+          - { label: "Link către pagina produsului", name: "link", widget: "string", hint: "Exemplu: products/curea-classic.html" }
