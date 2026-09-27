@@ -1,0 +1,28 @@
+{
+  "pageTitle": "Colecția de Portofele",
+  "pageIntro": "Fiecare portofel este tăiat, asamblat și cusut manual din piele naturală premium. Durabilitate garantată pentru zeci de ani.",
+  "ctaText": "Comandă un model personalizat",
+  "items": [
+    {
+      "title": "Portofel Slim Cardholder",
+      "price": "389 MDL",
+      "description": "Ideal pentru 4-6 carduri și câteva bancnote pliate.",
+      "image": "image/portmoneu1.jpg",
+      "link": "products/portofel-minimalistic.html"
+    },
+    {
+      "title": "Portofel Classic Bifold",
+      "price": "450 MDL",
+      "description": "Spațiu generos pentru buletin, carduri și compartiment de bani.",
+      "image": "image/portmoneu-masina-negru.jpg",
+      "link": "products/portmoneu-masina.html"
+    },
+    {
+      "title": "Portofel Zipper Premium",
+      "price": "520 MDL",
+      "description": "Închidere securizată cu fermoar YKK și compartiment monede.",
+      "image": "image/portmoneu1.jpg",
+      "link": "products/portofel-minimalistic.html"
+    }
+  ]
+}

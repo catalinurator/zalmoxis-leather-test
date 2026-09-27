@@ -1,0 +1,28 @@
+{
+  "pageTitle": "Colecția de Curele",
+  "pageIntro": "Realizate din fâșii solide de piele full-grain tăbăcită vegetal. O curea adevărată, robustă, finisată manual și creată să treacă testul timpului.",
+  "ctaText": "Comandă pe măsura ta",
+  "items": [
+    {
+      "title": "Curea Classic Brown",
+      "price": "550 MDL",
+      "description": "Lățime 4cm, ideală pentru blugi. Piele groasă de 4mm cu cataramă solidă.",
+      "image": "image/curea1.png",
+      "link": "products/curea-classic.html"
+    },
+    {
+      "title": "Curea Casual Black",
+      "price": "550 MDL",
+      "description": "Nuanță intensă de negru, margini șlefuite la sânge și finisate cu ceară.",
+      "image": "image/curea1.png",
+      "link": "products/curea-classic.html"
+    },
+    {
+      "title": "Curea Elegant Dress",
+      "price": "580 MDL",
+      "description": "Lățime de 3.5cm, profil fin, ideală pentru costume și ținute office.",
+      "image": "image/curea1.png",
+      "link": "products/curea-classic.html"
+    }
+  ]
+}

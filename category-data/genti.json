@@ -1,0 +1,28 @@
+{
+  "pageTitle": "Genți & Accesorii",
+  "pageIntro": "Design minimalist, asamblare meticuloasă și feronerie turnată. Obiecte de colecție care dezvoltă o patină superbă odată cu trecerea timpului.",
+  "ctaText": "Discută un proiect unicat",
+  "items": [
+    {
+      "title": "Geantă Messenger Heritage",
+      "price": "1850 MDL",
+      "description": "Compartiment spațios pentru laptop de 14\", documente și accesorii zilnice.",
+      "image": "image/geanta1.jpg",
+      "link": "products/geanta-vintage.html"
+    },
+    {
+      "title": "Key Organizer din Piele",
+      "price": "180 MDL",
+      "description": "Sistem inteligent care elimină zgomotul cheilor și îți protejează ecranul.",
+      "image": "image/geanta1.jpg",
+      "link": "products/geanta-vintage.html"
+    },
+    {
+      "title": "Tăviță de Birou (Valet Tray)",
+      "price": "250 MDL",
+      "description": "Perfectă pentru noptieră sau hol. Locul ideal unde să-ți lași ceasul și cheile.",
+      "image": "image/geanta1.jpg",
+      "link": "products/geanta-vintage.html"
+    }
+  ]
+}
