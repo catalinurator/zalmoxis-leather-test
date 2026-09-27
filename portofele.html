@@ -26,12 +26,12 @@
     </header>
 
     <section class="container" style="padding-top: 140px;">
-        <h2 class="section-title">Colecția de Portofele</h2>
-        <p class="text-center" style="max-width: 600px; margin: -20px auto 40px; color: var(--color-grey);">
+        <h2 class="section-title" id="pageTitle">Colecția de Portofele</h2>
+        <p class="text-center" id="pageIntro" style="max-width: 600px; margin: -20px auto 40px; color: var(--color-grey);">
             Fiecare portofel este tăiat, asamblat și cusut manual din piele naturală premium. Durabilitate garantată pentru zeci de ani.
         </p>
 
-        <div class="products-grid">
+        <div class="products-grid" id="productsGrid">
             
             <!-- Produsul 1 -->
             <a href="products/portofel-minimalistic.html" class="product-card-link">    
@@ -72,7 +72,7 @@
         </div>
      
         <div class="text-center" style="margin-top: 5px;">
-            <a href="index.html#contact" class="btn">Comandă un model personalizat</a>
+            <a href="index.html#contact" class="btn" id="ctaBtn">Comandă un model personalizat</a>
         </div>
     </section>
 
@@ -81,5 +81,33 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+    // Preluare produse editabile din panoul de administrare (category-data/portofele.json)
+    fetch("category-data/portofele.json")
+        .then(r => r.json())
+        .then(data => {
+            if (data.pageTitle) document.getElementById("pageTitle").textContent = data.pageTitle;
+            if (data.pageIntro) document.getElementById("pageIntro").textContent = data.pageIntro;
+            if (data.ctaText) document.getElementById("ctaBtn").textContent = data.ctaText;
+            if (Array.isArray(data.items) && data.items.length) {
+                const grid = document.getElementById("productsGrid");
+                grid.innerHTML = "";
+                data.items.forEach(item => {
+                    const a = document.createElement("a");
+                    a.href = item.link || "#";
+                    a.className = "product-card-link";
+                    a.innerHTML =
+                        '<div class="product-card">' +
+                        '<div class="product-img-box"><img src="' + item.image + '" alt="' + item.title + '"></div>' +
+                        '<h3>' + item.title + '</h3>' +
+                        '<div class="price" style="font-weight: 600; color: var(--color-accent); margin: 5px 0 10px;">' + item.price + '</div>' +
+                        '<p>' + item.description + '</p>' +
+                        '</div>';
+                    grid.appendChild(a);
+                });
+            }
+        })
+        .catch(err => console.warn("Nu s-au putut încărca produsele categoriei:", err));
+    </script>
 </body>
 </html>

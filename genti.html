@@ -26,12 +26,12 @@
     </header>
 
     <section class="container" style="padding-top: 140px;">
-        <h2 class="section-title">Genți & Accesorii</h2>
-        <p class="text-center" style="max-width: 600px; margin: -20px auto 40px; color: var(--color-grey);">
+        <h2 class="section-title" id="pageTitle">Genți & Accesorii</h2>
+        <p class="text-center" id="pageIntro" style="max-width: 600px; margin: -20px auto 40px; color: var(--color-grey);">
             Design minimalist, asamblare meticuloasă și feronerie turnată. Obiecte de colecție care dezvoltă o patină superbă odată cu trecerea timpului.
         </p>
 
-        <div class="products-grid">
+        <div class="products-grid" id="productsGrid">
             
             <!-- Produsul 1 -->
             <a href="products/geanta-vintage.html" class="product-card-link">    
@@ -72,7 +72,7 @@
         </div>
      
         <div class="text-center" style="margin-top: 5px;">
-            <a href="index.html#contact" class="btn">Discută un proiect unicat</a>
+            <a href="index.html#contact" class="btn" id="ctaBtn">Discută un proiect unicat</a>
         </div>
     </section>
 
@@ -81,5 +81,33 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+    // Preluare produse editabile din panoul de administrare (category-data/genti.json)
+    fetch("category-data/genti.json")
+        .then(r => r.json())
+        .then(data => {
+            if (data.pageTitle) document.getElementById("pageTitle").textContent = data.pageTitle;
+            if (data.pageIntro) document.getElementById("pageIntro").textContent = data.pageIntro;
+            if (data.ctaText) document.getElementById("ctaBtn").textContent = data.ctaText;
+            if (Array.isArray(data.items) && data.items.length) {
+                const grid = document.getElementById("productsGrid");
+                grid.innerHTML = "";
+                data.items.forEach(item => {
+                    const a = document.createElement("a");
+                    a.href = item.link || "#";
+                    a.className = "product-card-link";
+                    a.innerHTML =
+                        '<div class="product-card">' +
+                        '<div class="product-img-box"><img src="' + item.image + '" alt="' + item.title + '"></div>' +
+                        '<h3>' + item.title + '</h3>' +
+                        '<div class="price" style="font-weight: 600; color: var(--color-accent); margin: 5px 0 10px;">' + item.price + '</div>' +
+                        '<p>' + item.description + '</p>' +
+                        '</div>';
+                    grid.appendChild(a);
+                });
+            }
+        })
+        .catch(err => console.warn("Nu s-au putut încărca produsele categoriei:", err));
+    </script>
 </body>
 </html>
