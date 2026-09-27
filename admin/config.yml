@@ -1,0 +1,33 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "/image"
+public_folder: "image"
+
+locale: "ro"
+
+collections:
+  - name: "products"
+    label: "Produse"
+    folder: "products-data"
+    extension: "json"
+    format: "json"
+    create: false
+    identifier_field: "title"
+    fields:
+      - { label: "Titlu produs (RO)", name: "title", widget: "string", required: false, hint: "Folosit pentru: Portmoneu Auto, Portofel minimalist, Curea clasica" }
+      - { label: "Titlu produs (RO) — doar pentru Geantă Vintage", name: "title_ro", widget: "string", required: false }
+      - { label: "Titlu produs (EN) — doar pentru Geantă Vintage", name: "title_en", widget: "string", required: false }
+      - { label: "Preț", name: "price", widget: "string", hint: "Exemplu: 389 MDL" }
+      - { label: "Descriere (RO)", name: "description", widget: "text", required: false, hint: "Folosit pentru: Portmoneu Auto, Portofel minimalist, Curea clasica" }
+      - { label: "Descriere (RO) — doar pentru Geantă Vintage", name: "description_ro", widget: "text", required: false }
+      - { label: "Descriere (EN) — doar pentru Geantă Vintage", name: "description_en", widget: "text", required: false }
+      - { label: "Imagine principală", name: "mainImage", widget: "image", required: false }
+      - label: "Culori disponibile"
+        name: "colors"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Nume culoare", name: "name", widget: "string" }
+          - { label: "Imagine pentru această culoare", name: "image", widget: "image" }

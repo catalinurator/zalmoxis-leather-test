@@ -1,0 +1,11 @@
+{
+  "title": "Portmoneu Auto",
+  "price": "389 MDL",
+  "description": "Portofel realizat manual din piele naturală full-grain. Design minimalist, cusut manual pentru durabilitate maximă.",
+  "mainImage": "image/portmoneu-masina-negru.jpg",
+  "colors": [
+    { "name": "Negru", "image": "image/portmoneu-masina-negru.jpg" },
+    { "name": "Maro", "image": "image/portmoneu-masina-maro.jpg" },
+    { "name": "Coniac", "image": "image/portmoneu-masina-negru.jpg" }
+  ]
+}

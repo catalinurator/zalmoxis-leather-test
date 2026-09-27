@@ -1,0 +1,11 @@
+{
+  "title": "Portofel minimalist",
+  "price": "389 MDL",
+  "description": "Portofel realizat manual din piele naturală full-grain. Design minimalist, cusut manual pentru durabilitate maximă.",
+  "mainImage": "image/portmoneu1.jpg",
+  "colors": [
+    { "name": "Negru", "image": "image/portmoneu1.jpg" },
+    { "name": "Maro", "image": "image/portmoneu1.jpg" },
+    { "name": "Coniac", "image": "image/portmoneu1.jpg" }
+  ]
+}
